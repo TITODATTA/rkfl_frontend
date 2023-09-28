@@ -1,0 +1,188 @@
+.page_container {
+  padding: 10px;
+}
+.header_container {
+  display: flex;
+  padding: 10px;
+  background-color: #d2cbcb;
+  border-radius: 20px;
+
+  /* A light grayish color */
+}
+.logo_container {
+  flex: 0.1;
+}
+.welcome_tag {
+  flex: 0.85;
+  text-align: center;
+  margin-top: 6px;
+}
+.logout_button_container {
+  flex: 0.05;
+}
+.logout_button {
+  float: right;
+  margin-top: 10px;
+}
+.personal_info_container {
+  width: 30%;
+  margin-top: 15px;
+}
+.personal_info_container h3 {
+  margin-bottom: 10px;
+}
+.filter_option_container {
+  display: flex;
+  margin-top: 25px;
+}
+.filter_option_container select {
+  margin-left: 10px;
+  width: 10%;
+  padding: 3px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+.submit_button {
+  margin: 0 10px;
+  padding: 0 12px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.submit_button:hover {
+  background-color: #e0e0e0;
+  border-color: #999;
+}
+
+.filter_text {
+  margin-left: 10px;
+}
+.arrow_icon {
+  margin-top: 3px;
+}
+hr {
+  margin-left: 10px;
+  display: block;
+  border: none;
+  margin-top: 12px;
+  height: 2px; /* Set the initial height */
+  background-color: black;
+  width: 4%; /* Make it span the full width */
+}
+.table_container {
+  margin-top: 10px;
+}
+.data_table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  font-size: 10px;
+}
+
+.data_table th,
+.data_table td {
+  border: 1px solid #ccc;
+  padding: 7px;
+  text-align: center;
+  word-break: break-all;
+  max-width: 100px;
+}
+
+.data_table th {
+  background-color: #f2f2f2;
+}
+.pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Add a pseudo-element for the arrow */
+
+/* Media query for responsiveness */
+.smallLabel {
+  color: rgb(63, 103, 3);
+  font-size: 9px;
+  font-weight: bold;
+}
+.smallLabel1 {
+  color: red;
+  font-size: 9px;
+  font-weight: bold;
+}
+.button_containers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+.back_button {
+  width: 8%;
+  padding: 5px 20px;
+  border: 2px solid #ddd; /* Light black shade border */
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+}
+
+.submit_button2 {
+  margin-left: 10px;
+  width: 8%;
+  padding: 5px 20px;
+  border: 2px solid #ddd; /* Light black shade border */
+  background-color: lightgreen;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+}
+.text_area {
+  width: 88%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  appearance: none; /* Hide default arrow in browsers */
+  cursor: pointer;
+}
+.checkbox {
+  /* Style for the default checkbox appearance */
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #000; /* Border color for the checkbox */
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+}
+.checkbox:checked::before {
+  /* Style for the checked state */
+  content: "✗"; /* Red cross symbol */
+  display: block;
+  color: red; /* Red color for the cross */
+  font-size: 16px;
+  text-align: center;
+  line-height: 20px;
+}

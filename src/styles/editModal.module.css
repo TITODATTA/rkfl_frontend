@@ -1,0 +1,75 @@
+.edit_info {
+  display: flex;
+  margin-bottom: 10px;
+}
+.edit_info1 {
+  display: flex;
+  margin-bottom: 10px;
+}
+.edit_info2 {
+  display: flex;
+  margin-bottom: 10px;
+}
+.edit_info h5 {
+  flex: 0.5;
+}
+.edit_info input {
+  flex: 0.5;
+}
+.edit_info1 h5 {
+  flex: 0.5;
+}
+.edit_info1 select {
+  flex: 0.5;
+  width: 0;
+}
+.edit_info2 div {
+  flex: 0.5;
+}
+.edit_info2 h5 {
+  flex: 0.5;
+}
+.inputFile {
+  flex: 0.5;
+}
+.edit_container h4 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.button_container {
+  display: flex;
+  justify-content: center; /* Space between buttons */
+  align-items: center; /* Vertically center buttons */
+  margin-top: 20px;
+}
+.button_container button {
+  cursor: pointer;
+  margin-right: 10px;
+  width: 20%;
+  padding: 5px 20px;
+  border: 2px solid #ddd; /* Light black shade border */
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+.customFileInput {
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 12.5px;
+}
+.customFileInput input {
+  opacity: 0;
+  width: 0%;
+}
+.imageInfo {
+  display: flex;
+  flex-direction: column;
+}
+.editSpan {
+  color: red;
+  font-size: 13px;
+}

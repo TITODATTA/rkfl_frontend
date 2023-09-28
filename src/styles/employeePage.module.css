@@ -1,0 +1,221 @@
+.main_container {
+}
+.header_container {
+  display: flex;
+  padding: 15px;
+}
+.logo_container {
+  flex: 0.1;
+}
+.welcome_tag {
+  flex: 0.9;
+  text-align: center;
+}
+.tableContainer {
+  display: flex;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.leftElement {
+  flex: 0.15;
+  border-right: 1px solid black;
+  padding: 14px 10px;
+}
+.rightElement {
+  flex: 0.85;
+}
+.custom_button {
+  padding: 10px 20px;
+  background-color: white;
+  border: 2px solid #ddd; /* Light black shade border */
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.custom_button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2); /* Transparent shade color */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.custom_button:hover {
+  background-color: #f9f9f9; /* Lighter shade of white */
+}
+
+.custom_button:hover:before {
+  opacity: 1;
+}
+.sub_buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.sub_button {
+  width: 82%;
+  margin-top: 10px;
+  padding: 8px 10px;
+  background-color: white;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  font-size: 13.5px;
+  font-weight: bold;
+  color: #333;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.sub_button:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  width: 10px;
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.sub_button:hover {
+  background-color: #f9f9f9;
+}
+/* Adjust the positioning of the arrows as needed */
+.sub_button:hover:before {
+  transform: translateY(-50%);
+}
+.vertical_line {
+  border: none;
+  border-left: 3px dotted black;
+  height: 50px; /* Adjust the height as needed */
+  width: 10px;
+}
+.rightElement {
+  padding: 15px 20px;
+}
+.rightElement_header_container {
+  text-align: center;
+}
+.form_container {
+  margin-top: 37px;
+}
+.basic_info_container {
+  display: flex;
+}
+.basic_info_left {
+  flex: 0.5;
+}
+.basic_info_right {
+  flex: 0.5;
+}
+.basic_info_1 h4 {
+  margin-bottom: 10px;
+}
+.textBreaker1 {
+  margin-top: 15px;
+}
+.textBreaker2 {
+  margin-top: 10px;
+}
+.textBreaker1Span {
+  background-color: rgb(232, 232, 6);
+}
+.optionh4 {
+  color: red;
+}
+.tax_info_container {
+  display: flex;
+  margin-top: 15px;
+}
+.tax_info_left {
+  flex: 0.5;
+}
+.tax_info_right {
+  flex: 0.5;
+}
+.tax_info_option {
+  display: flex;
+}
+.tax_info_left input {
+  margin-top: 3px;
+  margin-left: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.tax_info_right input {
+  margin-top: 3px;
+  margin-left: 10px;
+  width: 25px;
+  height: 20px;
+}
+.rest_info_container {
+  display: flex;
+  margin-top: 15px;
+}
+.rest_info_right {
+  flex: 0.5;
+}
+.rest_info_left {
+  flex: 0.5;
+}
+.childrenInfo {
+  display: flex;
+  margin-top: 10px;
+}
+.exemptions_breakerText {
+  margin-top: 10px;
+  text-decoration: underline;
+}
+.childrenInfo input {
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+}
+.LandordInfo {
+  display: flex;
+  color: red;
+}
+.LandordInfo input {
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+}
+.empJoin_container {
+  margin-top: 10px;
+}
+/* Styles for the file input and related elements */
+.fileInput {
+  display: none;
+}
+
+.fileName {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.fileButton {
+  width: 30%;
+  height: 5%;
+  padding: 5px;
+  margin-top: 5px;
+  background-color: #f9f9f9;
+  color: black;
+  border: 2px solid #ddd;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.fileButton:hover {
+  background-color: #f9f9f9;
+}

@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import AdminPage from "./pages/AdminPage";
+import AccountantPage from "./pages/AccountantPage";
+import EmployeePage2 from "./pages/EmployeePage2";
+import TestPage from "./pages/TestPage";
+// import EmployeePage from "./pages/EmployeePage"
 
-function App() {
+
+const App = () => {
+  window.onbeforeunload = function () {
+    localStorage.clear();
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/Employee" element={<EmployeePage2 />} />
+        {/* <Route path="/Employee1" element={<EmployeePage />} /> */}
+        <Route path="/Administrator" element={<AdminPage />} />
+        <Route path="/Accountant" element={<AccountantPage />} />
+        <Route path="/test" element={<TestPage />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App

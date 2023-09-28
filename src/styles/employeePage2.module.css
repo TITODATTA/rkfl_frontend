@@ -1,0 +1,180 @@
+.main_container {
+  padding: 10px;
+}
+.header_container {
+  display: flex;
+  background-color: #d2cbcb;
+  border-radius: 20px;
+}
+.logo_container {
+  flex: 0.1;
+}
+.welcome_tag {
+  flex: 0.85;
+  text-align: center;
+  margin-top: 6px;
+}
+.logout_button_container {
+  flex: 0.05;
+  margin-top: 10px;
+}
+.logout_button {
+  float: right;
+}
+.investment_schedule_option_container {
+  padding: 10px;
+}
+.information_container {
+  display: flex;
+}
+.left_information {
+  flex: 0.5;
+}
+.right_information {
+  flex: 0.5;
+}
+.emp_info_container {
+  width: 96%;
+  display: flex;
+  margin-top: 10px;
+  padding: 10px;
+  border: 2px solid #ddd;
+}
+.emp_info_right {
+  flex: 0.5;
+}
+.emp_info_left {
+  flex: 0.5;
+}
+.emp_info_h3 {
+  margin-bottom: 10px;
+}
+.emp_info_h3 span {
+  font-weight: 400;
+}
+.first_entry_container {
+  width: 50%;
+  display: flex;
+  margin-top: 20px;
+}
+.first_entry_left {
+  flex: 0.45;
+  border: 2px solid #ddd;
+}
+.first_entry_right {
+  flex: 0.55;
+  border: 2px solid #ddd;
+}
+.text_container1 {
+  padding: 15px;
+  border-bottom: 2px solid #ddd;
+}
+.text_container2 {
+  padding: 15px;
+}
+.text_container2 h4 {
+  margin-top: 25px;
+}
+.year_container {
+  padding: 15px;
+  border-bottom: 2px solid #ddd;
+}
+.tax_option1 {
+  display: flex;
+  padding: 5px;
+  border-bottom: 2px solid #ddd;
+}
+.tax_option2 {
+  display: flex;
+  padding: 5px;
+}
+.tax_option1 input {
+  width: 30px;
+}
+.tax_option2 input {
+  width: 30px;
+}
+.tax_option1 h4 {
+  font-weight: 400;
+}
+.tax_option2 h4 {
+  font-weight: 400;
+}
+.submit_button_container {
+  width: 25%;
+  margin-top: 15px;
+}
+.submit_button_container button {
+  width: 100%;
+  padding: 5px 20px;
+  background-color: lightgreen;
+  border: 2px solid #ddd; /* Light black shade border */
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.submit_button_container button:hover {
+  background-color: rgb(166, 240, 166);
+  cursor: pointer;
+}
+.second_entry_container {
+  display: flex;
+  margin-top: 20px;
+  border: 2px solid #ddd;
+}
+.second_entry_left {
+  flex: 0.15;
+  border-right: 2px solid #ddd;
+}
+.second_entry_right {
+  flex: 0.85;
+  /* display: flex; */
+}
+.investment_schedule_text {
+  padding: 5px;
+  text-align: center;
+}
+.investment_schedule_option_container {
+  display: flex;
+  margin-top: 5px;
+}
+.investment_schedule_option_container div {
+  flex: 0.5;
+  padding: 10px;
+  display: flex;
+}
+.option_checkbox {
+  width: 20px;
+  margin-left: 20px;
+}
+/* Select.module.css */
+.main_section_container {
+  display: flex;
+  padding: 5px;
+  margin-top: 10px;
+}
+.rules_container {
+  margin-top: 10px;
+}
+
+.custom_select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  appearance: none; /* Hide default arrow in browsers */
+  cursor: pointer;
+  text-align: center;
+}
+.tableContainer {
+  padding: 5px;
+}
+.tableHeader {
+  text-align: center;
+}

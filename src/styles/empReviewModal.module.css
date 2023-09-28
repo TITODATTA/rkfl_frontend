@@ -1,0 +1,49 @@
+/* EmployeeReviewModal.module.css */
+.table_container {
+  overflow-y: auto;
+  max-height: 400px; /* Adjust the maximum height as needed */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 10px;
+  margin-top: 10px;
+}
+.table_container h5 {
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+/* Your CSS Module */
+.button_container {
+  display: flex;
+  justify-content: center; /* Space between buttons */
+  align-items: center; /* Vertically center buttons */
+  margin-top: 10px;
+}
+.button_container button {
+  cursor: pointer;
+  margin-right: 10px;
+  width: 20%;
+  padding: 5px 20px;
+  border: 2px solid #ddd; /* Light black shade border */
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+/* Add more styles as needed */
