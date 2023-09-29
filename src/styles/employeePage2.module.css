@@ -1,6 +1,12 @@
 .main_container {
   padding: 10px;
 }
+.loader_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 .header_container {
   display: flex;
   background-color: #d2cbcb;
@@ -73,7 +79,7 @@
   padding: 15px;
 }
 .text_container2 h4 {
-  margin-top: 25px;
+  /* margin-top: 25px; */
 }
 .year_container {
   padding: 15px;
