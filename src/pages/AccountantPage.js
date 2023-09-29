@@ -50,7 +50,7 @@ const AccountantPage = () => {
     // Slice the transactions array to display only the items for the current page
     const currentItems = transactions.slice(startIndex, endIndex);
 
-    const plants = userDetails.plants.split(',');
+    const plants = userDetails?.plants.split(',');
     console.log(plants)
 
     // Function to handle page changes
