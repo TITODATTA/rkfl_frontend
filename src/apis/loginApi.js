@@ -1,8 +1,6 @@
 import axios from 'axios'
 import { setUser } from '../state/userSlice'
 import { url } from "../utils/constants";
-
-const url = process.env.REACT_APP_BASE_URL
 export const handleLogin = async (email, password, role, navigate, dispatch, setOpen, setOpenError, setErrorMessage, setLoading) => {
     setLoading(true)
     if (!/^\d+$/.test(email)) {
