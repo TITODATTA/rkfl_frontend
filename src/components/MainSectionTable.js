@@ -1162,6 +1162,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                 array10,
                                 array24,
                                 array80CCD,
+                                openyear,
                                 setReviewModal,
                                 setError,
                                 setErrorMessage)}>

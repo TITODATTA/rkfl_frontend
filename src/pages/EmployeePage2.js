@@ -112,6 +112,12 @@ const EmployeePage2 = () => {
                                 {newEntry ?
                                     <div className={empPageCss.tax_option_container}>
                                         <div
+                                            className={`${empPageCss.tax_option2} ${selectedOption1 === 'option2' ? empPageCss.selected_option : ''
+                                                }`}
+                                        >
+                                            <h4>Taxation is Not yet Updated in SAP</h4>
+                                        </div>
+                                        {/* <div
                                             className={`${empPageCss.tax_option1} ${selectedOption1 === 'option1' ? empPageCss.selected_option : ''
                                                 }`}
                                             onClick={() => handleCheckboxChange1('option1')}
@@ -134,7 +140,7 @@ const EmployeePage2 = () => {
                                                 checked={selectedOption1 === 'option2'}
                                                 readOnly
                                             />
-                                        </div>
+                                        </div> */}
                                     </div> :
                                     <div className={empPageCss.tax_option_container}>
                                         <div

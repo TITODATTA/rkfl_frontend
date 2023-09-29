@@ -147,8 +147,8 @@ export const handleFileChange = (index, rows, setRows) => {
     });
     input.click();
 };
-const checkInvestmentType = (array) => {
-    return array.some((obj) => obj.investmentSchedule === "actual");
+const checkInvestmentType = (array, year) => {
+    return array.some((obj) => obj.investmentSchedule === "actual" && obj.financialyear === year);
 };
 
 export const handleOpenReviewModal = (
@@ -158,15 +158,16 @@ export const handleOpenReviewModal = (
     array10,
     array24,
     array80CCD,
+    year,
     setReviewModal,
     setError,
     setErrorMessage) => {
     if (selectedOption === "actual") {
-        if (checkInvestmentType(array80C) ||
-            checkInvestmentType(array80D) ||
-            checkInvestmentType(array10) ||
-            checkInvestmentType(array24) ||
-            checkInvestmentType(array80CCD)
+        if (checkInvestmentType(array80C, year) ||
+            checkInvestmentType(array80D, year) ||
+            checkInvestmentType(array10, year) ||
+            checkInvestmentType(array24, year) ||
+            checkInvestmentType(array80CCD, year)
         ) {
             setReviewModal(true)
         }
