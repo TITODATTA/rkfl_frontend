@@ -2,10 +2,12 @@ import axios from 'axios'
 import { setUser } from '../state/userSlice'
 
 const url = process.env.REACT_APP_BASE_URL
-export const handleLogin = async (email, password, role, navigate, dispatch, setOpen, setOpenError, setErrorMessage) => {
+export const handleLogin = async (email, password, role, navigate, dispatch, setOpen, setOpenError, setErrorMessage, setLoading) => {
+    setLoading(true)
     if (!/^\d+$/.test(email)) {
         setOpenError(true)
         setErrorMessage("Employee Code should only contain numbers.");
+        setLoading(false)
         return;
     }
 
@@ -34,6 +36,7 @@ export const handleLogin = async (email, password, role, navigate, dispatch, set
         .catch(error => {
             setOpenError(true)
             setErrorMessage(error.response.data.error);
+            setLoading(false)
         });
 
 };

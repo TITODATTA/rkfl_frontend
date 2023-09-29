@@ -16,7 +16,8 @@ const LoginPage = () => {
     const [role, setRole] = useState('Employee');
     const [open, setOpen] = useState(false);
     const [openError, setOpenError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("")
+    const [errorMessage, setErrorMessage] = useState("");
+    const [loading, setLoading] = useState(false)
     const successMessage = "Logged In Successfully, Redirecting to your Page..."
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -66,13 +67,17 @@ const LoginPage = () => {
                         Administrator
                     </label>
                 </div>
+                {loading ? <CircularProgress /> : <>
+                    {email.length === 0 || password.length === 0 ?
+                        <button disabled>Login</button> :
+                        <button onClick={() => handleLogin(email, password, role, navigate, dispatch, setOpen, setOpenError, setErrorMessage, setLoading)}>
+                            Login
+                        </button>
+                    }
+                </>}
 
-                {email.length === 0 || password.length === 0 ?
-                    <button disabled>Login</button> :
-                    <button onClick={() => handleLogin(email, password, role, navigate, dispatch, setOpen, setOpenError, setErrorMessage)}>
-                        Login
-                    </button>
-                }
+
+
             </div>
             <SuccessSnackbar state={open} setState={setOpen} successMessage={successMessage} />
             <ErrorSnackbar state={openError} setState={setOpenError} errorMessage={errorMessage} />
