@@ -10,7 +10,7 @@ import { Logout } from '@mui/icons-material'
 import SubSectionList from '../components/SubSectionList'
 import CircularProgress from '@mui/material/CircularProgress';
 import Rules from '../components/Rules'
-import { handleGetTaxtaion } from '../apis/taxationApi'
+import { handleCreateTaxtaion } from '../apis/taxationApi'
 
 const EmployeePage2 = () => {
     const role = sessionStorage.getItem('role')
@@ -40,7 +40,6 @@ const EmployeePage2 = () => {
         }
     }, [])
 
-    console.log(taxOption)
     const handleCheckboxChange1 = (option) => {
         setSelectedOption1(option);
         if (option === "option2") {
@@ -165,7 +164,7 @@ const EmployeePage2 = () => {
 
                 {selectedOption1.length !== 0 &&
                     <div className={empPageCss.submit_button_container}>
-                        <button>SUBMIT</button>
+                        <button onClick={() => handleCreateTaxtaion(user?.employeeCode, openyear, selectedOption1)}>SUBMIT</button>
                     </div>}
 
                 {taxOption === 1 &&
