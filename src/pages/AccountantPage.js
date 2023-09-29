@@ -30,8 +30,6 @@ const AccountantPage = () => {
     const [rejectReason, setRejectReason] = useState('');
     const [radioChecked, setRadioChecked] = useState(null)
 
-
-
     useEffect(() => {
         if (!role || !userDetails) {
             navigate("/login")
@@ -50,8 +48,7 @@ const AccountantPage = () => {
     // Slice the transactions array to display only the items for the current page
     const currentItems = transactions.slice(startIndex, endIndex);
 
-    const plants = userDetails?.plants.split(',');
-    console.log(plants)
+    const plants = userDetails?.plants.split(',') || []
 
     // Function to handle page changes
     const handlePageChange = (newPage) => {
