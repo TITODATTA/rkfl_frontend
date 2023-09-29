@@ -105,61 +105,62 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                         </thead>
                         {viewOption === "actual" &&
                             <tbody>
-                                {mainSection === "Section 80C" && array80C.filter((item) => item.investmentSchedule === viewOption).map((item, index) => (
-                                    <tr key={index}>
-                                        <td className={css.word_break}>
-                                            {item.subSection}
-                                        </td>
-                                        <td className={css.word_break}>
-                                            {index + 1}
-                                        </td>
-                                        <td className={css.word_break}>
-                                            {item.nameOfAssured}
-                                        </td>
-                                        <td className={css.word_break}>
-                                            {item.relation}
-                                        </td>
-                                        <td className={css.word_break}>
-                                            {item.policyNo}
-                                        </td>
-                                        <td className={css.word_break}>
-                                            {item.investment}
-                                        </td>
-                                        <td className={css.word_break}>
-                                            {item.investmentSchedule}
-                                        </td>
-                                        <td className={css.word_break}>
-                                            You have uploaded  {item.file.length} files
-                                        </td>
-                                        <td>
-                                            {item?.isEdit === true ?
-                                                <IconButton onClick={() => handleOpenCommentsModel(item, setCommentsModel, setEntryStatus, setComments)}>
-                                                    <Error sx={{ color: 'red' }} />
-                                                </IconButton> : ""}
-                                            {item?.isEdit === true ?
-                                                <IconButton onClick={() => handleOpenEditModal(array80C.indexOf(item), setEditIndex, setEditModal)}>
-                                                    <Edit />
-                                                </IconButton> : ""}
-                                            {item?.isEdit === true ?
-                                                <IconButton onClick={() => handleUpdateOneTransaction(mainSection, item, setSuccess, setError, setSuccessMessage, setErrorMessage)}>
-                                                    <CheckIcon />
-                                                </IconButton> : ""}
+                                {mainSection === "Section 80C" &&
+                                    array80C.filter((item) => item.investmentSchedule === viewOption && item.financialyear === openyear).map((item, index) => (
+                                        <tr key={index}>
+                                            <td className={css.word_break}>
+                                                {item.subSection}
+                                            </td>
+                                            <td className={css.word_break}>
+                                                {index + 1}
+                                            </td>
+                                            <td className={css.word_break}>
+                                                {item.nameOfAssured}
+                                            </td>
+                                            <td className={css.word_break}>
+                                                {item.relation}
+                                            </td>
+                                            <td className={css.word_break}>
+                                                {item.policyNo}
+                                            </td>
+                                            <td className={css.word_break}>
+                                                {item.investment}
+                                            </td>
+                                            <td className={css.word_break}>
+                                                {item.investmentSchedule}
+                                            </td>
+                                            <td className={css.word_break}>
+                                                You have uploaded  {item.file.length} files
+                                            </td>
+                                            <td>
+                                                {item?.isEdit === true ?
+                                                    <IconButton onClick={() => handleOpenCommentsModel(item, setCommentsModel, setEntryStatus, setComments)}>
+                                                        <Error sx={{ color: 'red' }} />
+                                                    </IconButton> : ""}
+                                                {item?.isEdit === true ?
+                                                    <IconButton onClick={() => handleOpenEditModal(array80C.indexOf(item), setEditIndex, setEditModal)}>
+                                                        <Edit />
+                                                    </IconButton> : ""}
+                                                {item?.isEdit === true ?
+                                                    <IconButton onClick={() => handleUpdateOneTransaction(mainSection, item, setSuccess, setError, setSuccessMessage, setErrorMessage)}>
+                                                        <CheckIcon />
+                                                    </IconButton> : ""}
 
-                                            {!item.actualSubmission && <>
-                                                <IconButton onClick={() => handleOpenEditModal(array80C.indexOf(item), setEditIndex, setEditModal)}>
-                                                    <Edit />
-                                                </IconButton>
-                                                <Tooltip title="Delete the Entry" placement="left" >
-                                                    <IconButton onClick={() => handleDeleteRow2(array80C.indexOf(item), mainSection, array80C, setArray80C, array80D,
-                                                        setArray80D, array10, setArray10, array24, setArray24, array80CCD, setArray80CCD)}>
-                                                        <Delete />
+                                                {!item.actualSubmission && <>
+                                                    <IconButton onClick={() => handleOpenEditModal(array80C.indexOf(item), setEditIndex, setEditModal)}>
+                                                        <Edit />
                                                     </IconButton>
-                                                </Tooltip>
-                                            </>}
-                                        </td>
-                                    </tr>
-                                ))}
-                                {mainSection === "Section 80D" && array80D.filter((item) => item.investmentSchedule === viewOption).map((item, index) => (
+                                                    <Tooltip title="Delete the Entry" placement="left" >
+                                                        <IconButton onClick={() => handleDeleteRow2(array80C.indexOf(item), mainSection, array80C, setArray80C, array80D,
+                                                            setArray80D, array10, setArray10, array24, setArray24, array80CCD, setArray80CCD)}>
+                                                            <Delete />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </>}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                {mainSection === "Section 80D" && array80D.filter((item) => item.investmentSchedule === viewOption && item.financialyear === openyear).map((item, index) => (
                                     <tr key={index}>
                                         <td className={css.word_break}>
                                             {item.subSection}
@@ -212,7 +213,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                     </tr>
                                 ))}
-                                {mainSection === "Section 10" && array10.filter((item) => item.investmentSchedule === viewOption).map((item, index) => (
+                                {mainSection === "Section 10" && array10.filter((item) => item.investmentSchedule === viewOption && item.financialyear === openyear).map((item, index) => (
                                     <tr key={index}>
                                         <td className={css.word_break}>
                                             {item.subSection}
@@ -274,7 +275,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                     </tr>
                                 ))}
-                                {mainSection === "Section 24" && array24.filter((item) => item.investmentSchedule === viewOption).map((item, index) => (
+                                {mainSection === "Section 24" && array24.filter((item) => item.investmentSchedule === viewOption && item.financialyear === openyear).map((item, index) => (
                                     <tr key={index}>
                                         <td className={css.word_break}>
                                             {item.subSection}
@@ -336,7 +337,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                     </tr>
                                 ))}
-                                {mainSection === "Section 80CCD" && array80CCD.filter((item) => item.investmentSchedule === viewOption).map((item, index) => (
+                                {mainSection === "Section 80CCD" && array80CCD.filter((item) => item.investmentSchedule === viewOption && item.financialyear === openyear).map((item, index) => (
                                     <tr key={index}>
                                         <td className={css.word_break} >
                                             {item.subSection}
@@ -628,7 +629,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                             </tbody>}
                         {viewOption === "provisional" &&
                             <tbody>
-                                {mainSection === "Section 80C" && array80C.filter((item) => item.investmentSchedule === viewOption).map((item, index) => (
+                                {mainSection === "Section 80C" && array80C.filter((item) => item.investmentSchedule === viewOption && item.financialyear === openyear).map((item, index) => (
                                     <tr key={index}>
                                         <td className={css.word_break}>
                                             {item.subSection}
@@ -678,7 +679,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                     </tr>
                                 ))}
-                                {mainSection === "Section 80D" && array80D.filter((item) => item.investmentSchedule === viewOption).map((item, index) => (
+                                {mainSection === "Section 80D" && array80D.filter((item) => item.investmentSchedule === viewOption && item.financialyear === openyear).map((item, index) => (
                                     <tr key={index}>
                                         <td className={css.word_break}>
                                             {item.subSection}
@@ -723,7 +724,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                     </tr>
                                 ))}
-                                {mainSection === "Section 10" && array10.filter((item) => item.investmentSchedule === viewOption).map((item, index) => (
+                                {mainSection === "Section 10" && array10.filter((item) => item.investmentSchedule === viewOption && item.financialyear === openyear).map((item, index) => (
                                     <tr key={index}>
                                         <td className={css.word_break}>
                                             {item.subSection}
@@ -777,7 +778,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                     </tr>
                                 ))}
-                                {mainSection === "Section 24" && array24.filter((item) => item.investmentSchedule === viewOption).map((item, index) => (
+                                {mainSection === "Section 24" && array24.filter((item) => item.investmentSchedule === viewOption && item.financialyear === openyear).map((item, index) => (
                                     <tr key={index}>
                                         <td className={css.word_break}>
                                             {item.subSection}
@@ -831,7 +832,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                     </tr>
                                 ))}
-                                {mainSection === "Section 80CCD" && array80CCD.filter((item) => item.investmentSchedule === viewOption).map((item, index) => (
+                                {mainSection === "Section 80CCD" && array80CCD.filter((item) => item.investmentSchedule === viewOption && item.financialyear === openyear).map((item, index) => (
                                     <tr key={index}>
                                         <td className={css.word_break} >
                                             {item.subSection}
