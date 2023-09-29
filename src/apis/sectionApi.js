@@ -1,5 +1,6 @@
 import axios from "axios";
-const url = process.env.REACT_APP_BASE_URL
+import { url } from "../utils/constants";
+
 export const handleGetSection = async (mainSection, setSubSection, setIsLoading) => {
     if (mainSection === "Section 80C") {
         axios.get(`${url}/api/section/getSection80CData`, {

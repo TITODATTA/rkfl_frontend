@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = process.env.REACT_APP_BASE_URL
+import { url } from "../utils/constants";
 
 export const handleGetTaxtaion = async (employeeCode, financialYear, setNewEntry, setTaxOption, setIsLoading2) => {
     const postData = {

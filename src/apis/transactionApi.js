@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = process.env.REACT_APP_BASE_URL
+import { url } from "../utils/constants";
 
 export const handleCreateOrUpdateTransaction = async (
     array80C, array80D, array10, array24, array80CCD, setSuccess,

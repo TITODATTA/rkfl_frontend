@@ -1,6 +1,6 @@
 import axios from "axios";
 import { handleGetTaxtaion } from "./taxationApi";
-const url = process.env.REACT_APP_BASE_URL
+import { url } from "../utils/constants";
 
 export const handleGetFinancials = async (setOpenYear, setSelectedOption, employeeCode, setNewEntry, setTaxOption, setIsLoading2) => {
     setIsLoading2(true)
