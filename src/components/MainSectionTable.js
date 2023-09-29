@@ -409,7 +409,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 }}
                                                 value={row.subSectionValue}
                                             >
-                                                <option value="" disabled hidden selected>Select</option>
+                                                <option value="" >Select</option>
                                                 {subSection.map((item) => (
                                                     <option
                                                         value={item.subSectionCode}
@@ -448,7 +448,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 }}
                                                 value={row.relation}
                                             >
-                                                <option value="" disabled hidden selected>Select</option>
+                                                <option value="" >Select</option>
                                                 <option value="Self">Self</option>
                                                 <option value="Mother">Mother</option>
                                                 <option value="Father">Father</option>
@@ -898,7 +898,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 }}
                                                 value={row.subSectionValue}
                                             >
-                                                <option value="" disabled hidden selected>Select</option>
+                                                <option value="" >Select</option>
                                                 {subSection.map((item) => (
                                                     <option
                                                         value={item.subSectionCode}
@@ -937,7 +937,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 }}
                                                 value={row.relation}
                                             >
-                                                <option value="" disabled hidden selected>Select</option>
+                                                <option value="" >Select</option>
                                                 <option value="Self">Self</option>
                                                 <option value="Mother">Mother</option>
                                                 <option value="Father">Father</option>
