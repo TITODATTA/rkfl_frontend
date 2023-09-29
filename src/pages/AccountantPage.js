@@ -50,6 +50,9 @@ const AccountantPage = () => {
     // Slice the transactions array to display only the items for the current page
     const currentItems = transactions.slice(startIndex, endIndex);
 
+    const plants = userDetails.plants.split(',');
+    console.log(plants)
+
     // Function to handle page changes
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -152,6 +155,7 @@ const AccountantPage = () => {
         setSubmitButtonState(false);
         setData([])
         setRadioChecked(false)
+        setItemsPerPage(5)
     }
 
     const handleSubmit = () => {
@@ -191,7 +195,10 @@ const AccountantPage = () => {
                 <h4 className={css.filter_text}>Plant</h4>
                 <select value={plant} onChange={(e) => { handlePlantChange(e) }}>
                     <option value="" selected disabled hidden>Choose Plant</option>
-                    <option value={userDetails?.plant}>{userDetails?.plant}</option>
+                    {plants.map((plant) => (
+                        <option value={plant}>{plant}</option>
+                    ))}
+
                 </select>
                 <h4 className={css.filter_text}>Investment Schedule</h4>
                 <select value={investmentType} onChange={(e) => { handleInvestmentChange(e) }}>
@@ -242,7 +249,8 @@ const AccountantPage = () => {
                             <th>Policy Number/Document Number</th>
                             <th>Create Date/Time</th>
                             <th>Edit Date/Time</th>
-                            <th>Status (Accept/Reject)</th>
+                            {investmentType === 'Actual' && <th>Status (Accept/Reject)</th>}
+
                             <th>Accounts Comments</th>
 
                             {/* Add more table headers as needed */}
@@ -302,7 +310,7 @@ const AccountantPage = () => {
                                 <td>{item?.policyNo}</td>
                                 <td>{item?.createTimestamp}</td>
                                 <td>{item?.editTimestamp}</td>
-                                <td>
+                                {investmentType === 'Actual' && <td>
                                     {item?.status === 'Reject' ? <span>Rejected</span> :
                                         <>
                                             {item?.status}{" "}{item?.resubmissionCounter}
@@ -326,7 +334,8 @@ const AccountantPage = () => {
                                         </>
                                     }
 
-                                </td>
+                                </td>}
+
                                 <td >
                                     {item?.accountantsComments}
                                 </td>
