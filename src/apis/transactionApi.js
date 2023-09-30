@@ -9,7 +9,7 @@ export const handleCreateOrUpdateTransaction = async (
 
     const addKeyToObjects = (array) => {
         return array.map((obj) => {
-            if (finalSubmit && array.length > 0 && !edit) {
+            if (finalSubmit && array.length > 0 && !edit && obj.investmentSchedule === "actual") {
                 // Only add the key-value pair if selectedOption is "actual" and the array is not empty
                 return { ...obj, actualSubmission: 'true' }; // Replace 'key' and 'value' with the desired key and value
             }
@@ -215,7 +215,6 @@ export const handleUpdateTransaction = (data, setTransactions, setSubmitButtonSt
 }
 
 export const handleUpdateOneTransaction = async (sectionArray, objectToUpdate, setSuccess, setError, setSuccessMessage, setErrorMessage) => {
-    console.log(objectToUpdate)
     const postData = {
         employeeCode: JSON.parse(sessionStorage.getItem("userData")).employeeCode,
         sectionArray: sectionArray,
@@ -232,6 +231,9 @@ export const handleUpdateOneTransaction = async (sectionArray, objectToUpdate, s
             console.log(response)
             setSuccess(true)
             setSuccessMessage("Resubmitted Successfully , Reloading in few seconds..")
+            setTimeout(function () {
+                window.location.reload();
+            }, 2000);
         })
         .catch(error => {
             console.log(error)

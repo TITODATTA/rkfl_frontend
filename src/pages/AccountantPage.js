@@ -15,6 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import SaveIcon from '@mui/icons-material/Save';
 import { handleGetFinancials, handleGetFinancialsAccountant } from '../apis/financialApi'
+import { url } from '../utils/constants'
 
 const AccountantPage = () => {
     const role = sessionStorage.getItem('role')
@@ -172,15 +173,20 @@ const AccountantPage = () => {
     }
 
     const handleSubmitAcceptedTransaction = () => {
+        const hasCheckedTrue = transactions.some(item => item.checked === true);
+        if (hasCheckedTrue) {
+            alert("Rejected Documents Neeed To be Submitted First");
+            return; // Exit the function
+        }
         let acceptedArray;
         if (transactions.some(item => item.hasOwnProperty('checked'))) {
             // Filter based on the 'checked' key if it exists
-            acceptedArray = transactions.filter(item => !item.checked);
+            acceptedArray = transactions.filter(item => item.checked === false);
         } else {
             // Filter based on the 'status' key if 'checked' doesn't exist
             acceptedArray = transactions.filter(item => !item.status || item.status === "Resubmitted");
         }
-        console.log(acceptedArray)
+        console.log("accepted Array: ", acceptedArray)
     }
 
     return (
@@ -308,6 +314,7 @@ const AccountantPage = () => {
                             <th>Division</th>
                             <th>Investment</th>
                             <th>Investment Details</th>
+                            <th>Name Of Assured</th>
                             <th>Investment Amount</th>
                             <th>Pan of Landloard</th>
                             <th>Name of  Landloard</th>
@@ -342,6 +349,7 @@ const AccountantPage = () => {
                                 <td>{item?.division}</td>
                                 <td>{item?.investmentCode}</td>
                                 <td>{item.subSection}</td>
+                                <td>{item.nameOfAssured}</td>
                                 <td>{item.investment}</td>
                                 {item.subSectionCode === "13A" ?
                                     <>
@@ -371,7 +379,7 @@ const AccountantPage = () => {
                                 <td>
                                     {item?.file.map((item, index) => (
                                         <>
-                                            <a href={`http://localhost:5000/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
+                                            <a href={`${url}/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
                                             <br />
                                         </>
 
@@ -425,6 +433,7 @@ const AccountantPage = () => {
                                 <td>{item?.division}</td>
                                 <td>{item?.investmentCode}</td>
                                 <td>{item.subSection}</td>
+                                <td>{item.nameOfAssured}</td>
                                 <td>{item.investment}</td>
                                 {item.subSectionCode === "13A" ?
                                     <>
@@ -454,7 +463,7 @@ const AccountantPage = () => {
                                 <td>
                                     {item?.file.map((item, index) => (
                                         <>
-                                            <a href={`http://localhost:5000/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
+                                            <a href={`${url}/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
                                             <br />
                                         </>
 
@@ -508,6 +517,8 @@ const AccountantPage = () => {
                                 <td>{item?.division}</td>
                                 <td>{item?.investmentCode}</td>
                                 <td>{item.subSection}</td>
+                                <td>{item.nameOfAssured}</td>
+                                <td>{item.nameOfAssured}</td>
                                 <td>{item.investment}</td>
                                 {item.subSectionCode === "13A" ?
                                     <>
@@ -537,7 +548,7 @@ const AccountantPage = () => {
                                 <td>
                                     {item?.file.map((item, index) => (
                                         <>
-                                            <a href={`http://localhost:5000/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
+                                            <a href={`${url}/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
                                             <br />
                                         </>
 
@@ -566,6 +577,7 @@ const AccountantPage = () => {
                                 <td>{item?.division}</td>
                                 <td>{item?.investmentCode}</td>
                                 <td>{item.subSection}</td>
+                                <td>{item.nameOfAssured}</td>
                                 <td>{item.investment}</td>
                                 {item.subSectionCode === "13A" ?
                                     <>
@@ -595,7 +607,7 @@ const AccountantPage = () => {
                                 <td>
                                     {item?.file.map((item, index) => (
                                         <>
-                                            <a href={`http://localhost:5000/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
+                                            <a href={`${url}/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
                                             <br />
                                         </>
 
@@ -634,6 +646,7 @@ const AccountantPage = () => {
                                 <td>{item?.division}</td>
                                 <td>{item?.investmentCode}</td>
                                 <td>{item.subSection}</td>
+                                <td>{item.nameOfAssured}</td>
                                 <td>{item.investment}</td>
                                 {item.subSectionCode === "13A" ?
                                     <>
@@ -663,7 +676,7 @@ const AccountantPage = () => {
                                 <td>
                                     {item?.file.map((item, index) => (
                                         <>
-                                            <a href={`http://localhost:5000/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
+                                            <a href={`${url}/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
                                             <br />
                                         </>
 

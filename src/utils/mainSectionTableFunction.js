@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { url } from './constants';
 
 export const shouldDisplaySubmitButton = (rows, array80C, array80D, array10, array24, array80CCD) => {
     if (array80C.length === 0 && array80D.length === 0 && array10.length === 0 && array24.length === 0 && array80CCD.length === 0) {
@@ -17,7 +18,7 @@ export const handleAddRow = (setRows, rows, setAddState) => {
 export const handleDeleteRow = (index, rows, setRows, setSubSectionValue, setAddState, fileList, setFileList) => {
     if (fileList.length !== 0) {
         fileList.forEach((file) => {
-            axios.delete(`http://localhost:5000/file/${file.file}`)
+            axios.delete(`${url}/file/${file.file}`)
                 .then((res) => {
                     console.log("Files deleted")
                     setFileList([])
@@ -47,7 +48,7 @@ export const handleDeleteRow2 =
             if (mainSection === "Section 80C") {
                 if (array80C[index].file.length !== 0) {
                     array80C[index].file.forEach((file) => {
-                        axios.delete(`http://localhost:5000/file/${file.file}`)
+                        axios.delete(`${url}/file/${file.file}`)
                             .then((res) => {
                                 console.log("Files deleted")
                             })  // Handle further actions as needed
@@ -62,7 +63,7 @@ export const handleDeleteRow2 =
             else if (mainSection === "Section 80D") {
                 if (array80D[index].file.length !== 0) {
                     array80D[index].file.forEach((file) => {
-                        axios.delete(`http://localhost:5000/file/${file.file}`)
+                        axios.delete(`${url}/file/${file.file}`)
                             .then((res) => {
                                 console.log("Files deleted")
                             })  // Handle further actions as needed
@@ -77,7 +78,7 @@ export const handleDeleteRow2 =
             else if (mainSection === "Section 10") {
                 if (array10[index].file.length !== 0) {
                     array10[index].file.forEach((file) => {
-                        axios.delete(`http://localhost:5000/file/${file.file}`)
+                        axios.delete(`${url}/file/${file.file}`)
                             .then((res) => {
                                 console.log("Files deleted")
                             })  // Handle further actions as needed
@@ -92,7 +93,7 @@ export const handleDeleteRow2 =
             else if (mainSection === "Section 24") {
                 if (array24[index].file.length !== 0) {
                     array24[index].file.forEach((file) => {
-                        axios.delete(`http://localhost:5000/file/${file.file}`)
+                        axios.delete(`${url}/file/${file.file}`)
                             .then((res) => {
                                 console.log("Files deleted")
                             })  // Handle further actions as needed
@@ -107,7 +108,7 @@ export const handleDeleteRow2 =
             else {
                 if (array80CCD[index].file.length !== 0) {
                     array80CCD[index].file.forEach((file) => {
-                        axios.delete(`http://localhost:5000/file/${file.file}`)
+                        axios.delete(`${url}/file/${file.file}`)
                             .then((res) => {
                                 console.log("Files deleted")
                             })  // Handle further actions as needed

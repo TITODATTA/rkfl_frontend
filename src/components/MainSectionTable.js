@@ -58,7 +58,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
         setComments("")
     }
 
-    console.log(subSection)
+    console.log(array80C)
 
     return (
         <>
@@ -147,7 +147,8 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                         <CheckIcon />
                                                     </IconButton> : ""}
 
-                                                {!item.actualSubmission && <>
+                                                {item?.actualSubmission === "true" ? <>
+                                                </> : <>
                                                     <IconButton onClick={() => handleOpenEditModal(array80C.indexOf(item), setEditIndex, setEditModal)}>
                                                         <Edit />
                                                     </IconButton>
