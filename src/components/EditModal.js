@@ -6,6 +6,7 @@ import css from '../styles/editModal.module.css';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
 import { uploadFile, deleteFile } from '../apis/fileUpload';
+import { url } from '../utils/constants';
 
 const EditModal = ({
     editModal,
@@ -210,7 +211,7 @@ const EditModal = ({
                             <div className={css.imageInfo}>
                                 {file.map((item, index) => (
                                     <div>
-                                        <a href={`http://localhost:5000/file/${item.file}`} target="_blank" rel="noopener noreferrer">
+                                        <a href={`${url}/file/${item.file}`} target="_blank" rel="noopener noreferrer">
                                             View Uploaded File {index + 1}
                                         </a>
                                         <IconButton onClick={() => deleteFile(item, index, file, setFile, setSuccess, setSuccessMessage, setError, setErrorMessage)}>

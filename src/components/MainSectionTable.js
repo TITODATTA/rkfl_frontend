@@ -17,6 +17,7 @@ import { uploadFile, deleteFile } from '../apis/fileUpload';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import CommentsModel from './CommentsModel';
+import { url } from '../utils/constants';
 
 
 
@@ -574,7 +575,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <>
                                                     {fileList.map((file, index) => (
                                                         <>
-                                                            <a href={`http://localhost:5000/file/${file.file}`} target="_blank" rel="noreferrer">
+                                                            <a href={`${url}/file/${file.file}`} target="_blank" rel="noreferrer">
                                                                 Uploaded  File {index + 1}
                                                             </a>
                                                             <IconButton onClick={() => deleteFile(file, index, fileList, setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage)}>
@@ -1063,7 +1064,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <>
                                                     {fileList.map((file, index) => (
                                                         <>
-                                                            <a href={`http://localhost:5000/file/${file.file}`} target="_blank" rel="noreferrer">
+                                                            <a href={`${url}/file/${file.file}`} target="_blank" rel="noreferrer">
                                                                 Uploaded  File {index + 1}
                                                             </a>
                                                             <IconButton onClick={() => deleteFile(file, index, fileList, setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage)}>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import empPageCss from "../styles/employeePage2.module.css"
-import logo from "../assests/Logo-Test.png"
+import logo from "../assests/RKFL-Logo.jpg"
 import { useNavigate } from "react-router-dom"
 import { handleGetFinancials } from '../apis/financialApi'
 import { handleGetSection } from '../apis/sectionApi'
@@ -71,7 +71,7 @@ const EmployeePage2 = () => {
             {isLoading2 ? <div className={empPageCss.loader_container}><CircularProgress /></div> : <div className={empPageCss.main_container}>
                 <div className={empPageCss.header_container}>
                     <div className={empPageCss.logo_container}>
-                        <img src={logo} width="100%" height="80%" alt="img" />
+                        <img src={logo} width="70%%" height="70%" alt="img" />
                     </div>
                     <h1 className={empPageCss.welcome_tag}>Welcome {user?.employeeName} ({selectedOption.toUpperCase(1)})</h1>
                     <div className={empPageCss.logout_button_container}>

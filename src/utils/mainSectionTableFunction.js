@@ -148,7 +148,10 @@ export const handleFileChange = (index, rows, setRows) => {
     input.click();
 };
 const checkInvestmentType = (array, year) => {
-    return array.some((obj) => obj.investmentSchedule === "actual" && obj.financialyear === year);
+    return array.some((obj) => obj.investmentSchedule === "actual" && obj.financialyear === year && !obj.actualSubmission);
+};
+const checkInvestmentType2 = (array, year) => {
+    return array.some((obj) => obj.investmentSchedule === "provisional" && obj.financialyear === year);
 };
 
 export const handleOpenReviewModal = (
@@ -177,7 +180,18 @@ export const handleOpenReviewModal = (
         }
     }
     else {
-        setReviewModal(true)
+        if (checkInvestmentType2(array80C, year) ||
+            checkInvestmentType2(array80D, year) ||
+            checkInvestmentType2(array10, year) ||
+            checkInvestmentType2(array24, year) ||
+            checkInvestmentType2(array80CCD, year)
+        ) {
+            setReviewModal(true)
+        }
+        else {
+            setError(true)
+            setErrorMessage("Error : You have No Provisional Data to Submit")
+        }
     }
 };
 

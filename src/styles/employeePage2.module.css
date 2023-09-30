@@ -9,7 +9,6 @@
 }
 .header_container {
   display: flex;
-  background-color: #d2cbcb;
   border-radius: 20px;
 }
 .logo_container {
@@ -42,7 +41,7 @@
 .emp_info_container {
   width: 96%;
   display: flex;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   padding: 10px;
   border: 2px solid #ddd;
 }

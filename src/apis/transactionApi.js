@@ -31,7 +31,7 @@ export const handleCreateOrUpdateTransaction = async (
         section10: modifiedArray10,
         section24: modifiedArray24,
         section80CCD: modifiedArray80CCD,
-        finalActualSubmission: finalSubmit,
+        // finalActualSubmission: finalSubmit,
         plant: empCode.plant
     };
 
@@ -112,7 +112,7 @@ export const handleGetAllTransaction = async (setSection80C, setSection80D, setS
 };
 
 
-export const handleGetCombinedTransaction = async (setTransactions, plant, investmentType, setIsLoading, setSubmitButtonState) => {
+export const handleGetCombinedTransaction = async (setTransactions, plant, investmentType, mainSection, openYear, setIsLoading, setSubmitButtonState) => {
     setIsLoading(true)
     if (plant.length === 0) {
         alert("Choose Plant")
@@ -122,6 +122,12 @@ export const handleGetCombinedTransaction = async (setTransactions, plant, inves
     }
     if (investmentType.length === 0) {
         alert("Choose Investment Type")
+        setIsLoading(false)
+        setSubmitButtonState(false)
+        return;
+    }
+    if (mainSection.length === 0) {
+        alert("Choose Main Section")
         setIsLoading(false)
         setSubmitButtonState(false)
         return;
@@ -138,18 +144,19 @@ export const handleGetCombinedTransaction = async (setTransactions, plant, inves
         })
             .then(response => {
                 if (response.data.data.length === 0) {
+                    console.log(response)
                     alert("There is no data")
                     setTransactions([])
                     setIsLoading(false)
                     setSubmitButtonState(false)
                 }
                 else if (investmentType === 'Actual') {
-                    setTransactions(response.data.data.filter((item) => item.investmentSchedule === "actual"))
+                    setTransactions(response.data.data.filter((item) => item.investmentSchedule === "actual" && item.financialyear === openYear && item.mainSection === mainSection))
                     setIsLoading(false)
                     setSubmitButtonState(true)
                 }
                 else if (investmentType === 'Provisional') {
-                    setTransactions(response.data.data.filter((item) => item.investmentSchedule === "provisional"))
+                    setTransactions(response.data.data.filter((item) => item.investmentSchedule === "provisional" && item.financialyear === openYear && item.mainSection === mainSection))
                     setIsLoading(false)
                     setSubmitButtonState(true)
                 }
@@ -206,6 +213,7 @@ export const handleUpdateTransaction = (data, setTransactions, setSubmitButtonSt
             console.log(error);
         });
 }
+
 export const handleUpdateOneTransaction = async (sectionArray, objectToUpdate, setSuccess, setError, setSuccessMessage, setErrorMessage) => {
     console.log(objectToUpdate)
     const postData = {
@@ -228,7 +236,7 @@ export const handleUpdateOneTransaction = async (sectionArray, objectToUpdate, s
         .catch(error => {
             console.log(error)
             setError(true)
-            setErrorMessage("hat")
+            setErrorMessage("Error")
         });
 
 };

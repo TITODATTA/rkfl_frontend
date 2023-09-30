@@ -28,3 +28,27 @@ export const handleGetFinancials = async (setOpenYear, setSelectedOption, employ
         });
 
 };
+
+export const handleGetFinancialsAccountant = async (setOpenYear) => {
+    axios.get(`${url}/api/financials/getFinancials`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            const financials = response.data.financials;
+
+            // Find the financial entry with status "Open"
+            const openFinancial = financials.find(financial => financial.status === "Open");
+            if (openFinancial) {
+                setOpenYear(openFinancial.financialYear);
+            }
+            else {
+                console.log("There is no financial entry with Open")
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        });
+
+};

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import css from "../styles/accountantPage.module.css"
-import logo from "../assests/Logo-Test.png"
+import logo from "../assests/RKFL-Logo.jpg"
 import { IconButton, Tooltip } from '@mui/material'
 import { FormatListNumbered, Logout } from '@mui/icons-material'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -14,6 +14,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import SaveIcon from '@mui/icons-material/Save';
+import { handleGetFinancials, handleGetFinancialsAccountant } from '../apis/financialApi'
 
 const AccountantPage = () => {
     const role = sessionStorage.getItem('role')
@@ -24,11 +25,14 @@ const AccountantPage = () => {
     const [itemsPerPage, setItemsPerPage] = useState(5);
     const [investmentType, setInvestmentType] = useState("")
     const [plant, setPlant] = useState("");
+    const [mainSection, setMainSection] = useState("")
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState([]);
     const [submitButtonState, setSubmitButtonState] = useState(false);
     const [rejectReason, setRejectReason] = useState('');
-    const [radioChecked, setRadioChecked] = useState(null)
+    const [radioChecked, setRadioChecked] = useState(null);
+    const [openYear, setOpenYear] = useState("");
+    const [filter, setFilter] = useState("");
 
     useEffect(() => {
         if (!role || !userDetails) {
@@ -36,6 +40,9 @@ const AccountantPage = () => {
         }
         else if (role !== "Accountant") {
             navigate("/login")
+        }
+        else {
+            handleGetFinancialsAccountant(setOpenYear)
         }
     }, [])
     // Calculate the total number of pages
@@ -46,7 +53,7 @@ const AccountantPage = () => {
     const endIndex = startIndex + itemsPerPage;
 
     // Slice the transactions array to display only the items for the current page
-    const currentItems = transactions.slice(startIndex, endIndex);
+    let currentItems = transactions.slice(startIndex, endIndex);
 
     const plants = userDetails?.plants.split(',') || []
 
@@ -153,19 +160,34 @@ const AccountantPage = () => {
         setData([])
         setRadioChecked(false)
         setItemsPerPage(5)
+        setFilter("")
     }
 
     const handleSubmit = () => {
         handleUpdateTransaction(transactions, setTransactions, setSubmitButtonState, setData)
     }
-
     console.log(transactions)
+    const handleChangeFilter = (e) => {
+        setFilter(e.target.value)
+    }
+
+    const handleSubmitAcceptedTransaction = () => {
+        let acceptedArray;
+        if (transactions.some(item => item.hasOwnProperty('checked'))) {
+            // Filter based on the 'checked' key if it exists
+            acceptedArray = transactions.filter(item => !item.checked);
+        } else {
+            // Filter based on the 'status' key if 'checked' doesn't exist
+            acceptedArray = transactions.filter(item => !item.status || item.status === "Resubmitted");
+        }
+        console.log(acceptedArray)
+    }
 
     return (
         <div className={css.page_container}>
             <div className={css.header_container}>
                 <div className={css.logo_container}>
-                    <img src={logo} width="100%" height="80%" alt="img" />
+                    <img src={logo} width="70%" height="70%" alt="img" />
                 </div>
                 <h1 className={css.welcome_tag}>
                     Accountants Dashboard
@@ -184,6 +206,7 @@ const AccountantPage = () => {
                 <h3>Department :- {userDetails?.department}</h3>
                 <h3>Designation :- {userDetails?.designation}</h3>
                 <h3>Plant :- {userDetails?.plant}</h3>
+                <h3>Financial Year :- {openYear} (<a style={{ color: "blue", textDecoration: "underline", cursor: "pointer", fontWeight: "lighter" }}>Check Past Data</a>)</h3>
             </div>
             <div className={css.filter_option_container}>
                 <h4 >Select Filter Options</h4>
@@ -203,10 +226,19 @@ const AccountantPage = () => {
                     <option value="Actual">Actual</option>
                     <option value="Provisional">Provisional</option>
                 </select>
+                <h4 className={css.filter_text}>Main Section</h4>
+                <select value={mainSection} onChange={(e) => setMainSection(e.target.value)}>
+                    <option value="" selected hidden>Choose Section</option>
+                    <option value="Section 80C">Section 80C</option>
+                    <option value="Section 80D">Section 80D</option>
+                    <option value="Section 10">Section 10</option>
+                    <option value="Section 24">Section 24</option>
+                    <option value="Section 80CCD">Section 80CCD</option>
+                </select>
                 {submitButtonState ? <button
                     className={css.submit_button} disabled>Submit</button> : <button
                         className={css.submit_button}
-                        onClick={() => { handleGetCombinedTransaction(setTransactions, plant, investmentType, setIsLoading, setSubmitButtonState) }}>Submit</button>}
+                        onClick={() => { handleGetCombinedTransaction(setTransactions, plant, investmentType, mainSection, openYear, setIsLoading, setSubmitButtonState) }}>Submit</button>}
 
                 {currentItems.length !== 0 &&
                     <>
@@ -222,6 +254,47 @@ const AccountantPage = () => {
 
 
             </div>
+            {investmentType === 'Actual' && submitButtonState &&
+                <div className={css.filter_option_container}>
+                    <h4 >Rejected/Accepted/Resubmitted/New Actual Entry Filter Options</h4>
+                    <hr />
+                    <ArrowForwardIosIcon fontSize='small' className={css.arrow_icon} />
+                    <select value={filter} onChange={(e) => handleChangeFilter(e)}>
+                        <option value="">All</option>
+                        <option value="reject">Rejected</option>
+                        <option value="accept">Accepted</option>
+                        <option value="resubmit">Resubmitted</option>
+                        <option value="new">New Actual Entry</option>
+                    </select>
+                </div>}
+
+            {/* {submitButtonState && <div className={css.filter_option_container}>
+                <h4 >Advanced Filter</h4>
+                <hr />
+                <ArrowForwardIosIcon fontSize='small' className={css.arrow_icon} />
+                <h4 className={css.filter_text}>Select Type</h4>
+                <select >
+                    <option value="" selected disabled hidden>Choose Type</option>
+                    <option value="emp">Employee Code</option>
+                    <option value="main">Main Section</option>
+                </select>
+                <h4 className={css.filter_text}>Employee Code</h4>
+                <input
+                    type='text'
+                />
+                <h4 className={css.filter_text}>Main Section</h4>
+                <select >
+                    <option value="" selected disabled hidden>Choose Section</option>
+                    <option value="emp">Section 80C</option>
+                    <option value="main">Section 80D</option>
+                    <option value="main">Section 10</option>
+                    <option value="main">Section 24</option>
+                    <option value="main">Section 80CCD</option>
+                </select>
+                <button
+                    className={css.submit_button} disabled>Submit</button>
+            </div>} */}
+
             <div className={css.table_container}>
                 <table className={css.data_table}>
                     <thead>
@@ -246,7 +319,7 @@ const AccountantPage = () => {
                             <th>Policy Number/Document Number</th>
                             <th>Create Date/Time</th>
                             <th>Edit Date/Time</th>
-                            {investmentType === 'Actual' && <th>Status (Accept/Reject)</th>}
+                            {investmentType === 'Actual' && <th>Status(Reject)</th>}
 
                             <th>Accounts Comments</th>
 
@@ -258,7 +331,90 @@ const AccountantPage = () => {
                             <CircularProgress />
                         </div>}
 
-                        {!isLoading && currentItems.map((item, index) => (
+                        {!isLoading && filter.length === 0 && currentItems.map((item, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{item.employeeCode}</td>
+                                <td>{item.financialyear}</td>
+                                <td>{item.employeeName}</td>
+                                <td>{item.mainSection}</td>
+                                <td>{item?.subSectionCode}</td>
+                                <td>{item?.division}</td>
+                                <td>{item?.investmentCode}</td>
+                                <td>{item.subSection}</td>
+                                <td>{item.investment}</td>
+                                {item.subSectionCode === "13A" ?
+                                    <>
+                                        <td>{item?.pan}</td>
+                                        <td>{item?.landLoardName}</td>
+                                        <td>{item?.landLoardAddress}</td>
+                                    </> :
+                                    <>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </>
+                                }
+
+                                {item.subSectionCode === "B" ?
+                                    <>
+                                        <td>{item?.pan}</td>
+                                        <td>{item?.landloardsName}</td>
+                                        <td>{item?.landLoardsAddress}</td>
+                                    </> :
+                                    <>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </>
+                                }
+                                <td>
+                                    {item?.file.map((item, index) => (
+                                        <>
+                                            <a href={`http://localhost:5000/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
+                                            <br />
+                                        </>
+
+                                    ))}
+                                </td>
+                                <td>{item?.policyNo}</td>
+                                <td>{item?.createTimestamp}</td>
+                                <td>{item?.editTimestamp}</td>
+                                {investmentType === 'Actual' && <td>
+                                    {item?.status === 'Reject' ? <span>Rejected</span> :
+                                        <>
+                                            {item?.status}{" "}{item?.resubmissionCounter}
+                                            <br />
+                                            <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
+                                            {/* <FormControlLabel
+                                                        value="Reject"
+                                                        control={
+                                                            <Radio
+                                                                size='small'
+                                                            // checked={data[index === 0 ? index : index + 1]?.checked ? true : false}
+                                                            // Use the state variable to control the checked state
+                                                            />
+                                                        }
+                                                        label={<span className={css.smallLabel1}>Reject</span>}
+                                                    // onClick={() => handleRadioChange(index, 'Reject', item)}
+                                                    /> */}
+
+
+
+                                        </>
+                                    }
+
+                                </td>}
+
+                                <td >
+                                    {item?.accountantsComments}
+                                </td>
+
+
+                                {/* Add more table cells as needed */}
+                            </tr>
+                        ))}
+                        {filter === "reject" && currentItems.filter((item) => item.checked === true || item?.status === "Reject").map((item, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{item.employeeCode}</td>
@@ -341,6 +497,215 @@ const AccountantPage = () => {
                                 {/* Add more table cells as needed */}
                             </tr>
                         ))}
+                        {filter === "accept" && currentItems.filter((item) => item?.status === "Accept").map((item, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{item.employeeCode}</td>
+                                <td>{item.financialyear}</td>
+                                <td>{item.employeeName}</td>
+                                <td>{item.mainSection}</td>
+                                <td>{item?.subSectionCode}</td>
+                                <td>{item?.division}</td>
+                                <td>{item?.investmentCode}</td>
+                                <td>{item.subSection}</td>
+                                <td>{item.investment}</td>
+                                {item.subSectionCode === "13A" ?
+                                    <>
+                                        <td>{item?.pan}</td>
+                                        <td>{item?.landLoardName}</td>
+                                        <td>{item?.landLoardAddress}</td>
+                                    </> :
+                                    <>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </>
+                                }
+
+                                {item.subSectionCode === "B" ?
+                                    <>
+                                        <td>{item?.pan}</td>
+                                        <td>{item?.landloardsName}</td>
+                                        <td>{item?.landLoardsAddress}</td>
+                                    </> :
+                                    <>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </>
+                                }
+                                <td>
+                                    {item?.file.map((item, index) => (
+                                        <>
+                                            <a href={`http://localhost:5000/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
+                                            <br />
+                                        </>
+
+                                    ))}
+                                </td>
+                                <td>{item?.policyNo}</td>
+                                <td>{item?.createTimestamp}</td>
+                                <td>{item?.editTimestamp}</td>
+                                <td>Accepted</td>
+                                <td >
+                                    {item?.accountantsComments}
+                                </td>
+
+
+                                {/* Add more table cells as needed */}
+                            </tr>
+                        ))}
+                        {filter === "resubmit" && currentItems.filter((item) => item?.status === "Resubmitted").map((item, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{item.employeeCode}</td>
+                                <td>{item.financialyear}</td>
+                                <td>{item.employeeName}</td>
+                                <td>{item.mainSection}</td>
+                                <td>{item?.subSectionCode}</td>
+                                <td>{item?.division}</td>
+                                <td>{item?.investmentCode}</td>
+                                <td>{item.subSection}</td>
+                                <td>{item.investment}</td>
+                                {item.subSectionCode === "13A" ?
+                                    <>
+                                        <td>{item?.pan}</td>
+                                        <td>{item?.landLoardName}</td>
+                                        <td>{item?.landLoardAddress}</td>
+                                    </> :
+                                    <>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </>
+                                }
+
+                                {item.subSectionCode === "B" ?
+                                    <>
+                                        <td>{item?.pan}</td>
+                                        <td>{item?.landloardsName}</td>
+                                        <td>{item?.landLoardsAddress}</td>
+                                    </> :
+                                    <>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </>
+                                }
+                                <td>
+                                    {item?.file.map((item, index) => (
+                                        <>
+                                            <a href={`http://localhost:5000/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
+                                            <br />
+                                        </>
+
+                                    ))}
+                                </td>
+                                <td>{item?.policyNo}</td>
+                                <td>{item?.createTimestamp}</td>
+                                <td>{item?.editTimestamp}</td>
+                                {investmentType === 'Actual' && <td>
+                                    {item?.status === 'Reject' ? <span>Rejected</span> :
+                                        <>
+                                            {item?.status}{" "}{item?.resubmissionCounter}
+                                            <br />
+                                            <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
+                                        </>
+                                    }
+
+                                </td>}
+
+                                <td >
+                                    {item?.accountantsComments}
+                                </td>
+
+
+                                {/* Add more table cells as needed */}
+                            </tr>
+                        ))}
+                        {filter === "new" && currentItems.filter((item) => !item?.status && !item.checked).map((item, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{item.employeeCode}</td>
+                                <td>{item.financialyear}</td>
+                                <td>{item.employeeName}</td>
+                                <td>{item.mainSection}</td>
+                                <td>{item?.subSectionCode}</td>
+                                <td>{item?.division}</td>
+                                <td>{item?.investmentCode}</td>
+                                <td>{item.subSection}</td>
+                                <td>{item.investment}</td>
+                                {item.subSectionCode === "13A" ?
+                                    <>
+                                        <td>{item?.pan}</td>
+                                        <td>{item?.landLoardName}</td>
+                                        <td>{item?.landLoardAddress}</td>
+                                    </> :
+                                    <>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </>
+                                }
+
+                                {item.subSectionCode === "B" ?
+                                    <>
+                                        <td>{item?.pan}</td>
+                                        <td>{item?.landloardsName}</td>
+                                        <td>{item?.landLoardsAddress}</td>
+                                    </> :
+                                    <>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </>
+                                }
+                                <td>
+                                    {item?.file.map((item, index) => (
+                                        <>
+                                            <a href={`http://localhost:5000/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
+                                            <br />
+                                        </>
+
+                                    ))}
+                                </td>
+                                <td>{item?.policyNo}</td>
+                                <td>{item?.createTimestamp}</td>
+                                <td>{item?.editTimestamp}</td>
+                                {investmentType === 'Actual' && <td>
+                                    {item?.status === 'Reject' ? <span>Rejected</span> :
+                                        <>
+                                            {item?.status}{" "}{item?.resubmissionCounter}
+                                            <br />
+                                            <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
+                                            {/* <FormControlLabel
+                                                        value="Reject"
+                                                        control={
+                                                            <Radio
+                                                                size='small'
+                                                            // checked={data[index === 0 ? index : index + 1]?.checked ? true : false}
+                                                            // Use the state variable to control the checked state
+                                                            />
+                                                        }
+                                                        label={<span className={css.smallLabel1}>Reject</span>}
+                                                    // onClick={() => handleRadioChange(index, 'Reject', item)}
+                                                    /> */}
+
+
+
+                                        </>
+                                    }
+
+                                </td>}
+
+                                <td >
+                                    {item?.accountantsComments}
+                                </td>
+
+
+                                {/* Add more table cells as needed */}
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
                 <div className={css.pagination}>
@@ -356,7 +721,11 @@ const AccountantPage = () => {
                 </div>
                 {submitButtonState && <div className={css.button_containers}>
                     <button className={css.back_button} onClick={handleBackButton}>Back</button>
-                    <button className={css.submit_button2} onClick={handleSubmit}>Submit</button>
+                    {investmentType === 'Actual' && <>
+                        <button className={css.submit_button2} onClick={handleSubmit}>Submit Rejected</button>
+                        <button className={css.submit_button2} onClick={handleSubmitAcceptedTransaction}>Submit Accepted/Resubmitted To SAP</button>
+                    </>}
+
                 </div>}
 
             </div>
