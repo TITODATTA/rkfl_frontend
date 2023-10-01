@@ -1,3 +1,9 @@
 .main_container h3 {
   color: red;
 }
+.main_container h4 {
+  font-size: 14px;
+}
+.main_container {
+  padding: 0px 10px;
+}

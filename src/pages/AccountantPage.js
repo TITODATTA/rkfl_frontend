@@ -367,8 +367,8 @@ const AccountantPage = () => {
                                 {item.subSectionCode === "B" ?
                                     <>
                                         <td>{item?.pan}</td>
-                                        <td>{item?.landloardsName}</td>
-                                        <td>{item?.landLoardsAddress}</td>
+                                        <td>{item?.landLoardName}</td>
+                                        <td>{item?.landLoardAddress}</td>
                                     </> :
                                     <>
                                         <td></td>

@@ -11,7 +11,7 @@ export const handleCreateOrUpdateTransaction = async (
         return array.map((obj) => {
             if (finalSubmit && array.length > 0 && !edit && obj.investmentSchedule === "actual") {
                 // Only add the key-value pair if selectedOption is "actual" and the array is not empty
-                return { ...obj, actualSubmission: 'true' }; // Replace 'key' and 'value' with the desired key and value
+                return { ...obj, actualSubmission: true }; // Replace 'key' and 'value' with the desired key and value
             }
             return obj; // Otherwise, return the object as-is
         });

@@ -35,7 +35,7 @@ export const handleDeleteRow = (index, rows, setRows, setSubSectionValue, setAdd
 };
 
 export const handleDropdownChange = (e, setSubSectionValue) => {
-    setSubSectionValue(e.target.value)
+    setSubSectionValue(e.target.options[e.target.selectedIndex].getAttribute("data-subSectionCode"))
 };
 export const handleDeleteRow2 =
     (index, mainSection, array80C, setArray80C, array80D,
@@ -238,6 +238,8 @@ export const handleSaveData =
                     investment: row.investment || "",
                     file: fileList || [],
                     subSection: row.subSection,
+                    accommodationType: 1,
+                    cityCategory: row.cityCategory || "",
                     pan: row.pan || "",
                     landLoardName: row.landLoardName || "",
                     landLoardAddress: row.landLoardAddress || "",
@@ -271,20 +273,20 @@ export const handleSaveData =
                         setErrorMessage("Investment Can only be numbers");
                         return;
                     }
-                    else if (parseInt(rowData.investment) >= 100000) {
+                    else if (parseInt(rowData.investment) >= 8333) {
                         if (rowData.pan.length === 0) {
                             setError(true)
-                            setErrorMessage("Pan of Landord cannot empty if investment is more than 1 lakh")
+                            setErrorMessage("Pan of Landord cannot empty if investment  is more than 8333")
                             return;
                         }
                         if (rowData.landLoardName.length === 0) {
                             setError(true)
-                            setErrorMessage("Name of Landord cannot empty if investment is more than 1 lakh")
+                            setErrorMessage("Name of Landord cannot empty if investment is more than 8333")
                             return;
                         }
                         if (rowData.landLoardAddress.length === 0) {
                             setError(true)
-                            setErrorMessage("Address of Landord cannot empty if investment is more than 1 lakh")
+                            setErrorMessage("Address of Landord cannot empty if investment is more than 8333")
                             return;
                         }
                     }
@@ -330,20 +332,20 @@ export const handleSaveData =
                         setErrorMessage("File Cannot be empty");
                         return;
                     }
-                    else if (parseInt(rowData.investment) >= 100000) {
+                    else if (parseInt(rowData.investment) >= 8333) {
                         if (rowData.pan.length === 0) {
                             setError(true)
-                            setErrorMessage("Pan of Landord empty if investment is more than 1 lakh")
+                            setErrorMessage("Pan of Landord empty if investment is more than 8333")
                             return
                         }
                         if (rowData.landLoardName.length === 0) {
                             setError(true)
-                            setErrorMessage("Name of Landord cannot empty if investment is more than 1 lakh")
+                            setErrorMessage("Name of Landord cannot empty if investment is more than 8333")
                             return
                         }
                         if (rowData.landLoardAddress.length === 0) {
                             setError(true)
-                            setErrorMessage("Address of Landord cannot empty if investment is more than 1 lakh")
+                            setErrorMessage("Address of Landord cannot empty if investment is more than 8333")
                             return
                         }
                     }
@@ -364,6 +366,9 @@ export const handleSaveData =
                     policyNo: row.policyNo || "",
                     investment: row.investment || "",
                     file: fileList || [],
+                    propertyType: row.propertyType || "1",
+                    eligible80EEA: row.eligible80EEA || "",
+                    possession: row.possession || "",
                     subSection: row.subSection,
                     pan: row.pan || "",
                     landLoardName: row.landLoardName || "",

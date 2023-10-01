@@ -156,14 +156,11 @@ const EmployeePage2 = () => {
 
                             </div>
                         </div>
-                        <div className={empPageCss.rules_container}>
-                            {taxOption === 1 && <Rules />}
-
-                        </div>
                     </div>
-                    {/* <div className={empPageCss.right_information}>
-                    {isLoading ? <CircularProgress /> : <SubSectionList subSection={subSection} />}
-                </div> */}
+                    <div className={empPageCss.right_information}>
+                        {taxOption === 1 && <Rules selectedOption={selectedOption} />}
+
+                    </div>
                 </div>
 
 
@@ -227,7 +224,7 @@ const EmployeePage2 = () => {
                                         <option value="Section 80D">Section 80D</option>
                                         <option value="Section 10">Section 10</option>
                                         <option value="Section 24">Section 24</option>
-                                        <option value="Section 80CCD">Section 80CCD</option>
+                                        {/* <option value="Section 80CCD">Section 80CCD</option> */}
                                         {/* Add more options */}
                                     </select>}
 

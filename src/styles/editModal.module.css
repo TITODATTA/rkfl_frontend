@@ -16,6 +16,9 @@
 .edit_info input {
   flex: 0.5;
 }
+.edit_info select {
+  flex: 0.5;
+}
 .edit_info1 h5 {
   flex: 0.5;
 }

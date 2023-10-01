@@ -58,7 +58,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
         setComments("")
     }
 
-    console.log(array80C)
+    console.log(array24)
 
     return (
         <>
@@ -81,12 +81,27 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                     <table className={css.data_table}>
                         <thead>
                             <tr>
-                                <th>Sub Section</th>
+                                <th className={css.custom_th}>Sub Section</th>
                                 <th>S.No</th>
-                                <th>Name of Assured</th>
-                                <th>Relation</th>
-                                <th>Policy No/ Bill No/ Document No.</th>
-                                <th>Investment amount during the Year</th>
+                                <th>Name of Assured<span style={{ color: "red" }}>(*)</span></th>
+                                <th>Relation<span style={{ color: "red" }}>(*)</span></th>
+                                {mainSection === "Section 10" &&
+                                    <>
+                                        <th>Accommodation Type<br /><span style={{ color: "brown" }}>(1:-Rented Accommodation)</span></th>
+                                        <th>City Category<br /><span style={{ color: "brown" }}>(1:-Metro,Blank:Non Metro)</span></th>
+                                    </>
+                                }
+                                {mainSection === "Section 24" &&
+                                    <>
+                                        <th>Property Type</th>
+                                        <th>Eligible For 80EEA</th>
+                                        <th>Possession Obtained</th>
+                                    </>
+                                }
+                                <th>Policy No/ Bill No/ Document No.
+                                    {selectedOption === "actual" && <span style={{ color: "red" }}>(*)</span>}
+                                </th>
+                                <th>Investment amount during the {mainSection === "Section 10" ? "Month" : "Year"}<span style={{ color: "red" }}>(*)</span></th>
                                 {mainSection === "Section 10" &&
                                     <><th>PAN of Landlord</th>
                                         <th>Name of Landlord</th>
@@ -101,7 +116,10 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                 }
                                 <th>Invesment Type</th>
                                 <th>Evidence Document
-                                    (JPJ / PDF)</th>
+                                    (JPJ / PDF)
+                                    {selectedOption === "actual" && <span style={{ color: "red" }}>(*)</span>}
+                                </th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         {viewOption === "actual" &&
@@ -133,6 +151,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             <td className={css.word_break}>
                                                 You have uploaded  {item.file.length} files
                                             </td>
+                                            <td className={css.word_break}>
+                                                {item?.status}
+                                            </td>
                                             <td>
                                                 {item?.isEdit === true ?
                                                     <IconButton onClick={() => handleOpenCommentsModel(item, setCommentsModel, setEntryStatus, setComments)}>
@@ -147,7 +168,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                         <CheckIcon />
                                                     </IconButton> : ""}
 
-                                                {item?.actualSubmission === "true" ? <>
+                                                {item?.actualSubmission === true ? <>
                                                 </> : <>
                                                     <IconButton onClick={() => handleOpenEditModal(array80C.indexOf(item), setEditIndex, setEditModal)}>
                                                         <Edit />
@@ -188,6 +209,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         <td className={css.word_break}>
                                             You have uploaded  {item.file.length} files
                                         </td>
+                                        <td className={css.word_break}>
+                                            {item?.status}
+                                        </td>
                                         <td>
                                             {item?.isEdit === true ?
                                                 <IconButton onClick={() => handleOpenCommentsModel(item, setCommentsModel, setEntryStatus, setComments)}>
@@ -201,7 +225,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <IconButton onClick={() => handleUpdateOneTransaction(mainSection, item, setSuccess, setError, setSuccessMessage, setErrorMessage)} >
                                                     <CheckIcon />
                                                 </IconButton> : ""}
-                                            {!item.actualSubmission && <>
+                                            {item?.actualSubmission === true && <>
                                                 <IconButton onClick={() => handleOpenEditModal(array80D.indexOf(item), setEditIndex, setEditModal)}>
                                                     <Edit />
                                                 </IconButton>
@@ -230,6 +254,12 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {item.relation}
                                         </td>
                                         <td className={css.word_break}>
+                                            {item.accommodationType}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.cityCategory}
+                                        </td>
+                                        <td className={css.word_break}>
                                             {item.policyNo}
                                         </td>
                                         <td className={css.word_break}>
@@ -250,6 +280,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         <td className={css.word_break}>
                                             You have uploaded  {item.file.length} files
                                         </td>
+                                        <td className={css.word_break}>
+                                            {item?.status}
+                                        </td>
                                         <td>
                                             {item?.isEdit === true ?
                                                 <IconButton onClick={() => handleOpenCommentsModel(item, setCommentsModel, setEntryStatus, setComments)}>
@@ -263,7 +296,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <IconButton onClick={() => handleUpdateOneTransaction(mainSection, item, setSuccess, setError, setSuccessMessage, setErrorMessage)}>
                                                     <CheckIcon />
                                                 </IconButton> : ""}
-                                            {!item.actualSubmission && <>
+                                            {item?.actualSubmission === true && <>
                                                 <IconButton onClick={() => handleOpenEditModal(array10.indexOf(item), setEditIndex, setEditModal)}>
                                                     <Edit />
                                                 </IconButton>
@@ -292,6 +325,19 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {item.relation}
                                         </td>
                                         <td className={css.word_break}>
+                                            {item.propertyType === "1" && "Self-occupied/Deemed Self occupied/Under Construction"}
+                                            {item.propertyType === "2" && "Partly Let out House Property"}
+                                            {item.propertyType === "3" && "Wholly Let out House Property"}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.eligible80EEA}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.possession.length === 0 && ""}
+                                            {item.possession === "1" && "Yes"}
+                                            {item.possession === "2" && "No"}
+                                        </td>
+                                        <td className={css.word_break}>
                                             {item.policyNo}
                                         </td>
                                         <td className={css.word_break}>
@@ -312,6 +358,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         <td className={css.word_break}>
                                             You have uploaded  {item.file.length} files
                                         </td>
+                                        <td className={css.word_break}>
+                                            {item?.status}
+                                        </td>
                                         <td>
                                             {item?.isEdit === true ?
                                                 <IconButton onClick={() => handleOpenCommentsModel(item, setCommentsModel, setEntryStatus, setComments)}>
@@ -325,7 +374,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <IconButton onClick={() => handleUpdateOneTransaction(mainSection, item, setSuccess, setError, setSuccessMessage, setErrorMessage)}>
                                                     <CheckIcon />
                                                 </IconButton> : ""}
-                                            {!item.actualSubmission && <>
+                                            {item?.actualSubmission === true && <>
                                                 <IconButton onClick={() => handleOpenEditModal(array24.indexOf(item), setEditIndex, setEditModal)}>
                                                     <Edit />
                                                 </IconButton>
@@ -365,6 +414,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         <td className={css.word_break}>
                                             You have uploaded  {item.file.length} files
                                         </td>
+                                        <td className={css.word_break}>
+                                            {item?.status}
+                                        </td>
                                         <td>
                                             {item?.isEdit === true ?
                                                 <IconButton onClick={() => handleOpenCommentsModel(item, setCommentsModel, setEntryStatus, setComments)}>
@@ -378,7 +430,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <IconButton onClick={() => handleUpdateOneTransaction(mainSection, item, setSuccess, setError, setSuccessMessage, setErrorMessage)}>
                                                     <CheckIcon />
                                                 </IconButton> : ""}
-                                            {!item.actualSubmission && <>
+                                            {item?.actualSubmission === true && <>
                                                 <IconButton onClick={() => handleOpenEditModal(array80CCD.indexOf(item), setEditIndex, setEditModal)}>
                                                     <Edit />
                                                 </IconButton>
@@ -401,21 +453,24 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 onChange={(e) => {
                                                     const selectedValue = e.target.value;
                                                     const selectedSubSection = e.target.options[e.target.selectedIndex].getAttribute("data-subSection");
+                                                    const selectedSubSectionCode = e.target.options[e.target.selectedIndex].getAttribute("data-subSectionCode");
                                                     const selectedInvestmentCode = e.target.options[e.target.selectedIndex].getAttribute("data-investmentCode");
                                                     const selectedDivision = e.target.options[e.target.selectedIndex].getAttribute("data-division")
-                                                    rows[index].subSectionValue = selectedValue;
+                                                    rows[index].subSectionValue = selectedSubSectionCode;
                                                     rows[index].subSection = selectedSubSection;
                                                     rows[index].investmentCode = selectedInvestmentCode;
-                                                    rows[index].division = selectedDivision
+                                                    rows[index].division = selectedDivision;
+                                                    rows[index].selectValue = selectedValue
                                                     setRows([...rows])
                                                     handleDropdownChange(e, setSubSectionValue)
                                                 }}
-                                                value={row.subSectionValue}
+                                                value={row.selectValue}
                                             >
                                                 <option value="" >Select</option>
                                                 {subSection.map((item) => (
                                                     <option
-                                                        value={item.subSectionCode}
+                                                        value={item._id}
+                                                        data-subSectionCode={item.subSectionCode}
                                                         data-subSection={item.subSection}
                                                         data-investmentCode={item?.investmentCode || ""}
                                                         data-division={item?.division || ""}
@@ -426,7 +481,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             </select>
                                         </td>
                                         <td className={css.word_break} >
-                                            {index + 1}
+
                                         </td>
                                         <td contentEditable="true" className={css.word_break} onChange={(e) => {
                                             const updatedRows = [...rows];
@@ -459,6 +514,73 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <option value="Son">Son</option>
                                             </select>
                                         </td>
+                                        {mainSection === "Section 10" && <>
+                                            <td contentEditable>
+                                                1
+                                            </td>
+                                        </>}
+                                        {mainSection === "Section 10" && <tr>
+                                            <td>
+                                                <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].cityCategory = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.cityCategory}
+                                                >
+                                                    <option value="" >Non Metro</option>
+                                                    <option value="1" >Metro</option>
+                                                </select>
+                                            </td>
+
+                                        </tr>}
+                                        {mainSection === "Section 24" && <>
+                                            <td>
+                                                <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].propertyType = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.propertyType}
+                                                >
+                                                    <option value="1" >Self-occupied/Deemed Self occupied/Under Construction</option>
+                                                    <option value="2" >Partly Let out House Property</option>
+                                                    <option value="3" >Wholly Let out House Property</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="checkbox"
+                                                    className={css.custom_checkbox}
+                                                    onChange={(e) => {
+                                                        const isChecked = e.target.checked;
+                                                        rows[index].eligible80EEA = isChecked ? 'X' : ''; // Set 'X' when checked, '' when unchecked
+                                                        setRows([...rows]);
+                                                    }}
+                                                    checked={row.eligible80EEA === 'X'} // Check the checkbox if propertyType is 'X'
+                                                />
+                                            </td>
+                                            <td>
+                                                <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].possession = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.possession}
+                                                >
+                                                    <option value="" >None</option>
+                                                    <option value="1" >Yes</option>
+                                                    <option value="2" >No</option>
+                                                </select>
+                                            </td>
+
+                                        </>}
                                         <td contentEditable="true" className={css.word_break} onChange={(e) => {
                                             const updatedRows = [...rows];
                                             updatedRows[index].policyNo = e.currentTarget.textContent;
@@ -616,6 +738,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 </>
                                             )}
                                         </td>
+                                        <td className={css.word_break}>
+
+                                        </td>
                                         <td>
                                             {/* <IconButton onClick={() => handleEditRow(index)}>
                                     <Edit />
@@ -656,6 +781,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                         <td className={css.word_break}>
                                             You have uploaded  {item.file.length} files
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item?.status}
                                         </td>
                                         <td>
 
@@ -704,8 +832,12 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         <td className={css.word_break}>
                                             {item.investmentSchedule}
                                         </td>
+
                                         <td className={css.word_break}>
                                             You have uploaded  {item.file.length} files
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item?.status}
                                         </td>
                                         <td>
                                             {
@@ -741,6 +873,12 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {item.relation}
                                         </td>
                                         <td className={css.word_break}>
+                                            {item.accommodationType}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.cityCategory}
+                                        </td>
+                                        <td className={css.word_break}>
                                             {item.policyNo}
                                         </td>
                                         <td className={css.word_break}>
@@ -760,6 +898,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                         <td className={css.word_break}>
                                             You have uploaded  {item.file.length} files
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item?.status}
                                         </td>
                                         <td>
                                             {
@@ -795,6 +936,19 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {item.relation}
                                         </td>
                                         <td className={css.word_break}>
+                                            {item.propertyType === "1" && "Self-occupied/Deemed Self occupied/Under Construction"}
+                                            {item.propertyType === "2" && "Partly Let out House Property"}
+                                            {item.propertyType === "3" && "Wholly Let out House Property"}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.eligible80EEA}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.possession.length === 0 && ""}
+                                            {item.possession === "1" && "Yes"}
+                                            {item.possession === "2" && "No"}
+                                        </td>
+                                        <td className={css.word_break}>
                                             {item.policyNo}
                                         </td>
                                         <td className={css.word_break}>
@@ -812,8 +966,12 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         <td className={css.word_break}>
                                             {item.investmentSchedule}
                                         </td>
+
                                         <td className={css.word_break}>
                                             You have uploaded  {item.file.length} files
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item?.status}
                                         </td>
                                         <td>
                                             {
@@ -857,8 +1015,12 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         <td className={css.word_break}>
                                             {item.investmentSchedule}
                                         </td>
+
                                         <td className={css.word_break}>
                                             You have uploaded  {item.file.length} files
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item?.status}
                                         </td>
                                         <td>
                                             {
@@ -890,22 +1052,25 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 onChange={(e) => {
                                                     const selectedValue = e.target.value;
                                                     const selectedSubSection = e.target.options[e.target.selectedIndex].getAttribute("data-subSection");
+                                                    const selectedSubSectionCode = e.target.options[e.target.selectedIndex].getAttribute("data-subSectionCode");
                                                     const selectedInvestmentCode = e.target.options[e.target.selectedIndex].getAttribute("data-investmentCode");
                                                     const selectedDivision = e.target.options[e.target.selectedIndex].getAttribute("data-division")
-                                                    rows[index].subSectionValue = selectedValue;
+                                                    rows[index].selectValue = selectedValue
+                                                    rows[index].subSectionValue = selectedSubSectionCode;
                                                     rows[index].subSection = selectedSubSection;
                                                     rows[index].investmentCode = selectedInvestmentCode;
                                                     rows[index].division = selectedDivision
                                                     setRows([...rows])
                                                     handleDropdownChange(e, setSubSectionValue)
                                                 }}
-                                                value={row.subSectionValue}
+                                                value={row.selectValue}
                                             >
                                                 <option value="" >Select</option>
                                                 {subSection.map((item) => (
                                                     <option
-                                                        value={item.subSectionCode}
+                                                        value={item._id}
                                                         data-subSection={item.subSection}
+                                                        data-subSectionCode={item.subSectionCode}
                                                         data-investmentCode={item?.investmentCode || ""}
                                                         data-division={item?.division || ""}
                                                     >
@@ -915,7 +1080,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             </select>
                                         </td>
                                         <td className={css.word_break} >
-                                            {index + 1}
+
                                         </td>
                                         <td contentEditable="true" className={css.word_break} onChange={(e) => {
                                             const updatedRows = [...rows];
@@ -948,6 +1113,73 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <option value="Son">Son</option>
                                             </select>
                                         </td>
+                                        {mainSection === "Section 10" && <>
+                                            <td>
+                                                1
+                                            </td>
+                                        </>}
+                                        {mainSection === "Section 10" && <tr>
+                                            <td>
+                                                <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].cityCategory = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.cityCategory}
+                                                >
+                                                    <option value="" >Non Metro</option>
+                                                    <option value="1" >Metro</option>
+                                                </select>
+                                            </td>
+
+                                        </tr>}
+                                        {mainSection === "Section 24" && <>
+                                            <td>
+                                                <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].propertyType = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.propertyType}
+                                                >
+                                                    <option value="1">Self-occupied/Deemed Self occupied/Under Construction</option>
+                                                    <option value="2" >Partly Let out House Property</option>
+                                                    <option value="3" >Wholly Let out House Property</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="checkbox"
+                                                    className={css.custom_checkbox}
+                                                    onChange={(e) => {
+                                                        const isChecked = e.target.checked;
+                                                        rows[index].eligible80EEA = isChecked ? 'X' : ''; // Set 'X' when checked, '' when unchecked
+                                                        setRows([...rows]);
+                                                    }}
+                                                    checked={row.eligible80EEA === 'X'} // Check the checkbox if propertyType is 'X'
+                                                />
+                                            </td>
+                                            <td>
+                                                <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].possession = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.possession}
+                                                >
+                                                    <option value="">None</option>
+                                                    <option value="1" >Yes</option>
+                                                    <option value="2" >No</option>
+                                                </select>
+                                            </td>
+
+                                        </>}
                                         <td contentEditable="true" className={css.word_break} onChange={(e) => {
                                             const updatedRows = [...rows];
                                             updatedRows[index].policyNo = e.currentTarget.textContent;
@@ -1104,6 +1336,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                     </label>
                                                 </>
                                             )}
+                                        </td>
+                                        <td className={css.word_break}>
+
                                         </td>
                                         <td>
                                             {/* <IconButton onClick={() => handleEditRow(index)}>

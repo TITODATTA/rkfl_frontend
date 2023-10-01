@@ -68,6 +68,10 @@ export const handleEdit = (
     address,
     name1,
     file,
+    cityCategory,
+    propertyType,
+    eligible80EEA,
+    possession,
     policy,
     relation,
     subSectionCode,
@@ -87,6 +91,7 @@ export const handleEdit = (
     setInvestment,
     setRelation,
     setFile,
+    setCityCategory,
     setSubSectionCode,
     setSubSectionValue,
     setIsFileUploaded,
@@ -115,19 +120,19 @@ export const handleEdit = (
             setErrorMessage("Investment Can only be numbers");
 
         }
-        else if (mainSection === "Section 10" && parseInt(investment) >= 100000) {
+        else if (mainSection === "Section 10" && parseInt(investment) >= 8333) {
             console.log("Hello okya");
             if (pan.length === 0 && subSectionCode === "13A") {
                 setError(true)
-                setErrorMessage("Pan of Landord empty if investment is more than 1 lakh")
+                setErrorMessage("Pan of Landord empty if investment is more than 8333")
             }
             else if (name1.length === 0 && subSectionCode === "13A") {
                 setError(true)
-                setErrorMessage("Name of Landord cannot empty if investment is more than 1 lakh")
+                setErrorMessage("Name of Landord cannot empty if investment is more than 8333")
             }
             else if (address.length === 0 && subSectionCode === "13A") {
                 setError(true)
-                setErrorMessage("Address of Landord cannot empty if investment is more than 1 lakh")
+                setErrorMessage("Address of Landord cannot empty if investment is more than 8333")
             }
             else {
                 const updatedData = [...array10];
@@ -141,6 +146,7 @@ export const handleEdit = (
                     subSectionCode: subSectionCode,
                     subSection: subSectionValue,
                     pan: pan,
+                    cityCategory: cityCategory,
                     landLoardAddress: address,
                     landLoardName: name1,
                     editTimestamp: new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true })
@@ -186,6 +192,9 @@ export const handleEdit = (
                     subSectionCode: subSectionCode,
                     subSection: subSectionValue,
                     pan: pan,
+                    propertyType: propertyType,
+                    eligible80EEA: eligible80EEA,
+                    possession: possession,
                     landLoardAddress: address,
                     landLoardName: name1,
                     editTimestamp: new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true })
@@ -303,6 +312,7 @@ export const handleEdit = (
                     nameOfAssured: name,
                     policyNo: policy,
                     relation: relation,
+                    cityCategory: cityCategory,
                     subSectionCode: subSectionCode,
                     subSection: subSectionValue,
                     pan: pan,
@@ -359,18 +369,18 @@ export const handleEdit = (
             setErrorMessage("File Cannot be empty");
 
         }
-        else if (mainSection === "Section 10" && parseInt(investment) >= 100000) {
+        else if (mainSection === "Section 10" && parseInt(investment) >= 8333) {
             if (pan.length === 0 && subSectionCode === "13A") {
                 setError(true)
-                setErrorMessage("Pan of Landord empty if investment is more than 1 lakh")
+                setErrorMessage("Pan of Landord empty if investment is more than 8333")
             }
             else if (name1.length === 0 && subSectionCode === "13A") {
                 setError(true)
-                setErrorMessage("Name of Landord cannot empty if investment is more than 1 lakh")
+                setErrorMessage("Name of Landord cannot empty if investment is more than 8333")
             }
             else if (address.length === 0 && subSectionCode === "13A") {
                 setError(true)
-                setErrorMessage("Address of Landord cannot empty if investment is more than 1 lakh")
+                setErrorMessage("Address of Landord cannot empty if investment is more than 8333")
             }
             else {
                 const updatedData = [...array10];
@@ -384,6 +394,7 @@ export const handleEdit = (
                     subSectionCode: subSectionCode,
                     subSection: subSectionValue,
                     pan: pan,
+                    cityCategory: cityCategory,
                     landLoardAddress: address,
                     landLoardName: name1,
                     editTimestamp: new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true })
@@ -429,6 +440,9 @@ export const handleEdit = (
                     relation: relation,
                     subSectionCode: subSectionCode,
                     subSection: subSectionValue,
+                    possession: possession,
+                    propertyType: propertyType,
+                    eligible80EEA: eligible80EEA,
                     pan: pan,
                     landLoardAddress: address,
                     landLoardName: name1,
@@ -551,6 +565,7 @@ export const handleEdit = (
                     subSectionCode: subSectionCode,
                     subSection: subSectionValue,
                     pan: pan,
+                    cityCategory: cityCategory,
                     landLoardName: name1,
                     landLoardAddress: address,
                     editTimestamp: new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true })
@@ -569,6 +584,7 @@ export const handleEdit = (
                     setName1,
                     setAddress,
                     setIsFileUploaded,
+                    setCityCategory
                 )
             }
         }

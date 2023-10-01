@@ -39,7 +39,11 @@ const EditModal = ({
     const [pan, setPan] = useState("")
     const [address, setAddress] = useState("")
     const [name1, setName1] = useState("")
+    const [cityCategory, setCityCategory] = useState("")
     const [file, setFile] = useState([])
+    const [propertyType, setPropertyType] = useState("")
+    const [eligible80EEA, setEligible80EEA] = useState("")
+    const [possession, setPossession] = useState("")
     const [isFileUploaded, setIsFileUploaded] = useState(false);
     const [type, setType] = useState("")
     const alphanumericPattern = /^[a-zA-Z0-9]+$/;
@@ -84,6 +88,7 @@ const EditModal = ({
                 setAddress(array10[editIndex]?.landLoardAddress)
                 setFile(array10[editIndex]?.file)
                 setType(array10[editIndex]?.investmentSchedule)
+                setCityCategory(array10[editIndex]?.cityCategory)
                 if (array10[editIndex]?.file.length !== 0) {
                     setIsFileUploaded(true)
                 }
@@ -100,6 +105,9 @@ const EditModal = ({
                 setAddress(array24[editIndex]?.landLoardAddress)
                 setFile(array24[editIndex]?.file)
                 setType(array24[editIndex]?.investmentSchedule)
+                setPropertyType(array24[editIndex]?.propertyType)
+                setEligible80EEA(array24[editIndex]?.eligible80EEA)
+                setPossession(array24[editIndex]?.possession)
                 if (array24[editIndex]?.file.length !== 0) {
                     setIsFileUploaded(true)
                 }
@@ -120,6 +128,7 @@ const EditModal = ({
         }
     }, [editModal])
 
+    console.log(eligible80EEA)
 
     return (
         <Modal
@@ -159,6 +168,15 @@ const EditModal = ({
                     {mainSection === "Section 10" &&
                         <>
                             <div className={css.edit_info}>
+                                <h5 >City Category</h5>
+                                <select value={cityCategory} onChange={(e) => handleChangeInputFileds(e, setCityCategory)}>
+                                    <option value="">Non Metro</option>
+                                    <option value="1">Metro</option>
+                                </select>
+                                {/* {subSectionCode === "13A" ? <input type="text" value={cityCategory} onChange={(e) => handleChangeInputFileds(e, setCityCategory)} />
+                                    : <input type="text" disabled />} */}
+                            </div>
+                            <div className={css.edit_info}>
                                 <h5>PAN of Landlord</h5>
                                 {subSectionCode === "13A" ? <input type="text" value={pan} onChange={(e) => handleChangeInputFileds(e, setPan)} />
                                     : <input type="text" disabled />}
@@ -179,8 +197,31 @@ const EditModal = ({
                     {mainSection === "Section 24" &&
                         <>
                             <div className={css.edit_info}>
-                                <h5>PAN of Financial Institute of Homeloan Lender</h5>
-                                <input type="text" value={pan} onChange={(e) => handleChangeInputFileds(e, setPan)} />
+                                <h5>Property Type</h5>
+                                <select value={propertyType} onChange={(e) => handleChangeInputFileds(e, setPropertyType)}
+                                >
+                                    <option value="1">Self-occupied/Deemed Self occupied/Under Construction</option>
+                                    <option value="2" >Partly Let out House Property</option>
+                                    <option value="3" >Wholly Let out House Property</option>
+                                </select>
+                            </div>
+                            <div className={css.edit_info}>
+                                <h5>Eligible 80EEA</h5>
+                                <input
+                                    onChange={() => setEligible80EEA(eligible80EEA === 'X' ? "" : 'X')}
+                                    type="checkbox"
+                                    className={css.custom_checkbox}
+                                    checked={eligible80EEA === 'X'} // Check the checkbox if propertyType is 'X'
+                                />
+                            </div>
+                            <div className={css.edit_info}>
+                                <h5>Possession Obtained</h5>
+                                <select value={possession} onChange={(e) => handleChangeInputFileds(e, setPossession)}
+                                >
+                                    <option value="">None</option>
+                                    <option value="1" >Yes</option>
+                                    <option value="2" >No</option>
+                                </select>
                             </div>
                             <div className={css.edit_info}>
                                 <h5>Name of Financial Institute of Homeloan Lender</h5>
@@ -245,6 +286,10 @@ const EditModal = ({
                                     address,
                                     name1,
                                     file,
+                                    cityCategory,
+                                    propertyType,
+                                    eligible80EEA,
+                                    possession,
                                     policy,
                                     relation,
                                     subSectionCode,
@@ -264,6 +309,7 @@ const EditModal = ({
                                     setInvestment,
                                     setRelation,
                                     setFile,
+                                    setCityCategory,
                                     setSubSectionCode,
                                     setSubSectionValue,
                                     setIsFileUploaded,
@@ -293,7 +339,7 @@ const EditModal = ({
                     </div>
                 </div>
             </Box>
-        </Modal>
+        </Modal >
     )
 }
 
