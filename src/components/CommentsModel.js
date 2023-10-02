@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import styles from '../styles/commentsModel.module.css';
 
 const modalStyle = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 200,
+    width: 300,
     maxHeight: "80%",
     bgcolor: 'background.paper',
     border: '2px solid #000',
@@ -28,9 +29,12 @@ const CommentsModel = ({
             aria-describedby="modal-modal-description"
         >
             <Box sx={modalStyle}>
-                <h4>Status : {entryStatus}</h4>
-                <h4>Accountents Comments : {comments}</h4>
-                <button onClick={() => handleCloseCommentsModel()}>Close</button>
+                <h4 className={styles.modal_header}>Status: <span style={{ color: "red" }}>{entryStatus}ed</span></h4>
+                <h4 className={styles.modal_text}>Accountants Comments: <span style={{ fontWeight: "lighter" }}>{comments}</span></h4>
+                <div className={styles.button_container}>
+                    <button className={styles.close_button} onClick={() => handleCloseCommentsModel()}>Close</button>
+                </div>
+
             </Box>
         </Modal>
     )

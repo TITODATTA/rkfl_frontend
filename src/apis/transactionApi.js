@@ -174,7 +174,7 @@ export const handleUpdateTransaction = (data, setTransactions, setSubmitButtonSt
     const filteredData = data.filter(item => item?.checked === true);
 
     if (filteredData.length === 0) {
-        alert("Empty transaction Cannot be submitted")
+        alert("No Rejected Transactions")
         return;
     }
 
@@ -242,3 +242,42 @@ export const handleUpdateOneTransaction = async (sectionArray, objectToUpdate, s
         });
 
 };
+export const handleUpdateAcceptedTransaction = (data, setTransactions, setSubmitButtonState) => {
+    // Filter out empty objects from the data array
+
+    if (data.length === 0) {
+        alert("No Accepted Transaction")
+        return;
+    }
+
+    const axiosRequests = data.map((item) => {
+        const postData = {
+            employeeCode: item?.employeeCode,
+            sectionArray: item?.mainSection,
+            objectId: item?.uniqueId,
+        };
+
+        return axios.put(
+            `${url}/api/transactions/updateTransactionObjectAccepted`,
+            postData,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: 'Admin',
+                },
+            }
+        );
+    });
+
+    Promise.all(axiosRequests)
+        .then((responses) => {
+            alert('Accepted Data has been submitted, Hit Submit on the filter options to check status');
+            setTransactions([])
+            setSubmitButtonState(false)
+            console.log(responses);
+        })
+        .catch((error) => {
+            alert('Error');
+            console.log(error);
+        });
+}

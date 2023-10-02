@@ -5,7 +5,7 @@ import logo from "../assests/RKFL-Logo.jpg"
 import { IconButton, Tooltip } from '@mui/material'
 import { FormatListNumbered, Logout } from '@mui/icons-material'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { handleGetCombinedTransaction, handleUpdateTransaction } from "../apis/transactionApi";
+import { handleGetCombinedTransaction, handleUpdateAcceptedTransaction, handleUpdateTransaction } from "../apis/transactionApi";
 import CircularProgress from '@mui/material/CircularProgress';
 import MessageIcon from '@mui/icons-material/Message';
 import Radio from '@mui/material/Radio';
@@ -16,6 +16,7 @@ import FormLabel from '@mui/material/FormLabel';
 import SaveIcon from '@mui/icons-material/Save';
 import { handleGetFinancials, handleGetFinancialsAccountant } from '../apis/financialApi'
 import { url } from '../utils/constants'
+import RulesAccount from '../components/RulesAccount'
 
 const AccountantPage = () => {
     const role = sessionStorage.getItem('role')
@@ -124,33 +125,6 @@ const AccountantPage = () => {
     };
 
 
-    // if (dataIndex === -1) {
-    //     // If the item is not in the array, add it
-    //     let newReason = '';
-    //     while (!newReason.trim()) {
-    //         newReason = prompt('Please enter the reason for rejection (must not be empty):', '');
-    //         if (newReason === null) {
-    //             // If the user cancels the prompt, exit the loop
-    //             return;
-    //         }
-    //     }
-    //     updatedData.push({
-    //         ...item,
-    //         status: status,
-    //         accountantsComments: newReason,
-    //         checked: true,
-    //         isEdit: true,
-    //     });
-    // }
-    // else {
-    //     // If the item is already in the array, remove it
-    //     updatedData.splice(dataIndex, 1);
-    // }
-
-    // setTransactions(updatedData);
-    // };
-
-
 
 
 
@@ -162,6 +136,9 @@ const AccountantPage = () => {
         setRadioChecked(false)
         setItemsPerPage(5)
         setFilter("")
+        setPlant("")
+        setInvestmentType("")
+        setMainSection("")
     }
 
     const handleSubmit = () => {
@@ -186,7 +163,7 @@ const AccountantPage = () => {
             // Filter based on the 'status' key if 'checked' doesn't exist
             acceptedArray = transactions.filter(item => !item.status || item.status === "Resubmitted");
         }
-        console.log("accepted Array: ", acceptedArray)
+        handleUpdateAcceptedTransaction(acceptedArray, setTransactions, setSubmitButtonState)
     }
 
     return (
@@ -206,40 +183,43 @@ const AccountantPage = () => {
                     </Tooltip>
                 </div>
             </div>
-            <div className={css.personal_info_container}>
-                <h3>Name :- {userDetails?.employeeName}</h3>
-                <h3>Employee Code :- {userDetails?.employeeCode}</h3>
-                <h3>Department :- {userDetails?.department}</h3>
-                <h3>Designation :- {userDetails?.designation}</h3>
-                <h3>Plant :- {userDetails?.plant}</h3>
-                <h3>Financial Year :- {openYear} (<a style={{ color: "blue", textDecoration: "underline", cursor: "pointer", fontWeight: "lighter" }}>Check Past Data</a>)</h3>
+            <div className={css.base_container}>
+                <div className={css.personal_info_container}>
+                    <h3>Name :- {userDetails?.employeeName}</h3>
+                    <h3>Employee Code :- {userDetails?.employeeCode}</h3>
+                    <h3>Department :- {userDetails?.department}</h3>
+                    <h3>Designation :- {userDetails?.designation}</h3>
+                    <h3>Plant :- {userDetails?.plant}</h3>
+                    <h3>Financial Year :- {openYear} (<a style={{ color: "blue", textDecoration: "underline", cursor: "pointer", fontWeight: "lighter" }}>Check Past Data</a>)</h3>
+                </div>
+                <RulesAccount />
             </div>
             <div className={css.filter_option_container}>
                 <h4 >Select Filter Options</h4>
                 <hr />
                 <ArrowForwardIosIcon fontSize='small' className={css.arrow_icon} />
-                <h4 className={css.filter_text}>Plant</h4>
-                <select value={plant} onChange={(e) => { handlePlantChange(e) }}>
+                <h4 className={css.filter_text}>Plant<span style={{ color: "red" }}>(*)</span></h4>
+                <select value={plant} disabled={submitButtonState ? true : false} onChange={(e) => { handlePlantChange(e) }}>
                     <option value="" selected disabled hidden>Choose Plant</option>
                     {plants.map((plant) => (
                         <option value={plant}>{plant}</option>
                     ))}
 
                 </select>
-                <h4 className={css.filter_text}>Investment Schedule</h4>
-                <select value={investmentType} onChange={(e) => { handleInvestmentChange(e) }}>
+                <h4 className={css.filter_text}>Investment Schedule<span style={{ color: "red" }}>(*)</span></h4>
+                <select value={investmentType} disabled={submitButtonState ? true : false} onChange={(e) => { handleInvestmentChange(e) }}>
                     <option value="" selected hidden>Choose Investment</option>
                     <option value="Actual">Actual</option>
                     <option value="Provisional">Provisional</option>
                 </select>
-                <h4 className={css.filter_text}>Main Section</h4>
-                <select value={mainSection} onChange={(e) => setMainSection(e.target.value)}>
+                <h4 className={css.filter_text}>Main Section<span style={{ color: "red" }}>(*)</span></h4>
+                <select value={mainSection} disabled={submitButtonState ? true : false} onChange={(e) => setMainSection(e.target.value)}>
                     <option value="" selected hidden>Choose Section</option>
                     <option value="Section 80C">Section 80C</option>
                     <option value="Section 80D">Section 80D</option>
                     <option value="Section 10">Section 10</option>
                     <option value="Section 24">Section 24</option>
-                    <option value="Section 80CCD">Section 80CCD</option>
+                    {/* <option value="Section 80CCD">Section 80CCD</option> */}
                 </select>
                 {submitButtonState ? <button
                     className={css.submit_button} disabled>Submit</button> : <button
@@ -391,9 +371,12 @@ const AccountantPage = () => {
                                 {investmentType === 'Actual' && <td>
                                     {item?.status === 'Reject' ? <span>Rejected</span> :
                                         <>
-                                            {item?.status}{" "}{item?.resubmissionCounter}
+                                            {item?.status}{" "}
+                                            {item.status === "Resubmitted" ? item?.resubmissionCounter : ""}
                                             <br />
-                                            <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
+                                            {item?.status !== 'Accept' &&
+                                                <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />}
+
                                             {/* <FormControlLabel
                                                         value="Reject"
                                                         control={
@@ -477,7 +460,7 @@ const AccountantPage = () => {
                                         <>
                                             {item?.status}{" "}{item?.resubmissionCounter}
                                             <br />
-                                            <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(index, 'Reject', item)} />
+                                            <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
                                             {/* <FormControlLabel
                                                         value="Reject"
                                                         control={
@@ -518,7 +501,7 @@ const AccountantPage = () => {
                                 <td>{item?.investmentCode}</td>
                                 <td>{item.subSection}</td>
                                 <td>{item.nameOfAssured}</td>
-                                <td>{item.nameOfAssured}</td>
+                                {/* <td>{item.nameOfAssured}</td> */}
                                 <td>{item.investment}</td>
                                 {item.subSectionCode === "13A" ?
                                     <>

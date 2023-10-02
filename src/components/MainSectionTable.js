@@ -225,12 +225,13 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <IconButton onClick={() => handleUpdateOneTransaction(mainSection, item, setSuccess, setError, setSuccessMessage, setErrorMessage)} >
                                                     <CheckIcon />
                                                 </IconButton> : ""}
-                                            {item?.actualSubmission === true && <>
-                                                <IconButton onClick={() => handleOpenEditModal(array80D.indexOf(item), setEditIndex, setEditModal)}>
+                                            {item?.actualSubmission === true ? <>
+                                            </> : <>
+                                                <IconButton onClick={() => handleOpenEditModal(array80C.indexOf(item), setEditIndex, setEditModal)}>
                                                     <Edit />
                                                 </IconButton>
                                                 <Tooltip title="Delete the Entry" placement="left" >
-                                                    <IconButton onClick={() => handleDeleteRow2(array80D.indexOf(item), mainSection, array80C, setArray80C, array80D,
+                                                    <IconButton onClick={() => handleDeleteRow2(array80C.indexOf(item), mainSection, array80C, setArray80C, array80D,
                                                         setArray80D, array10, setArray10, array24, setArray24, array80CCD, setArray80CCD)}>
                                                         <Delete />
                                                     </IconButton>
@@ -296,12 +297,13 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <IconButton onClick={() => handleUpdateOneTransaction(mainSection, item, setSuccess, setError, setSuccessMessage, setErrorMessage)}>
                                                     <CheckIcon />
                                                 </IconButton> : ""}
-                                            {item?.actualSubmission === true && <>
-                                                <IconButton onClick={() => handleOpenEditModal(array10.indexOf(item), setEditIndex, setEditModal)}>
+                                            {item?.actualSubmission === true ? <>
+                                            </> : <>
+                                                <IconButton onClick={() => handleOpenEditModal(array80C.indexOf(item), setEditIndex, setEditModal)}>
                                                     <Edit />
                                                 </IconButton>
                                                 <Tooltip title="Delete the Entry" placement="left" >
-                                                    <IconButton onClick={() => handleDeleteRow2(array10.indexOf(item), mainSection, array80C, setArray80C, array80D,
+                                                    <IconButton onClick={() => handleDeleteRow2(array80C.indexOf(item), mainSection, array80C, setArray80C, array80D,
                                                         setArray80D, array10, setArray10, array24, setArray24, array80CCD, setArray80CCD)}>
                                                         <Delete />
                                                     </IconButton>
@@ -374,12 +376,13 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <IconButton onClick={() => handleUpdateOneTransaction(mainSection, item, setSuccess, setError, setSuccessMessage, setErrorMessage)}>
                                                     <CheckIcon />
                                                 </IconButton> : ""}
-                                            {item?.actualSubmission === true && <>
-                                                <IconButton onClick={() => handleOpenEditModal(array24.indexOf(item), setEditIndex, setEditModal)}>
+                                            {item?.actualSubmission === true ? <>
+                                            </> : <>
+                                                <IconButton onClick={() => handleOpenEditModal(array80C.indexOf(item), setEditIndex, setEditModal)}>
                                                     <Edit />
                                                 </IconButton>
                                                 <Tooltip title="Delete the Entry" placement="left" >
-                                                    <IconButton onClick={() => handleDeleteRow2(array24.indexOf(item), mainSection, array80C, setArray80C, array80D,
+                                                    <IconButton onClick={() => handleDeleteRow2(array80C.indexOf(item), mainSection, array80C, setArray80C, array80D,
                                                         setArray80D, array10, setArray10, array24, setArray24, array80CCD, setArray80CCD)}>
                                                         <Delete />
                                                     </IconButton>
@@ -430,12 +433,13 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <IconButton onClick={() => handleUpdateOneTransaction(mainSection, item, setSuccess, setError, setSuccessMessage, setErrorMessage)}>
                                                     <CheckIcon />
                                                 </IconButton> : ""}
-                                            {item?.actualSubmission === true && <>
-                                                <IconButton onClick={() => handleOpenEditModal(array80CCD.indexOf(item), setEditIndex, setEditModal)}>
+                                            {item?.actualSubmission === true ? <>
+                                            </> : <>
+                                                <IconButton onClick={() => handleOpenEditModal(array80C.indexOf(item), setEditIndex, setEditModal)}>
                                                     <Edit />
                                                 </IconButton>
                                                 <Tooltip title="Delete the Entry" placement="left" >
-                                                    <IconButton onClick={() => handleDeleteRow2(array80CCD.indexOf(item), mainSection, array80C, setArray80C, array80D,
+                                                    <IconButton onClick={() => handleDeleteRow2(array80C.indexOf(item), mainSection, array80C, setArray80C, array80D,
                                                         setArray80D, array10, setArray10, array24, setArray24, array80CCD, setArray80CCD)}>
                                                         <Delete />
                                                     </IconButton>

@@ -1,0 +1,16 @@
+/* notFoundStyles.module.css */
+.notFoundContainer {
+  text-align: center;
+  padding: 50px;
+}
+
+.errorMessage {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.backLink {
+  font-size: 18px;
+  color: #007bff;
+  text-decoration: none;
+}

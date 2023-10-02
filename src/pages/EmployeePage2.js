@@ -50,8 +50,6 @@ const EmployeePage2 = () => {
 
 
 
-
-
     // const handleCheckboxChange = (option) => {
     //     setSelectedOption(option);
     // };

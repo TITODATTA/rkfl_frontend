@@ -1,0 +1,30 @@
+/* modalStyles.module.css */
+.modal_container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal_header {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.modal_text {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.close_button {
+  background-color: #ff5733;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.button_container {
+  display: flex;
+  justify-content: center;
+}

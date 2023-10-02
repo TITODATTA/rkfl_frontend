@@ -29,6 +29,10 @@
 .personal_info_container h3 {
   margin-bottom: 10px;
 }
+.base_container {
+  display: flex;
+  justify-content: space-between;
+}
 .filter_option_container {
   display: flex;
   margin-top: 25px;
@@ -190,4 +194,10 @@ hr {
   font-size: 16px;
   text-align: center;
   line-height: 20px;
+}
+.rules_container {
+  width: 40%;
+}
+.rules_container h3 {
+  color: red;
 }
