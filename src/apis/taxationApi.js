@@ -17,7 +17,11 @@ export const handleGetTaxtaion = async (employeeCode, financialYear, setNewEntry
             setIsLoading2(false)
         })
         .catch(error => {
-            alert("Server Error")
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
             console.log(error)
             setIsLoading2(false)
         });
@@ -40,7 +44,11 @@ export const handleCreateTaxtaion = async (employeeCode, financialYear, taxOptio
             window.location.reload();
         })
         .catch(error => {
-            alert("Server Error")
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
             console.log(error)
         });
 
@@ -62,7 +70,11 @@ export const handleDuplicateTaxtationYear = async (financialYear, setIsLoading) 
             alert("Dataset copied successfully for this financial year")
         })
         .catch(error => {
-            alert("Server Error")
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
             setIsLoading(false)
             console.log(error)
         });

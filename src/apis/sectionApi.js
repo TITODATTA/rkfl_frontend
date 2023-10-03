@@ -13,6 +13,11 @@ export const handleGetSection = async (mainSection, setSubSection, setIsLoading)
                 setIsLoading(false)
             })
             .catch(error => {
+                if (error.code === "ERR_NETWORK") {
+                    alert("Server Error:Redirecting To Login")
+                    window.location = "/login"
+                    return;
+                }
                 alert("Server Error: " + error.response.data.error)
             });
     }
@@ -27,6 +32,11 @@ export const handleGetSection = async (mainSection, setSubSection, setIsLoading)
                 setIsLoading(false)
             })
             .catch(error => {
+                if (error.code === "ERR_NETWORK") {
+                    alert("Server Error:Redirecting To Login")
+                    window.location = "/login"
+                    return;
+                }
                 alert("Server Error: " + error.response.data.error)
             });
     }
@@ -41,6 +51,11 @@ export const handleGetSection = async (mainSection, setSubSection, setIsLoading)
                 setIsLoading(false)
             })
             .catch(error => {
+                if (error.code === "ERR_NETWORK") {
+                    alert("Server Error:Redirecting To Login")
+                    window.location = "/login"
+                    return;
+                }
                 alert("Server Error: " + error.response.data.error)
             });
     }
@@ -55,6 +70,11 @@ export const handleGetSection = async (mainSection, setSubSection, setIsLoading)
                 setIsLoading(false)
             })
             .catch(error => {
+                if (error.code === "ERR_NETWORK") {
+                    alert("Server Error:Redirecting To Login")
+                    window.location = "/login"
+                    return;
+                }
                 alert("Server Error: " + error.response.data.error)
             });
     }
@@ -69,6 +89,11 @@ export const handleGetSection = async (mainSection, setSubSection, setIsLoading)
                 setIsLoading(false)
             })
             .catch(error => {
+                if (error.code === "ERR_NETWORK") {
+                    alert("Server Error:Redirecting To Login")
+                    window.location = "/login"
+                    return;
+                }
                 alert("Server Error: " + error.response.data.error)
             });
     }

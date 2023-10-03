@@ -34,6 +34,11 @@ export const uploadFile = async (file, setFileList, setSuccess, setSuccessMessag
         setSuccessMessage("File uploaded successfully")
         setUploadLoading(false)
     } catch (error) {
+        if (error.code === "ERR_NETWORK") {
+            alert("Server Error:Redirecting To Login")
+            window.location = "/login"
+            return;
+        }
         setError(true)
         setErrorMessage(error.response.data.error)
         setUploadLoading(false)
@@ -53,6 +58,11 @@ export const deleteFile = async (file, index, fileList, setFileList, setSuccess,
             setUploadLoading(false)
         })  // Handle further actions as needed
         .catch((error) => {
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
             setError(true)
             setErrorMessage('Error deleting file:', error);
             setUploadLoading(false)

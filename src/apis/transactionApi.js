@@ -55,8 +55,13 @@ export const handleCreateOrUpdateTransaction = async (
             }
         })
         .catch(error => {
-            alert("Server Error")
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
             console.log(error)
+            alert('Error');
         });
 
 };
@@ -106,8 +111,13 @@ export const handleGetAllTransaction = async (setSection80C, setSection80D, setS
             setSection80CCD(response.data.data.section80CCD)
         })
         .catch(error => {
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
+            alert('Error');
             console.log(error)
-            alert("Server Error")
         });
 
 };
@@ -178,7 +188,12 @@ export const handleGetCombinedTransaction = async (setTransactions, plant, inves
                 }
             })
             .catch(error => {
-                console.log(error)
+                if (error.code === "ERR_NETWORK") {
+                    alert("Server Error:Redirecting To Login")
+                    window.location = "/login"
+                    return;
+                }
+                alert('Error');
                 setSubmitButtonState(false)
             });
 
@@ -224,6 +239,11 @@ export const handleUpdateTransaction = (data, setTransactions, setSubmitButtonSt
             setData([])
         })
         .catch((error) => {
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
             alert('Error');
             console.log(error);
         });
@@ -250,6 +270,11 @@ export const handleUpdateOneTransaction = async (sectionArray, objectToUpdate, s
             }, 2000);
         })
         .catch(error => {
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
             console.log(error)
             setError(true)
             setErrorMessage("Error")
@@ -313,8 +338,14 @@ export const handleCopyTransaction = async (financialYear, setIsLoading) => {
         })
         .catch(error => {
             console.log(error)
-            alert("Server Error")
             setIsLoading(false)
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
+            alert('Error');
+
         });
 
 }
@@ -331,7 +362,12 @@ export const handleGetAllTransactionForCsv = async (setIsLoading) => {
         })
         .catch(error => {
             setIsLoading(false)
-            alert("Server Error")
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
+            alert('Error');
             console.log(error)
         });
 

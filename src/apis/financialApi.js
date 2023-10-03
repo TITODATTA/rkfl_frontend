@@ -26,8 +26,13 @@ export const handleGetFinancials = async (setOpenYear, setSelectedOption, employ
             }
         })
         .catch(error => {
-            alert("Server Error: " + error.response.data.error + "Redirecting To Login")
-            window.location = "/login"
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
+            console.log("Server Error")
+
         });
 
 };
@@ -52,7 +57,12 @@ export const handleGetFinancialsAccountant = async (setOpenYear) => {
             }
         })
         .catch(error => {
-            alert("Server Error: " + error.response.data.error)
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
+            alert("Server Error")
         });
 
 };
@@ -78,7 +88,12 @@ export const handleGetFinancialsAdmin = async (setOpenYear, setInvestmentType) =
             }
         })
         .catch(error => {
-            alert("Server Error: " + error.response.data.error)
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
+            alert("Server Error")
         });
 
 };
@@ -95,6 +110,11 @@ export const updateInvestmentTypeToActual = () => {
             window.location.reload();
         })
         .catch(error => {
-            alert("Server Error: " + error.response.data.error)
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
+            alert("Server Error")
         });
 }

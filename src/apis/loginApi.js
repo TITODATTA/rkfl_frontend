@@ -33,6 +33,12 @@ export const handleLogin = async (email, password, role, navigate, dispatch, set
 
         })
         .catch(error => {
+            if (error.code === "ERR_NETWORK") {
+                setErrorMessage("Network Error");
+                setOpenError(true)
+                setLoading(false)
+                return;
+            }
             setOpenError(true)
             setErrorMessage(error.response.data.error);
             setLoading(false)
