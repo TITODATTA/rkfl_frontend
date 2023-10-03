@@ -22,7 +22,7 @@ const App = () => {
         {/* <Route path="/Employee1" element={<EmployeePage />} /> */}
         <Route path="/Administrator" element={<AdminPage />} />
         <Route path="/Accountant" element={<AccountantPage />} />
-        <Route path="/test" element={<TestPage />} />
+        {/* <Route path="/test" element={<TestPage />} /> */}
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

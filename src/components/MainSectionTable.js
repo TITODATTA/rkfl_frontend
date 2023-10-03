@@ -58,8 +58,6 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
         setComments("")
     }
 
-    console.log(array24)
-
     return (
         <>
             <FormControl>

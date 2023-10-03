@@ -11,6 +11,7 @@ import SubSectionList from '../components/SubSectionList'
 import CircularProgress from '@mui/material/CircularProgress';
 import Rules from '../components/Rules'
 import { handleCreateTaxtaion } from '../apis/taxationApi'
+import { handleDownloadCsv } from '../utils/mainSectionTableFunction'
 
 const EmployeePage2 = () => {
     const role = sessionStorage.getItem('role')
@@ -226,6 +227,9 @@ const EmployeePage2 = () => {
                                         {/* Add more options */}
                                     </select>}
 
+                            </div>
+                            <div className={empPageCss.csv_download_container}>
+                                <a onClick={() => handleDownloadCsv()}>Download Investment Details for 2023</a>
                             </div>
                         </div>
                         <div className={empPageCss.second_entry_right}>

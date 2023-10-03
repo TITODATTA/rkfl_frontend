@@ -13,7 +13,7 @@ export const handleGetSection = async (mainSection, setSubSection, setIsLoading)
                 setIsLoading(false)
             })
             .catch(error => {
-                console.log(error)
+                alert("Server Error: " + error.response.data.error)
             });
     }
     else if (mainSection === "Section 80D") {
@@ -27,7 +27,7 @@ export const handleGetSection = async (mainSection, setSubSection, setIsLoading)
                 setIsLoading(false)
             })
             .catch(error => {
-                console.log(error)
+                alert("Server Error: " + error.response.data.error)
             });
     }
     else if (mainSection === "Section 10") {
@@ -41,7 +41,7 @@ export const handleGetSection = async (mainSection, setSubSection, setIsLoading)
                 setIsLoading(false)
             })
             .catch(error => {
-                console.log(error)
+                alert("Server Error: " + error.response.data.error)
             });
     }
     else if (mainSection === "Section 24") {
@@ -55,7 +55,7 @@ export const handleGetSection = async (mainSection, setSubSection, setIsLoading)
                 setIsLoading(false)
             })
             .catch(error => {
-                console.log(error)
+                alert("Server Error: " + error.response.data.error)
             });
     }
     else if (mainSection === "Section 80CCD") {
@@ -69,7 +69,7 @@ export const handleGetSection = async (mainSection, setSubSection, setIsLoading)
                 setIsLoading(false)
             })
             .catch(error => {
-                console.log(error)
+                alert("Server Error: " + error.response.data.error)
             });
     }
     else {

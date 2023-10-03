@@ -16,6 +16,10 @@
 .login_form_header {
   margin-bottom: 15px;
 }
+.login_form_header1 {
+  margin-bottom: 20px;
+  font-size: 25px;
+}
 
 .login_form input {
   width: 92%;

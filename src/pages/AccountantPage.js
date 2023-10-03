@@ -31,10 +31,12 @@ const AccountantPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState([]);
     const [submitButtonState, setSubmitButtonState] = useState(false);
+    const [submitButtonState2, setSubmitButtonState2] = useState(false);
     const [rejectReason, setRejectReason] = useState('');
     const [radioChecked, setRadioChecked] = useState(null);
     const [openYear, setOpenYear] = useState("");
     const [filter, setFilter] = useState("");
+    const [searchTerm, setSearchTerm] = useState("")
 
     useEffect(() => {
         if (!role || !userDetails) {
@@ -57,7 +59,7 @@ const AccountantPage = () => {
     // Slice the transactions array to display only the items for the current page
     let currentItems = transactions.slice(startIndex, endIndex);
 
-    const plants = userDetails?.plants.split(',') || []
+    const plants = userDetails?.acctRolePlant.split(',') || []
 
     // Function to handle page changes
     const handlePageChange = (newPage) => {
@@ -124,7 +126,23 @@ const AccountantPage = () => {
         }
     };
 
+    const handleSearchEmployee = () => {
+        if (searchTerm.length === 0) {
+            alert("Employee Code is empty")
+        }
+        else {
+            const filteredData = transactions.filter((item) =>
+                item.employeeCode.toString() === searchTerm
+            );
+            if (filteredData.length === 0) {
+                alert("Employee Does not exist , or Employee Has not done any Entry")
+            }
+            else {
+                setTransactions(filteredData);
+            }
+        }
 
+    }
 
 
 
@@ -139,12 +157,16 @@ const AccountantPage = () => {
         setPlant("")
         setInvestmentType("")
         setMainSection("")
+        setSearchTerm("")
+    }
+    const handleBackButton2 = () => {
+        setSubmitButtonState2(false)
+        setSearchTerm("")
     }
 
     const handleSubmit = () => {
         handleUpdateTransaction(transactions, setTransactions, setSubmitButtonState, setData)
     }
-    console.log(transactions)
     const handleChangeFilter = (e) => {
         setFilter(e.target.value)
     }
@@ -214,7 +236,7 @@ const AccountantPage = () => {
                 </select>
                 <h4 className={css.filter_text}>Main Section<span style={{ color: "red" }}>(*)</span></h4>
                 <select value={mainSection} disabled={submitButtonState ? true : false} onChange={(e) => setMainSection(e.target.value)}>
-                    <option value="" selected hidden>Choose Section</option>
+                    <option value="">All</option>
                     <option value="Section 80C">Section 80C</option>
                     <option value="Section 80D">Section 80D</option>
                     <option value="Section 10">Section 10</option>
@@ -240,6 +262,14 @@ const AccountantPage = () => {
 
 
             </div>
+            {submitButtonState &&
+                <div className={css.filter_option_container}>
+                    <h4 className={css.filter_text}>Search By Employee Code :-</h4>
+                    <input type='number' inputMode="numeric" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                    <button className={css.submit_button} onClick={handleSearchEmployee} >Submit</button>
+                    <button className={css.submit_button} onClick={handleBackButton2} >Reset</button>
+                </div>}
+
             {investmentType === 'Actual' && submitButtonState &&
                 <div className={css.filter_option_container}>
                     <h4 >Rejected/Accepted/Resubmitted/New Actual Entry Filter Options</h4>

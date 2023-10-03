@@ -183,3 +183,13 @@
 .tableHeader {
   text-align: center;
 }
+.csv_download_container {
+  margin-top: 20px;
+  font-size: 12px;
+  text-align: center;
+}
+.csv_download_container a {
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+}

@@ -128,8 +128,6 @@ const EditModal = ({
         }
     }, [editModal])
 
-    console.log(eligible80EEA)
-
     return (
         <Modal
             open={editModal}

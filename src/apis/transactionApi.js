@@ -55,6 +55,7 @@ export const handleCreateOrUpdateTransaction = async (
             }
         })
         .catch(error => {
+            alert("Server Error")
             console.log(error)
         });
 
@@ -98,7 +99,6 @@ export const handleGetAllTransaction = async (setSection80C, setSection80D, setS
         }
     })
         .then(response => {
-            console.log(response)
             setSection80C(response.data.data.section80C)
             setSection80D(response.data.data.section80D)
             setSection10(response.data.data.section10)
@@ -107,6 +107,7 @@ export const handleGetAllTransaction = async (setSection80C, setSection80D, setS
         })
         .catch(error => {
             console.log(error)
+            alert("Server Error")
         });
 
 };
@@ -126,12 +127,12 @@ export const handleGetCombinedTransaction = async (setTransactions, plant, inves
         setSubmitButtonState(false)
         return;
     }
-    if (mainSection.length === 0) {
-        alert("Choose Main Section")
-        setIsLoading(false)
-        setSubmitButtonState(false)
-        return;
-    }
+    // if (mainSection.length === 0) {
+    //     alert("Choose Main Section")
+    //     setIsLoading(false)
+    //     setSubmitButtonState(false)
+    //     return;
+    // }
     else {
         const postData = {
             plant: plant
@@ -144,21 +145,36 @@ export const handleGetCombinedTransaction = async (setTransactions, plant, inves
         })
             .then(response => {
                 if (response.data.data.length === 0) {
-                    console.log(response)
                     alert("There is no data")
                     setTransactions([])
                     setIsLoading(false)
                     setSubmitButtonState(false)
                 }
                 else if (investmentType === 'Actual') {
-                    setTransactions(response.data.data.filter((item) => item.investmentSchedule === "actual" && item.financialyear === openYear && item.mainSection === mainSection))
-                    setIsLoading(false)
-                    setSubmitButtonState(true)
+                    if (mainSection.length === 0) {
+                        setTransactions(response.data.data.filter((item) => item.investmentSchedule === "actual" && item.financialyear === openYear))
+                        setIsLoading(false)
+                        setSubmitButtonState(true)
+                    }
+                    else {
+                        setTransactions(response.data.data.filter((item) => item.investmentSchedule === "actual" && item.financialyear === openYear && item.mainSection === mainSection))
+                        setIsLoading(false)
+                        setSubmitButtonState(true)
+                    }
+
                 }
                 else if (investmentType === 'Provisional') {
-                    setTransactions(response.data.data.filter((item) => item.investmentSchedule === "provisional" && item.financialyear === openYear && item.mainSection === mainSection))
-                    setIsLoading(false)
-                    setSubmitButtonState(true)
+                    if (mainSection.length === 0) {
+                        setTransactions(response.data.data.filter((item) => item.investmentSchedule === "provisional" && item.financialyear === openYear))
+                        setIsLoading(false)
+                        setSubmitButtonState(true)
+                    }
+                    else {
+                        setTransactions(response.data.data.filter((item) => item.investmentSchedule === "provisional" && item.financialyear === openYear && item.mainSection === mainSection))
+                        setIsLoading(false)
+                        setSubmitButtonState(true)
+                    }
+
                 }
             })
             .catch(error => {
@@ -206,7 +222,6 @@ export const handleUpdateTransaction = (data, setTransactions, setSubmitButtonSt
             setTransactions([])
             setSubmitButtonState(false)
             setData([])
-            console.log(responses);
         })
         .catch((error) => {
             alert('Error');
@@ -228,7 +243,6 @@ export const handleUpdateOneTransaction = async (sectionArray, objectToUpdate, s
         }
     })
         .then(response => {
-            console.log(response)
             setSuccess(true)
             setSuccessMessage("Resubmitted Successfully , Reloading in few seconds..")
             setTimeout(function () {
@@ -274,10 +288,51 @@ export const handleUpdateAcceptedTransaction = (data, setTransactions, setSubmit
             alert('Accepted Data has been submitted, Hit Submit on the filter options to check status');
             setTransactions([])
             setSubmitButtonState(false)
-            console.log(responses);
         })
         .catch((error) => {
             alert('Error');
             console.log(error);
         });
 }
+
+
+export const handleCopyTransaction = async (financialYear, setIsLoading) => {
+    setIsLoading(true)
+    const postData = {
+        financialYear: financialYear
+    }
+    axios.post(`${url}/api/transactions/copyObjects`, postData, {
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': 'Admin'
+        }
+    })
+        .then(response => {
+            setIsLoading(false)
+            alert('Successfully Converted Actual To Provisional for the New Financial Year');
+        })
+        .catch(error => {
+            console.log(error)
+            alert("Server Error")
+            setIsLoading(false)
+        });
+
+}
+export const handleGetAllTransactionForCsv = async (setIsLoading) => {
+    setIsLoading(true)
+    axios.get(`${url}/api/transactions/combineAllEmployeeArrays`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            alert("CSV/JSON Data Successfully Created Successfully")
+            setIsLoading(false)
+        })
+        .catch(error => {
+            setIsLoading(false)
+            alert("Server Error")
+            console.log(error)
+        });
+
+};

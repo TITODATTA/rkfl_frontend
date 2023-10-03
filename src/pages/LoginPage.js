@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import SuccessSnackbar from '../components/SuccessSnackbar';
 import ErrorSnackbar from '../components/ErrorSnackbar';
 import CircularProgress from '@mui/material/CircularProgress';
-import logo from "../assests/RKFL-Logo.jpg"
+import logo from "../assests/Untitled_design__2_-removebg-preview.png"
 
 
 
@@ -24,8 +24,10 @@ const LoginPage = () => {
     return (
         <div className={LoginPageCSS.login_container}>
             <div className={LoginPageCSS.login_form}>
-                <img src={logo} width="30%" height="30%" alt="img" />
-                <h1 className={LoginPageCSS.login_form_header}>LOGIN</h1>
+                <img src={logo} alt="img" />
+                <h3 className={LoginPageCSS.login_form_header}>
+                    Employee Investment For Income Tax
+                </h3>
                 <input
                     type="email"
                     placeholder="Employee Code"

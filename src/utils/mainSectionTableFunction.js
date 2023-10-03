@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { url } from './constants';
+import * as XLSX from 'xlsx';
 
 export const shouldDisplaySubmitButton = (rows, array80C, array80D, array10, array24, array80CCD) => {
     if (array80C.length === 0 && array80D.length === 0 && array10.length === 0 && array24.length === 0 && array80CCD.length === 0) {
@@ -20,11 +21,10 @@ export const handleDeleteRow = (index, rows, setRows, setSubSectionValue, setAdd
         fileList.forEach((file) => {
             axios.delete(`${url}/file/${file.file}`)
                 .then((res) => {
-                    console.log("Files deleted")
                     setFileList([])
                 })  // Handle further actions as needed
                 .catch((error) => {
-                    console.log(error)
+                    alert(error.response.data.error)
                 })
         })
     }
@@ -53,7 +53,7 @@ export const handleDeleteRow2 =
                                 console.log("Files deleted")
                             })  // Handle further actions as needed
                             .catch((error) => {
-                                console.log(error)
+                                alert(error.response.data.error)
                             })
                     })
                 }
@@ -68,7 +68,7 @@ export const handleDeleteRow2 =
                                 console.log("Files deleted")
                             })  // Handle further actions as needed
                             .catch((error) => {
-                                console.log(error)
+                                alert(error.response.data.error)
                             })
                     })
                 }
@@ -83,7 +83,7 @@ export const handleDeleteRow2 =
                                 console.log("Files deleted")
                             })  // Handle further actions as needed
                             .catch((error) => {
-                                console.log(error)
+                                alert(error.response.data.error)
                             })
                     })
                 }
@@ -98,7 +98,7 @@ export const handleDeleteRow2 =
                                 console.log("Files deleted")
                             })  // Handle further actions as needed
                             .catch((error) => {
-                                console.log(error)
+                                alert(error.response.data.error)
                             })
                     })
                 }
@@ -113,7 +113,7 @@ export const handleDeleteRow2 =
                                 console.log("Files deleted")
                             })  // Handle further actions as needed
                             .catch((error) => {
-                                console.log(error)
+                                alert(error.response.data.error)
                             })
                     })
                 }
@@ -421,7 +421,6 @@ export const handleSaveData =
 
                 }
                 else {
-                    console.log("hello world!");
                     if (rowData.subSection.length === 0) {
                         setError(true)
                         setErrorMessage("Sub Section Cannot be empty");
@@ -631,7 +630,6 @@ export const handleActualConversion = (index, array, setArray, setError, setErro
             };
             const newArray = [...updatedData];
             newArray[newArray.length] = ediObj;
-            console.log(newArray)
             setArray(newArray)
             setSuccess(true)
             setSuccessMessage("Conversion Successfull")
@@ -647,3 +645,61 @@ export const handleOpenCommentsModel = (item, setCommentsModel, setEntryStatus, 
     setEntryStatus(item.status)
     setComments(item.accountantsComments)
 }
+
+
+export const handleDownloadCsv = () => {
+    const empCode = JSON.parse(sessionStorage.getItem("userData"))
+    const postData = {
+        employeeCode: parseInt(empCode.employeeCode),
+    }
+    axios.post(`${url}/api/transactions/getTransactionByEmployeeCode`, postData, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            const data = {
+                section80C: response.data.data.section80C,
+                section80D: response.data.data.section80D,
+                section10: response.data.data.section10,
+                section24: response.data.data.section24
+            }
+            const workbook = XLSX.utils.book_new();
+            const allData = [];
+
+            // Combine data from all sections into a single array
+            for (const sectionName in data) {
+                const sectionData = data[sectionName];
+
+                if (sectionData.length > 0) {
+                    allData.push(...sectionData);
+                }
+            }
+
+            if (allData.length > 0) {
+                // Define the fields you want in the Excel sheet
+                const fields = ['employeeCode', 'subSection', 'mainSection', 'nameOfAssured', 'relation', 'accommodation',
+                    'cityCategory', 'propertyType,eligible80EEA', 'possession', 'pan', 'landLoardName', 'landLoardAddress',
+                    , 'policyNo', 'financialyear', 'investment', 'investmentSchedule', 'status'];
+
+                // Create a worksheet with the combined data
+                const worksheetData = [fields].concat(
+                    allData.map((item) => fields.map((field) => item[field]))
+                );
+
+                const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+
+                // Add the worksheet to the workbook
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'TransactionData');
+            }
+
+            const filename = 'transaction_data.xlsx';
+
+            // Save the entire workbook as a single Excel file
+            XLSX.writeFile(workbook, filename);
+        })
+        .catch(error => {
+            alert(error.response.data.error)
+        });
+
+};

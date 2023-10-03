@@ -26,19 +26,12 @@ export const uploadFile = async (file, setFileList, setSuccess, setSuccessMessag
 
         // Access file name and object from the response
         const { filename, file: uploadedFile } = response.data;
-
-        // console.log(`Uploaded file name: ${filename}`);
-        // console.log('Uploaded file object:', uploadedFile);
         setFileList((prevState) => [...prevState, { file: uploadedFile._id }]);
         setSuccess(true)
         setSuccessMessage("File uploaded successfully")
-
-        // Handle further actions as needed
     } catch (error) {
-        // console.error('Error uploading file:', error);
         setError(true)
-        setSuccessMessage("Error uploading file:", error)
-
+        setErrorMessage(error.response.data.error)
     }
 };
 

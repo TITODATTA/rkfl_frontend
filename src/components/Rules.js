@@ -13,7 +13,12 @@ const Rules = ({ selectedOption }) => {
             <h5>3)Press <span style={{ color: "blue" }}>"Submit Your {selectedOption} Data"</span> positively before logging out or exiting from the page otherwise your investment data will not be saved</h5>
             <h5>4)In Section 10 for <span style={{ color: "blue" }}>"House Rent Allowance"</span> if your investment amount per month is<span style={{ color: "red" }}> more than Rs 8333</span> , then <span style={{ color: "red" }}>Pan,Name,Address of Landlord</span> is <span style={{ color: "red" }}>mandatory</span>.</h5>
             {selectedOption === "provisional" &&
-                <h5>5) Mutiple Files can be uploaded for a single investment by clicking on Upload more in the Edit Mode or in the table while adding a investment </h5>}
+                <>
+                    <h5>5) Mutiple Files can be uploaded for a single investment by clicking on Upload more in the Edit Mode or in the table while adding a investment </h5>
+                    <h5>7)<span style={{ color: "blue" }}>File Name</span> needs to have a correct format :- <span style={{ color: "blue" }}>"EmployeeCode(In Number)_FileName(text)"</span></h5>
+                    <h5>8)<span style={{ color: "blue" }}>File Size</span> needs to below <span style={{ color: "blue" }}>200KB</span></h5>
+                </>
+            }
             {selectedOption === "actual" && <>
                 <h5>5)To upload files , click on edit option , and choose the button "Choose File".</h5>
                 <h5>6)Mutiple Files can be uploaded for a single investment by clicking on upload more in the edit option</h5>

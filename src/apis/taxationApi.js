@@ -12,12 +12,12 @@ export const handleGetTaxtaion = async (employeeCode, financialYear, setNewEntry
         },
     })
         .then(response => {
-            console.log(response)
             setNewEntry(response.data.newEntry)
             setTaxOption(response?.data?.data?.taxOption)
             setIsLoading2(false)
         })
         .catch(error => {
+            alert("Server Error")
             console.log(error)
             setIsLoading2(false)
         });
@@ -36,11 +36,34 @@ export const handleCreateTaxtaion = async (employeeCode, financialYear, taxOptio
         },
     })
         .then(response => {
-            console.log(response)
             alert("Taxation created successfully")
             window.location.reload();
         })
         .catch(error => {
+            alert("Server Error")
+            console.log(error)
+        });
+
+};
+
+
+export const handleDuplicateTaxtationYear = async (financialYear, setIsLoading) => {
+    setIsLoading(true)
+    const postData = {
+        financialYear: financialYear,
+    }
+    axios.post(`${url}/api/taxations/copy`, postData, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            setIsLoading(false)
+            alert("Dataset copied successfully for this financial year")
+        })
+        .catch(error => {
+            alert("Server Error")
+            setIsLoading(false)
             console.log(error)
         });
 

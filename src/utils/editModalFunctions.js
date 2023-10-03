@@ -121,7 +121,6 @@ export const handleEdit = (
 
         }
         else if (mainSection === "Section 10" && parseInt(investment) >= 8333) {
-            console.log("Hello okya");
             if (pan.length === 0 && subSectionCode === "13A") {
                 setError(true)
                 setErrorMessage("Pan of Landord empty if investment is more than 8333")
