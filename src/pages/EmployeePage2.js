@@ -177,33 +177,7 @@ const EmployeePage2 = () => {
                                     <h3>Investment Schedule</h3>
                                 </div>
                                 <div className={empPageCss.investment_schedule_option_container}>
-                                    <h4>Details Will be Submitted in <span style={selectedOption === "provisional" ? { color: "red" } : { color: "blue" }}>{selectedOption}</span>  State</h4>
-                                    {/* <div
-                                    className={`${empPageCss.option1} ${selectedOption === 'provisional' ? empPageCss.selected_option : ''
-                                        }`}
-                                    onClick={() => handleCheckboxChange('provisional')}
-                                >
-                                    <h4 style={{ color: 'red' }}>Provisional</h4>
-                                    <input
-                                        type='checkbox'
-                                        className={empPageCss.option_checkbox}
-                                        checked={selectedOption === 'provisional'}
-                                        readOnly
-                                    />
-                                </div>
-                                <div
-                                    className={`${empPageCss.option2} ${selectedOption === 'actual' ? empPageCss.selected_option : ''
-                                        }`}
-                                    onClick={() => handleCheckboxChange('actual')}
-                                >
-                                    <h4 style={{ color: 'blue' }}>Actual</h4>
-                                    <input
-                                        type='checkbox'
-                                        className={empPageCss.option_checkbox}
-                                        checked={selectedOption === 'actual'}
-                                        readOnly
-                                    />
-                                </div> */}
+                                    <h4>Details Will be Submitted in <span style={selectedOption === "provisional" ? { color: "red" } : { color: "blue" }}>{selectedOption}</span> State</h4>
                                 </div>
                             </div>
                             <div className={empPageCss.main_section_container}>
@@ -229,7 +203,7 @@ const EmployeePage2 = () => {
 
                             </div>
                             <div className={empPageCss.csv_download_container}>
-                                <a onClick={() => handleDownloadCsv()}>Download Investment Details for 2023</a>
+                                <a onClick={() => handleDownloadCsv()}>Download Investment Details submitted till Date</a>
                             </div>
                         </div>
                         <div className={empPageCss.second_entry_right}>

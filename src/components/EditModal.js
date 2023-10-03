@@ -4,7 +4,7 @@ import Modal from '@mui/material/Modal';
 import { modalStyle, handleCloseEditModal, handleFileChange, handleFileRemove, handleChangeInputFileds, handleEdit } from "../utils/editModalFunctions"
 import css from '../styles/editModal.module.css';
 import CloseIcon from '@mui/icons-material/Close';
-import { IconButton } from '@mui/material';
+import { CircularProgress, IconButton } from '@mui/material';
 import { uploadFile, deleteFile } from '../apis/fileUpload';
 import { url } from '../utils/constants';
 
@@ -45,6 +45,7 @@ const EditModal = ({
     const [eligible80EEA, setEligible80EEA] = useState("")
     const [possession, setPossession] = useState("")
     const [isFileUploaded, setIsFileUploaded] = useState(false);
+    const [uploadLoading, setUploadLoading] = useState(false)
     const [type, setType] = useState("")
     const alphanumericPattern = /^[a-zA-Z0-9]+$/;
 
@@ -234,42 +235,46 @@ const EditModal = ({
                     <div className={css.edit_info2}>
                         <h5>Evidence Document
                             (JPJ / PDF)</h5>
-
-                        {file.length === 0 && (
-                            <input
-                                type="file"
-                                className={css.inputFile}
-                                accept=".jpg,.jpeg,.png,.pdf"
-                                onChange={(e) => uploadFile(e.target.files[0], setFile, setSuccess, setSuccessMessage, setError, setErrorMessage)}
-                            />
-                        )}
-
-
-                        {/* Display the uploaded file and a button to remove/change it */}
-                        {file.length !== 0 && (
-                            <div className={css.imageInfo}>
-                                {file.map((item, index) => (
-                                    <div>
-                                        <a href={`${url}/file/${item.file}`} target="_blank" rel="noopener noreferrer">
-                                            View Uploaded File {index + 1}
-                                        </a>
-                                        <IconButton onClick={() => deleteFile(item, index, file, setFile, setSuccess, setSuccessMessage, setError, setErrorMessage)}>
-                                            <CloseIcon fontSize='small' />
-                                        </IconButton>
-                                    </div>
-                                ))}
-                                <label className={css.customFileInput}>
-                                    Upload More
+                        {uploadLoading ? <CircularProgress size={20} />
+                            : <>
+                                {file.length === 0 && (
                                     <input
                                         type="file"
-                                        accept=".pdf,.doc,.docx"
-                                        multiple
-                                        onChange={(e) => uploadFile(e.target.files[0], setFile, setSuccess, setSuccessMessage, setError, setErrorMessage)}
+                                        className={css.inputFile}
+                                        onChange={(e) => uploadFile(e.target.files[0], setFile, setSuccess, setSuccessMessage, setError, setErrorMessage, setUploadLoading)}
                                     />
-                                </label>
-                            </div>
+                                )}
 
-                        )}
+
+                                {/* Display the uploaded file and a button to remove/change it */}
+                                {file.length !== 0 && (
+                                    <div className={css.imageInfo}>
+                                        {file.map((item, index) => (
+                                            <div>
+                                                <a href={`${url}/file/${item.file}`} target="_blank" rel="noopener noreferrer">
+                                                    View Uploaded File {index + 1}
+                                                </a>
+                                                <IconButton onClick={() => deleteFile(item, index, file, setFile, setSuccess, setSuccessMessage, setError, setErrorMessage, setUploadLoading)}>
+                                                    <CloseIcon fontSize='small' />
+                                                </IconButton>
+                                            </div>
+                                        ))}
+                                        <label className={css.customFileInput}>
+                                            Upload More
+                                            <input
+                                                type="file"
+                                                accept=".pdf,.doc,.docx"
+                                                multiple
+                                                onChange={(e) => uploadFile(e.target.files[0], setFile, setSuccess, setSuccessMessage, setError, setErrorMessage, setUploadLoading)}
+                                            />
+                                        </label>
+                                    </div>
+
+                                )}
+                            </>
+
+                        }
+
                     </div>
                     <div className={css.button_container}>
                         <button style={{ backgroundColor: "lightgreen" }}

@@ -39,12 +39,13 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
     const [isLoading, setIsLoading] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
-    const [viewOption, setViewOption] = useState("provisional");
+    const [viewOption, setViewOption] = useState(selectedOption);
     const [finalActualSubmission, setFinalActualSubmission] = useState(false);
     const [fileList, setFileList] = useState([]);
     const [entryStatus, setEntryStatus] = useState("")
     const [comments, setComments] = useState("")
     const [commentsModel, setCommentsModel] = useState(false)
+    const [uploadLoading, setUploadLoading] = useState(false)
     const alphanumericPattern = /^[a-zA-Z0-9]+$/;
 
     useEffect(() => {
@@ -696,49 +697,42 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {selectedOption}
                                         </td>
                                         <td className={css.word_break}>
-                                            {fileList.length !== 0 ? (
-                                                <>
-                                                    {fileList.map((file, index) => (
-                                                        <>
-                                                            <a href={`${url}/file/${file.file}`} target="_blank" rel="noreferrer">
-                                                                Uploaded  File {index + 1}
-                                                            </a>
-                                                            <IconButton onClick={() => deleteFile(file, index, fileList, setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage)}>
-                                                                <CloseIcon fontSize='small' />
-                                                            </IconButton>
-                                                            <br />
-                                                        </>
-                                                    ))}
-                                                    <label className={css.customFileInput}>
-                                                        upload More
-                                                        <input
-                                                            type="file"
-                                                            accept=".pdf,.doc,.docx"
-                                                            multiple
-                                                            onChange={(e) => uploadFile(e.target.files[0], setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage)}
-                                                        // onChange={(e) => {
-                                                        //     handleFileUpload(index, e.target.files, rows, setRows);
-                                                        // }}
-                                                        />
-                                                    </label>
-                                                    {/* <button onClick={() => handleFileChange(index, rows, setRows)}>Change</button> */}
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <label className={css.customFileInput}>
-                                                        Choose a File
-                                                        <input
-                                                            type="file"
-                                                            accept=".pdf,.doc,.docx"
-                                                            multiple
-                                                            onChange={(e) => uploadFile(e.target.files[0], setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage)}
-                                                        // onChange={(e) => {
-                                                        //     handleFileUpload(index, e.target.files, rows, setRows);
-                                                        // }}
-                                                        />
-                                                    </label>
-                                                </>
-                                            )}
+                                            {uploadLoading ? <CircularProgress size={30} /> : <>
+                                                {fileList.length !== 0 ? (
+                                                    <>
+                                                        {fileList.map((file, index) => (
+                                                            <>
+                                                                <a href={`${url}/file/${file.file}`} target="_blank" rel="noreferrer">
+                                                                    Uploaded  File {index + 1}
+                                                                </a>
+                                                                <IconButton onClick={() => deleteFile(file, index, fileList, setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage, setUploadLoading)}>
+                                                                    <CloseIcon fontSize='small' />
+                                                                </IconButton>
+                                                                <br />
+                                                            </>
+                                                        ))}
+                                                        <label className={css.customFileInput}>
+                                                            upload More
+                                                            <input
+                                                                type="file"
+                                                                multiple
+                                                                onChange={(e) => uploadFile(e.target.files[0], setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage, setUploadLoading)}
+                                                            />
+                                                        </label>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <label className={css.customFileInput}>
+                                                            Choose a File
+                                                            <input
+                                                                type="file"
+                                                                multiple
+                                                                onChange={(e) => uploadFile(e.target.files[0], setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage, setUploadLoading)}
+                                                            />
+                                                        </label>
+                                                    </>
+                                                )}
+                                            </>}
                                         </td>
                                         <td className={css.word_break}>
 
@@ -1295,49 +1289,44 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {selectedOption}
                                         </td>
                                         <td className={css.word_break}>
-                                            {fileList.length !== 0 ? (
-                                                <>
-                                                    {fileList.map((file, index) => (
-                                                        <>
-                                                            <a href={`${url}/file/${file.file}`} target="_blank" rel="noreferrer">
-                                                                Uploaded  File {index + 1}
-                                                            </a>
-                                                            <IconButton onClick={() => deleteFile(file, index, fileList, setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage)}>
-                                                                <CloseIcon fontSize='small' />
-                                                            </IconButton>
-                                                            <br />
-                                                        </>
-                                                    ))}
-                                                    <label className={css.customFileInput}>
-                                                        upload More
-                                                        <input
-                                                            type="file"
-                                                            accept=".pdf,.doc,.docx"
-                                                            multiple
-                                                            onChange={(e) => uploadFile(e.target.files[0], setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage)}
-                                                        // onChange={(e) => {
-                                                        //     handleFileUpload(index, e.target.files, rows, setRows);
-                                                        // }}
-                                                        />
-                                                    </label>
-                                                    {/* <button onClick={() => handleFileChange(index, rows, setRows)}>Change</button> */}
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <label className={css.customFileInput}>
-                                                        Choose a File
-                                                        <input
-                                                            type="file"
-                                                            accept=".pdf,.doc,.docx"
-                                                            multiple
-                                                            onChange={(e) => uploadFile(e.target.files[0], setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage)}
-                                                        // onChange={(e) => {
-                                                        //     handleFileUpload(index, e.target.files, rows, setRows);
-                                                        // }}
-                                                        />
-                                                    </label>
-                                                </>
-                                            )}
+                                            {uploadLoading ? <CircularProgress size={30} /> : <>
+                                                {fileList.length !== 0 ? (
+                                                    <>
+                                                        {fileList.map((file, index) => (
+                                                            <>
+                                                                <a href={`${url}/file/${file.file}`} target="_blank" rel="noreferrer">
+                                                                    Uploaded  File {index + 1}
+                                                                </a>
+                                                                <IconButton onClick={() => deleteFile(file, index, fileList, setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage, setUploadLoading)}>
+                                                                    <CloseIcon fontSize='small' />
+                                                                </IconButton>
+                                                                <br />
+                                                            </>
+                                                        ))}
+                                                        <label className={css.customFileInput}>
+                                                            upload More
+                                                            <input
+                                                                type="file"
+                                                                multiple
+                                                                onChange={(e) => uploadFile(e.target.files[0], setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage, setUploadLoading)}
+                                                            />
+                                                        </label>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <label className={css.customFileInput}>
+                                                            Choose a File
+                                                            <input
+                                                                type="file"
+                                                                multiple
+                                                                onChange={(e) => uploadFile(e.target.files[0], setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage, setUploadLoading)}
+                                                            />
+                                                        </label>
+                                                    </>
+                                                )}
+                                            </>}
+
+
                                         </td>
                                         <td className={css.word_break}>
 
