@@ -32,7 +32,7 @@ const Rules = ({ selectedOption }) => {
             </>}
 
             <h5>
-                13)Symbols :
+                {selectedOption === "provisional" ? "9" : "13"})Symbols :
                 <IconButton><Add fontSize='small' /></IconButton>(Add)
                 <IconButton><Edit fontSize='small' /></IconButton>(Edit)
                 <IconButton><Delete fontSize='small' /></IconButton>(Delete)

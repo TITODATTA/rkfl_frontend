@@ -73,7 +73,7 @@ const LoginPage = () => {
                 {loading ? <CircularProgress /> : <>
                     {email.length === 0 || password.length === 0 ?
                         <button disabled>Login</button> :
-                        <button onClick={() => handleLogin(email, password, role, navigate, dispatch, setOpen, setOpenError, setErrorMessage, setLoading)}>
+                        <button type="submit" onClick={() => handleLogin(email, password, role, navigate, dispatch, setOpen, setOpenError, setErrorMessage, setLoading)}>
                             Login
                         </button>
                     }
