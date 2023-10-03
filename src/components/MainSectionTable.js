@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import css from '../styles/mainSectionTable.module.css';
 import { IconButton, Tooltip } from '@mui/material';
 import { Add, Delete, Edit, Error, Loop } from '@mui/icons-material';
-import { handleAddRow, shouldDisplaySubmitButton, handleDeleteRow, handleDeleteRow2, handleDropdownChange, handleFileUpload, handleFileChange, handleSaveData, handleOpenReviewModal, handleCloseReviewModal, handleOpenEditModal, handleActualConversion, handleOpenCommentsModel } from '../utils/mainSectionTableFunction';
+import { handleAddRow, shouldDisplaySubmitButton, handleDeleteRow, handleDeleteRow2, handleDropdownChange, handleSaveData, handleOpenReviewModal, handleCloseReviewModal, handleOpenEditModal, handleActualConversion, handleOpenCommentsModel } from '../utils/mainSectionTableFunction';
 import ErrorSnackbar from './ErrorSnackbar';
 import SuccessSnackbar from './SuccessSnackbar';
 import EmployeeReviewModal from './EmployeeReviewModal';
-import { handleCreateOrUpdateTransaction, handleGetTransaction, handleUpdateOneTransaction } from '../apis/transactionApi';
+import { handleGetTransaction, handleUpdateOneTransaction } from '../apis/transactionApi';
 import CircularProgress from '@mui/material/CircularProgress';
 import EditModal from './EditModal';
 import Radio from '@mui/material/Radio';
@@ -108,9 +108,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                 }
                                 {mainSection === "Section 24" &&
                                     <>
-                                        <th>PAN of Financial Institute of Homeloan Lender</th>
-                                        <th>Name of Financial Institute of Homeloan Lender</th>
-                                        <th>Address of Homeloan Lender</th>
+                                        <th>PAN of Financial Institute of Homeloan Lender<span style={{ color: "red" }}>(*)</span></th>
+                                        <th>Name of Financial Institute of Homeloan Lender<span style={{ color: "red" }}>(*)</span></th>
+                                        <th>Address of Homeloan Lender<span style={{ color: "red" }}>(*)</span></th>
                                     </>
                                 }
                                 <th>Invesment Type</th>
