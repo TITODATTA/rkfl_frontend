@@ -29,7 +29,7 @@ const LoginPage = () => {
                     Employee Investment For Income Tax
                 </h3>
                 <input
-                    type="email"
+                    type="text"
                     placeholder="Employee Code"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}

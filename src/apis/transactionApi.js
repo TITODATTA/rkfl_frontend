@@ -61,7 +61,8 @@ export const handleCreateOrUpdateTransaction = async (
                 return;
             }
             console.log(error)
-            alert('Error');
+            alert("Server Error:Redirecting To Login")
+            window.location = "/login"
         });
 
 };
@@ -96,6 +97,11 @@ export const handleGetTransaction = async (
             setArray24([])
             setArray80CCD([])
             setIsLoading(false)
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
         });
 
 };
@@ -151,6 +157,11 @@ export const handleGetInvestmentTransaction = async (
             setInvestment24(0)
             setInvestment80D(0)
             setInvestment80C(0)
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
         });
 
 };
@@ -175,7 +186,7 @@ export const handleGetAllTransaction = async (setSection80C, setSection80D, setS
                 window.location = "/login"
                 return;
             }
-            alert('Error');
+            alert("Server Error:Redirecting To Login")
             console.log(error)
         });
 
@@ -252,7 +263,7 @@ export const handleGetCombinedTransaction = async (setTransactions, plant, inves
                     window.location = "/login"
                     return;
                 }
-                alert('Error');
+                alert("Server Error:Redirecting To Login")
                 setSubmitButtonState(false)
             });
 
@@ -426,8 +437,7 @@ export const handleGetAllTransactionForCsv = async (setIsLoading) => {
                 window.location = "/login"
                 return;
             }
-            alert('Error');
-            console.log(error)
+            alert('Server Error');
         });
 
 };
