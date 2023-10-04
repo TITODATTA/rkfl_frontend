@@ -100,7 +100,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                 <th>Policy No/ Bill No/ Document No.
                                     {selectedOption === "actual" && <span style={{ color: "red" }}>(*)</span>}
                                 </th>
-                                <th>Investment amount during the {mainSection === "Section 10" ? "Month" : "Year"}<span style={{ color: "red" }}>(*)</span></th>
+                                <th>Investment amount during the "Year"<span style={{ color: "red" }}>(*)</span></th>
                                 {mainSection === "Section 10" &&
                                     <><th>PAN of Landlord</th>
                                         <th>Name of Landlord</th>
