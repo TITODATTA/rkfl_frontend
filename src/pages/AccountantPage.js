@@ -234,7 +234,7 @@ const AccountantPage = () => {
                     <option value="Actual">Actual</option>
                     <option value="Provisional">Provisional</option>
                 </select>
-                <h4 className={css.filter_text}>Main Section<span style={{ color: "red" }}>(*)</span></h4>
+                <h4 className={css.filter_text}>Main Section</h4>
                 <select value={mainSection} disabled={submitButtonState ? true : false} onChange={(e) => setMainSection(e.target.value)}>
                     <option value="">All</option>
                     <option value="Section 80C">Section 80C</option>
