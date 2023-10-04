@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import css from "../styles/accountantPage.module.css"
-import logo from "../assests/RKFL-Logo.jpg"
+import logo from "../assests/Logo_main-removebg-preview.png"
 import { IconButton, Tooltip } from '@mui/material'
-import { FormatListNumbered, Logout } from '@mui/icons-material'
+import { Logout } from '@mui/icons-material'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { handleGetCombinedTransaction, handleUpdateAcceptedTransaction, handleUpdateTransaction } from "../apis/transactionApi";
 import CircularProgress from '@mui/material/CircularProgress';
-import MessageIcon from '@mui/icons-material/Message';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import SaveIcon from '@mui/icons-material/Save';
-import { handleGetFinancials, handleGetFinancialsAccountant } from '../apis/financialApi'
+import { handleGetFinancialsAccountant } from '../apis/financialApi'
 import { url } from '../utils/constants'
 import RulesAccount from '../components/RulesAccount'
 
@@ -192,7 +185,7 @@ const AccountantPage = () => {
         <div className={css.page_container}>
             <div className={css.header_container}>
                 <div className={css.logo_container}>
-                    <img src={logo} width="70%" height="70%" alt="img" />
+                    <img src={logo} width="100%" height="100%" alt="img" />
                 </div>
                 <h1 className={css.welcome_tag}>
                     Accountants Dashboard

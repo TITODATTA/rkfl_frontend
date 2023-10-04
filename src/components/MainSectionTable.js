@@ -50,7 +50,16 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
 
     useEffect(() => {
         setIsLoading(true)
-        handleGetTransaction(setArray80C, setArray80D, setArray10, setArray24, setArray80CCD, setIsLoading, setFinalActualSubmission)
+        handleGetTransaction(
+            setArray80C,
+            setArray80D,
+            setArray10,
+            setArray24,
+            setArray80CCD,
+            setIsLoading,
+            setFinalActualSubmission,
+            openyear
+        )
     }, [])
 
     const handleCloseCommentsModel = () => {

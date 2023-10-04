@@ -17,11 +17,9 @@
 .welcome_tag {
   flex: 0.85;
   text-align: center;
-  margin-top: 6px;
 }
 .logout_button_container {
   flex: 0.05;
-  margin-top: 10px;
 }
 .logout_button {
   float: right;
@@ -31,6 +29,7 @@
 }
 .information_container {
   display: flex;
+  margin-top: 30px;
 }
 .left_information {
   flex: 0.5;
@@ -41,7 +40,6 @@
 .emp_info_container {
   width: 96%;
   display: flex;
-  /* margin-top: 10px; */
   padding: 10px;
   border: 2px solid #ddd;
 }
@@ -60,7 +58,10 @@
 .first_entry_container {
   width: 50%;
   display: flex;
-  margin-top: 20px;
+}
+.first_entry_container1 {
+  width: 45%;
+  /* display: flex; */
 }
 .first_entry_left {
   flex: 0.45;
@@ -192,4 +193,30 @@
   text-decoration: underline;
   color: blue;
   cursor: pointer;
+}
+.first_entry_details_container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+/* Styles for the entire table */
+.table_container_invesment {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* Styles for table headers */
+.table_container_invesment th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  font-size: 13px;
+  padding: 5px;
+}
+
+/* Styles for table cells */
+.table_container_invesment td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  font-size: 13px;
+  padding: 5px;
 }

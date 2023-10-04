@@ -149,11 +149,13 @@ const EditModal = ({
                     <div className={css.edit_info1}>
                         <h5>Relation</h5>
                         <select value={relation} onChange={(e) => handleChangeInputFileds(e, setRelation)}>
+                            <option value="" >Select</option>
                             <option value="Self">Self</option>
-                            <option value="Mother">Mother</option>
-                            <option value="Father">Father</option>
-                            <option value="Sister">Sister</option>
-                            <option value="Son">Son</option>
+                            <option value="Parent/Guardian">Parent/Guardian</option>
+                            <option value="Spouse/Partner">Spouse/Partner</option>
+                            <option value="Son/Daughter">Son/Daughter</option>
+                            <option value="Siblings">Siblings</option>
+                            <option value="Others">Others</option>
                         </select>
                     </div>
                     <div className={css.edit_info}>

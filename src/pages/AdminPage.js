@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import css from "../styles/adminPage.module.css"
-import logo from "../assests/RKFL-Logo.jpg"
+import logo from "../assests/Logo_main-removebg-preview.png"
 import { IconButton, Tooltip } from '@mui/material'
 import { Logout } from '@mui/icons-material'
 import { handleGetFinancialsAdmin, updateInvestmentTypeToActual } from '../apis/financialApi'
@@ -59,7 +59,7 @@ const AdminPage = () => {
         <div className={css.page_container}>
             <div className={css.header_container}>
                 <div className={css.logo_container}>
-                    <img src={logo} width="70%" height="70%" alt="img" />
+                    <img src={logo} width="100%" height="100%" alt="img" />
                 </div>
                 <h1 className={css.welcome_tag}>
                     Administrator Dashboard

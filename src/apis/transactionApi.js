@@ -66,7 +66,10 @@ export const handleCreateOrUpdateTransaction = async (
 
 };
 
-export const handleGetTransaction = async (setArray80C, setArray80D, setArray10, setArray24, setArray80CCD, setIsLoading, setFinalActualSubmission) => {
+export const handleGetTransaction = async (
+    setArray80C, setArray80D, setArray10,
+    setArray24, setArray80CCD, setIsLoading,
+    setFinalActualSubmission) => {
     const empCode = JSON.parse(sessionStorage.getItem("userData"))
     const postData = {
         employeeCode: parseInt(empCode.employeeCode),
@@ -77,6 +80,7 @@ export const handleGetTransaction = async (setArray80C, setArray80D, setArray10,
         }
     })
         .then(response => {
+            console.log(response)
             setArray80C(response.data.data.section80C)
             setArray80D(response.data.data.section80D)
             setArray10(response.data.data.section10)
@@ -92,6 +96,61 @@ export const handleGetTransaction = async (setArray80C, setArray80D, setArray10,
             setArray24([])
             setArray80CCD([])
             setIsLoading(false)
+        });
+
+};
+export const handleGetInvestmentTransaction = async (
+    setInvestment80C, setInvestment80D, setInvestment10,
+    setInvestment24, selectedOption, openyear) => {
+    const empCode = JSON.parse(sessionStorage.getItem("userData"))
+    const postData = {
+        employeeCode: parseInt(empCode.employeeCode),
+    }
+    axios.post(`${url}/api/transactions/getTransactionByEmployeeCode`, postData, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            console.log(response)
+            const totalInvestment80C = response.data.data.section80C.length > 0 ?
+                response.data.data.section80C
+                    .filter(item => item.investmentSchedule === selectedOption && item.financialyear === openyear)
+                    .reduce((acc, item) => {
+                        const investmentValue = parseInt(item.investment);
+                        return isNaN(investmentValue) ? acc : acc + investmentValue;
+                    }, 0) : 0;
+            const totalInvestment80D = response.data.data.section80D.length > 0 ?
+                response.data.data.section80D
+                    .filter(item => item.investmentSchedule === selectedOption && item.financialyear === openyear)
+                    .reduce((acc, item) => {
+                        const investmentValue = parseInt(item.investment);
+                        return isNaN(investmentValue) ? acc : acc + investmentValue;
+                    }, 0) : 0;
+            const totalInvestment10 = response.data.data.section10.length > 0 ?
+                response.data.data.section10
+                    .filter(item => item.investmentSchedule === selectedOption && item.financialyear === openyear)
+                    .reduce((acc, item) => {
+                        const investmentValue = parseInt(item.investment);
+                        return isNaN(investmentValue) ? acc : acc + investmentValue;
+                    }, 0) : 0;
+            const totalInvestment24 = response.data.data.section24.length > 0 ?
+                response.data.data.section24
+                    .filter(item => item.investmentSchedule === selectedOption && item.financialyear === openyear)
+                    .reduce((acc, item) => {
+                        const investmentValue = parseInt(item.investment);
+                        return isNaN(investmentValue) ? acc : acc + investmentValue;
+                    }, 0) : 0;
+            setInvestment80C(totalInvestment80C)
+            setInvestment80D(totalInvestment80D)
+            setInvestment10(totalInvestment10)
+            setInvestment24(totalInvestment24)
+        })
+        .catch(error => {
+            setInvestment10(0)
+            setInvestment24(0)
+            setInvestment80D(0)
+            setInvestment80C(0)
         });
 
 };

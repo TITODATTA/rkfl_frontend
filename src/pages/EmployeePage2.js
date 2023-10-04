@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
 import empPageCss from "../styles/employeePage2.module.css"
-import logo from "../assests/RKFL-Logo.jpg"
+import logo from "../assests/Logo_main-removebg-preview.png"
 import { useNavigate } from "react-router-dom"
 import { handleGetFinancials } from '../apis/financialApi'
 import { handleGetSection } from '../apis/sectionApi'
 import MainSectionTable from '../components/MainSectionTable'
 import { IconButton, Tooltip } from '@mui/material'
 import { Logout } from '@mui/icons-material'
-import SubSectionList from '../components/SubSectionList'
 import CircularProgress from '@mui/material/CircularProgress';
 import Rules from '../components/Rules'
 import { handleCreateTaxtaion } from '../apis/taxationApi'
 import { handleDownloadCsv } from '../utils/mainSectionTableFunction'
+import { handleGetInvestmentTransaction } from '../apis/transactionApi'
 
 const EmployeePage2 = () => {
     const role = sessionStorage.getItem('role')
@@ -26,6 +26,10 @@ const EmployeePage2 = () => {
     const [rows, setRows] = useState([]);
     const [newEntry, setNewEntry] = useState(false)
     const [taxOption, setTaxOption] = useState("")
+    const [invesment80C, setInvestment80C] = useState(0)
+    const [invesment80D, setInvestment80D] = useState(0)
+    const [invesment10, setInvestment10] = useState(0)
+    const [invesment24, setInvestment24] = useState(0)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -36,18 +40,29 @@ const EmployeePage2 = () => {
             navigate("/login")
         }
         else {
-            handleGetFinancials(setOpenYear, setSelectedOption, user.employeeCode, setNewEntry, setTaxOption, setIsLoading2)
-            // handleGetTaxtaion(user.employeeCode, openyear)
+            handleGetFinancials(
+                setOpenYear,
+                setSelectedOption,
+                user.employeeCode,
+                setNewEntry,
+                setTaxOption,
+                setIsLoading2,
+                setInvestment80C,
+                setInvestment80D,
+                setInvestment10,
+                setInvestment24
+            )
+
         }
     }, [])
 
-    const handleCheckboxChange1 = (option) => {
-        setSelectedOption1(option);
-        if (option === "option2") {
-            setSubSection([])
-            setMainSection("")
-        }
-    };
+    // const handleCheckboxChange1 = (option) => {
+    //     setSelectedOption1(option);
+    //     if (option === "option2") {
+    //         setSubSection([])
+    //         setMainSection("")
+    //     }
+    // };
 
 
 
@@ -70,7 +85,7 @@ const EmployeePage2 = () => {
             {isLoading2 ? <div className={empPageCss.loader_container}><CircularProgress /></div> : <div className={empPageCss.main_container}>
                 <div className={empPageCss.header_container}>
                     <div className={empPageCss.logo_container}>
-                        <img src={logo} width="70%%" height="70%" alt="img" />
+                        <img src={logo} width="100%" height="100%" alt="img" />
                     </div>
                     <h1 className={empPageCss.welcome_tag}>Welcome {user?.employeeName} ({selectedOption.toUpperCase(1)})</h1>
                     <div className={empPageCss.logout_button_container}>
@@ -95,66 +110,67 @@ const EmployeePage2 = () => {
                                 <h3 className={empPageCss.emp_info_h3}>Phone Number : <span>+91 {user?.phoneNumber}</span></h3>
                             </div>
                         </div>
-                        <div className={empPageCss.first_entry_container}>
-                            <div className={empPageCss.first_entry_left}>
-                                <div className={empPageCss.text_container1}>
-                                    <h4>Financial Year</h4>
+                        <div className={empPageCss.first_entry_details_container}>
+                            <div className={empPageCss.first_entry_container}>
+                                <div className={empPageCss.first_entry_left}>
+                                    <div className={empPageCss.text_container1}>
+                                        <h4>Financial Year</h4>
+                                    </div>
+                                    <div className={empPageCss.text_container2}>
+                                        <h4>Taxation Option</h4>
+                                    </div>
                                 </div>
-                                <div className={empPageCss.text_container2}>
-                                    <h4>Taxation Option</h4>
+                                <div className={empPageCss.first_entry_right}>
+                                    <div className={empPageCss.year_container}>
+                                        <h4>{openyear}</h4>
+                                    </div>
+                                    {newEntry ?
+                                        <div className={empPageCss.tax_option_container}>
+                                            <div
+                                                className={`${empPageCss.tax_option2} ${selectedOption1 === 'option2' ? empPageCss.selected_option : ''
+                                                    }`}
+                                            >
+                                                <h4>Taxation is Not yet Updated in SAP</h4>
+                                            </div>
+                                        </div> :
+                                        <div className={empPageCss.tax_option_container}>
+                                            <div
+                                                className={`${empPageCss.tax_option2} ${selectedOption1 === 'option2' ? empPageCss.selected_option : ''
+                                                    }`}
+                                            >
+                                                {taxOption === 1 ? <h4 style={{ color: 'blue' }}>Option 1 (Tax rates as per old regime)</h4> :
+                                                    <h4 style={{ color: 'red' }}>Option 2 (Tax rates as per new regime)</h4>}
+                                            </div>
+                                        </div>}
                                 </div>
                             </div>
-                            <div className={empPageCss.first_entry_right}>
-                                <div className={empPageCss.year_container}>
-                                    <h4>{openyear}</h4>
+                            <div className={empPageCss.first_entry_container1}>
+                                <div className={empPageCss.first_entry_left}>
+                                    <h4 style={{ textAlign: "center" }}>Total Investment Details({selectedOption.toUpperCase()})</h4>
+                                    <table className={empPageCss.table_container_invesment}>
+                                        <thead>
+                                            <tr>
+                                                <th>Section 80C</th>
+                                                <th>Section 80D</th>
+                                                <th>Section 10</th>
+                                                <th>Section 24</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{invesment80C}</td>
+                                                <td>{invesment80D}</td>
+                                                <td>{invesment10}</td>
+                                                <td>{invesment24}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                {newEntry ?
-                                    <div className={empPageCss.tax_option_container}>
-                                        <div
-                                            className={`${empPageCss.tax_option2} ${selectedOption1 === 'option2' ? empPageCss.selected_option : ''
-                                                }`}
-                                        >
-                                            <h4>Taxation is Not yet Updated in SAP</h4>
-                                        </div>
-                                        {/* <div
-                                            className={`${empPageCss.tax_option1} ${selectedOption1 === 'option1' ? empPageCss.selected_option : ''
-                                                }`}
-                                            onClick={() => handleCheckboxChange1('option1')}
-                                        >
-                                            <h4 style={{ color: 'red' }}>Option 1 (Tax rates as per old regime)</h4>
-                                            <input
-                                                type='checkbox'
-                                                checked={selectedOption1 === 'option1'}
-                                                readOnly
-                                            />
-                                        </div>
-                                        <div
-                                            className={`${empPageCss.tax_option2} ${selectedOption1 === 'option2' ? empPageCss.selected_option : ''
-                                                }`}
-                                            onClick={() => handleCheckboxChange1('option2')}
-                                        >
-                                            <h4 style={{ color: 'blue' }}>Option 2 (Tax rates as per new regime)</h4>
-                                            <input
-                                                type='checkbox'
-                                                checked={selectedOption1 === 'option2'}
-                                                readOnly
-                                            />
-                                        </div> */}
-                                    </div> :
-                                    <div className={empPageCss.tax_option_container}>
-                                        <div
-                                            className={`${empPageCss.tax_option2} ${selectedOption1 === 'option2' ? empPageCss.selected_option : ''
-                                                }`}
-                                        >
-                                            {taxOption === 1 ? <h4 style={{ color: 'blue' }}>Option 1 (Tax rates as per old regime)</h4> :
-                                                <h4 style={{ color: 'red' }}>Option 2 (Tax rates as per new regime)</h4>}
-
-
-                                        </div>
-                                    </div>}
-
                             </div>
                         </div>
+
+
+
                     </div>
                     <div className={empPageCss.right_information}>
                         {taxOption === 1 && <Rules selectedOption={selectedOption} />}
@@ -188,7 +204,6 @@ const EmployeePage2 = () => {
                                         <option value="Section 80D">Section 80D</option>
                                         <option value="Section 10">Section 10</option>
                                         <option value="Section 24">Section 24</option>
-                                        <option value="Section 80CCD">Section 80CCD</option>
                                         {/* Add more options */}
                                     </select> :
                                     <select className={empPageCss.custom_select} value={mainSection} onChange={(e) => handleChangeMainSection(e)}>
@@ -214,7 +229,8 @@ const EmployeePage2 = () => {
                                 </div>
                                 {mainSection.length !== 0 && selectedOption.length !== 0 &&
                                     < MainSectionTable rows={rows} setRows={setRows} subSection={subSection}
-                                        mainSection={mainSection} selectedOption={selectedOption} openyear={openyear} />}
+                                        mainSection={mainSection} selectedOption={selectedOption} openyear={openyear}
+                                    />}
                             </div>
                         </div>
                     </div>}
