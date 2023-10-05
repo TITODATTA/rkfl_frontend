@@ -221,6 +221,7 @@ export const handleSaveData =
         alphanumericPattern,
         fileList,
         setFileList, openyear) => {
+        const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
         const savedData = [];
         const empCode = JSON.parse(sessionStorage.getItem("userData"))
         const currentDateMillis = Date.now();
@@ -277,6 +278,11 @@ export const handleSaveData =
                         if (rowData.pan.length === 0) {
                             setError(true)
                             setErrorMessage("Pan of Landord cannot empty if investment  is more than 8333")
+                            return;
+                        }
+                        if (!panPattern.test(rowData.pan)) {
+                            setError(true)
+                            setErrorMessage("Pan of Landord pattern is not a valid format")
                             return;
                         }
                         if (rowData.landLoardName.length === 0) {
@@ -337,6 +343,11 @@ export const handleSaveData =
                             setError(true)
                             setErrorMessage("Pan of Landord empty if investment is more than 8333")
                             return
+                        }
+                        if (!panPattern.test(rowData.pan)) {
+                            setError(true)
+                            setErrorMessage("Pan of Landord pattern is not a valid format")
+                            return;
                         }
                         if (rowData.landLoardName.length === 0) {
                             setError(true)
@@ -406,6 +417,11 @@ export const handleSaveData =
                     else if (rowData.pan.length === 0) {
                         setError(true)
                         setErrorMessage("Pan of Lender cannot empty")
+                        return;
+                    }
+                    if (!panPattern.test(rowData.pan)) {
+                        setError(true)
+                        setErrorMessage("Pan of Lender pattern is not a valid format")
                         return;
                     }
                     else if (rowData.landLoardName.length === 0) {
@@ -491,6 +507,7 @@ export const handleSaveData =
                     nameOfAssured: row.nameOfAssured || "",
                     relation: row.relation || "",
                     policyNo: row.policyNo || "",
+                    paymentDate: row.paymentDate || "",
                     investment: row.investment || "",
                     file: fileList || [],
                     subSection: row.subSection || "",
@@ -563,6 +580,11 @@ export const handleSaveData =
                         setErrorMessage("Investment Can only be numbers");
                         return;
                     }
+                    else if (rowData.paymentDate.length === 0) {
+                        setError(true)
+                        setErrorMessage("Payment Date cannot be empty");
+                        return;
+                    }
                     else if (rowData.file.length === 0) {
                         setError(true)
                         setErrorMessage("File Cannot be empty");
@@ -608,9 +630,16 @@ export const handleSaveData =
         }
     };
 export const handleActualConversion = (index, array, setArray, setError, setErrorMessage, setSuccess, setSuccessMessage) => {
+    console.log(array[index])
     if (array[index]?.file.length === 0 || array[index]?.policyNo.length === 0) {
         setError(true)
         setErrorMessage("Conversion to  Actual Requires File Upload and Policy/Document Number")
+    }
+    else if (array[index].paymentDate) {
+        if (array[index]?.paymentDate.length === 0) {
+            setError(true)
+            setErrorMessage("Payment Date Is Required for Actual Entry")
+        }
     }
     else {
         const empCode = JSON.parse(sessionStorage.getItem("userData"))

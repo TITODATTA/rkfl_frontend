@@ -103,6 +103,7 @@ const EmployeePage2 = () => {
                                 <h3 className={empPageCss.emp_info_h3}>Employee Code :<span>{user?.employeeCode}</span> </h3>
                                 <h3 className={empPageCss.emp_info_h3}>Name : <span>{user?.employeeName}</span></h3>
                                 <h3 className={empPageCss.emp_info_h3}>Date of Joining : <span>{user?.dateOfJoining}</span></h3>
+                                <h3 className={empPageCss.emp_info_h3}>Plant : <span>{user?.plant}</span></h3>
                             </div>
                             <div className={empPageCss.emp_info_right}>
                                 <h3 className={empPageCss.emp_info_h3}>P.A.N. : <span>{user?.panNumber}</span></h3>

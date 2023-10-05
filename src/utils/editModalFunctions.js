@@ -73,6 +73,7 @@ export const handleEdit = (
     eligible80EEA,
     possession,
     policy,
+    paymentDate,
     relation,
     subSectionCode,
     subSectionValue,
@@ -105,6 +106,7 @@ export const handleEdit = (
 
 
 ) => {
+    const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
     if (type === "provisional") {
         if (name.length === 0) {
             setError(true)
@@ -124,6 +126,10 @@ export const handleEdit = (
             if (pan.length === 0 && subSectionCode === "13A") {
                 setError(true)
                 setErrorMessage("Pan of Landord empty if investment is more than 8333")
+            }
+            else if (!panPattern.test(pan) && subSectionCode === "13A") {
+                setError(true)
+                setErrorMessage("Pan of Landord is not a valid format")
             }
             else if (name1.length === 0 && subSectionCode === "13A") {
                 setError(true)
@@ -170,6 +176,10 @@ export const handleEdit = (
             if (pan.length === 0) {
                 setError(true)
                 setErrorMessage("Pan of Lender cannot be empty")
+            }
+            else if (!panPattern.test(pan)) {
+                setError(true)
+                setErrorMessage("Pan of Lender is not a valid format")
             }
             else if (name1.length === 0) {
                 setError(true)
@@ -223,6 +233,7 @@ export const handleEdit = (
                     investment: investment,
                     nameOfAssured: name,
                     policyNo: policy,
+                    paymentDate: paymentDate,
                     relation: relation,
                     subSectionCode: subSectionCode,
                     subSection: subSectionValue,
@@ -251,6 +262,7 @@ export const handleEdit = (
                     file: file,
                     investment: investment,
                     nameOfAssured: name,
+                    paymentDate: paymentDate,
                     policyNo: policy,
                     relation: relation,
                     subSectionCode: subSectionCode,
@@ -358,6 +370,11 @@ export const handleEdit = (
             setErrorMessage("Policy Number Cannot be empty");
 
         }
+        else if (paymentDate.length === 0) {
+            setError(true)
+            setErrorMessage("Payment Date Cannot be empty");
+
+        }
         else if (alphanumericPattern.test(policy) === false) {
             setError(true)
             setErrorMessage("Policy Number Can only be alphanumeric");
@@ -372,6 +389,10 @@ export const handleEdit = (
             if (pan.length === 0 && subSectionCode === "13A") {
                 setError(true)
                 setErrorMessage("Pan of Landord empty if investment is more than 8333")
+            }
+            else if (!panPattern.test(pan)) {
+                setError(true)
+                setErrorMessage("Pan of Landord is not a valid format")
             }
             else if (name1.length === 0 && subSectionCode === "13A") {
                 setError(true)
@@ -419,6 +440,10 @@ export const handleEdit = (
             if (pan.length === 0) {
                 setError(true)
                 setErrorMessage("Pan of Lender cannot be empty")
+            }
+            else if (!panPattern.test(pan)) {
+                setError(true)
+                setErrorMessage("Pan of Lender is not a valid format")
             }
             else if (name1.length === 0) {
                 setError(true)
@@ -473,6 +498,7 @@ export const handleEdit = (
                     investment: investment,
                     nameOfAssured: name,
                     policyNo: policy,
+                    paymentDate: paymentDate,
                     relation: relation,
                     subSectionCode: subSectionCode,
                     subSection: subSectionValue,
@@ -502,6 +528,7 @@ export const handleEdit = (
                     investment: investment,
                     nameOfAssured: name,
                     policyNo: policy,
+                    paymentDate: paymentDate,
                     relation: relation,
                     subSectionCode: subSectionCode,
                     subSection: subSectionValue,

@@ -47,7 +47,11 @@ const EditModal = ({
     const [isFileUploaded, setIsFileUploaded] = useState(false);
     const [uploadLoading, setUploadLoading] = useState(false)
     const [type, setType] = useState("")
+    const [paymentDate, setPaymentDate] = useState("")
     const alphanumericPattern = /^[a-zA-Z0-9]+$/;
+
+
+    console.log(array80D)
 
     useEffect(() => {
         if (editModal) {
@@ -60,6 +64,7 @@ const EditModal = ({
                 setInvestment(array80C[editIndex]?.investment)
                 setFile(array80C[editIndex]?.file)
                 setType(array80C[editIndex]?.investmentSchedule)
+                setPaymentDate(array80C[editIndex]?.paymentDate)
                 if (array80C[editIndex]?.file.length !== 0) {
                     setIsFileUploaded(true)
                 }
@@ -73,6 +78,7 @@ const EditModal = ({
                 setInvestment(array80D[editIndex]?.investment)
                 setFile(array80D[editIndex]?.file)
                 setType(array80D[editIndex]?.investmentSchedule)
+                setPaymentDate(array80D[editIndex]?.paymentDate)
                 if (array80D[editIndex]?.file.length !== 0) {
                     setIsFileUploaded(true)
                 }
@@ -154,14 +160,18 @@ const EditModal = ({
                             <option value="Parent/Guardian">Parent/Guardian</option>
                             <option value="Spouse/Partner">Spouse/Partner</option>
                             <option value="Son/Daughter">Son/Daughter</option>
-                            <option value="Siblings">Siblings</option>
-                            <option value="Others">Others</option>
                         </select>
                     </div>
                     <div className={css.edit_info}>
                         <h5>Policy No/ Bill No/ Document No.</h5>
                         <input type="text" value={policy} onChange={(e) => handleChangeInputFileds(e, setPolicy)} />
                     </div>
+                    {mainSection === "Section 80C" || mainSection === "Section 80D" ?
+                        <div className={css.edit_info}>
+                            <h5>Payment Date</h5>
+                            <input type="date" value={paymentDate} onChange={(e) => handleChangeInputFileds(e, setPaymentDate)} />
+                        </div> : <></>}
+
                     <div className={css.edit_info}>
                         <h5>Investment amount during the Year</h5>
                         <input type="text" value={investment} onChange={(e) => handleChangeInputFileds(e, setInvestment)} />
@@ -296,6 +306,7 @@ const EditModal = ({
                                     eligible80EEA,
                                     possession,
                                     policy,
+                                    paymentDate,
                                     relation,
                                     subSectionCode,
                                     subSectionValue,

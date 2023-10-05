@@ -67,6 +67,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
         setEntryStatus("")
         setComments("")
     }
+    console.log(array80C)
 
     return (
         <>
@@ -89,7 +90,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                     <table className={css.data_table}>
                         <thead>
                             <tr>
-                                <th className={css.custom_th}>Sub Section</th>
+                                <th className={css.custom_th}>Sub Section<span style={{ color: "red" }}>(*)</span></th>
                                 <th>S.No</th>
                                 <th>Name of Assured<span style={{ color: "red" }}>(*)</span></th>
                                 <th>Relation<span style={{ color: "red" }}>(*)</span></th>
@@ -106,9 +107,16 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         <th>Possession Obtained</th>
                                     </>
                                 }
-                                <th>Policy No/ Bill No/ Document No.
+                                <th>
+                                    Policy No/ Bill No/ Document No.
                                     {selectedOption === "actual" && <span style={{ color: "red" }}>(*)</span>}
                                 </th>
+                                {mainSection === "Section 80C" || mainSection === "Section 80D" ?
+                                    <th>
+                                        Invesment Payment Date
+                                        {selectedOption === "actual" && <span style={{ color: "red" }}>(*)</span>}
+                                    </th> : <></>}
+
                                 <th>Investment amount during the "Year"<span style={{ color: "red" }}>(*)</span></th>
                                 {mainSection === "Section 10" &&
                                     <><th>PAN of Landlord</th>
@@ -149,6 +157,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             </td>
                                             <td className={css.word_break}>
                                                 {item.policyNo}
+                                            </td>
+                                            <td className={css.word_break}>
+                                                {item.paymentDate}
                                             </td>
                                             <td className={css.word_break}>
                                                 {item.investment}
@@ -209,6 +220,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {item.policyNo}
                                         </td>
                                         <td className={css.word_break}>
+                                            {item.paymentDate}
+                                        </td>
+                                        <td className={css.word_break}>
                                             {item.investment}
                                         </td>
                                         <td className={css.word_break}>
@@ -235,11 +249,11 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 </IconButton> : ""}
                                             {item?.actualSubmission === true ? <>
                                             </> : <>
-                                                <IconButton onClick={() => handleOpenEditModal(array80C.indexOf(item), setEditIndex, setEditModal)}>
+                                                <IconButton onClick={() => handleOpenEditModal(array80D.indexOf(item), setEditIndex, setEditModal)}>
                                                     <Edit />
                                                 </IconButton>
                                                 <Tooltip title="Delete the Entry" placement="left" >
-                                                    <IconButton onClick={() => handleDeleteRow2(array80C.indexOf(item), mainSection, array80C, setArray80C, array80D,
+                                                    <IconButton onClick={() => handleDeleteRow2(array80D.indexOf(item), mainSection, array80C, setArray80C, array80D,
                                                         setArray80D, array10, setArray10, array24, setArray24, array80CCD, setArray80CCD)}>
                                                         <Delete />
                                                     </IconButton>
@@ -307,11 +321,11 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 </IconButton> : ""}
                                             {item?.actualSubmission === true ? <>
                                             </> : <>
-                                                <IconButton onClick={() => handleOpenEditModal(array80C.indexOf(item), setEditIndex, setEditModal)}>
+                                                <IconButton onClick={() => handleOpenEditModal(array10.indexOf(item), setEditIndex, setEditModal)}>
                                                     <Edit />
                                                 </IconButton>
                                                 <Tooltip title="Delete the Entry" placement="left" >
-                                                    <IconButton onClick={() => handleDeleteRow2(array80C.indexOf(item), mainSection, array80C, setArray80C, array80D,
+                                                    <IconButton onClick={() => handleDeleteRow2(array10.indexOf(item), mainSection, array80C, setArray80C, array80D,
                                                         setArray80D, array10, setArray10, array24, setArray24, array80CCD, setArray80CCD)}>
                                                         <Delete />
                                                     </IconButton>
@@ -386,11 +400,11 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 </IconButton> : ""}
                                             {item?.actualSubmission === true ? <>
                                             </> : <>
-                                                <IconButton onClick={() => handleOpenEditModal(array80C.indexOf(item), setEditIndex, setEditModal)}>
+                                                <IconButton onClick={() => handleOpenEditModal(array24.indexOf(item), setEditIndex, setEditModal)}>
                                                     <Edit />
                                                 </IconButton>
                                                 <Tooltip title="Delete the Entry" placement="left" >
-                                                    <IconButton onClick={() => handleDeleteRow2(array80C.indexOf(item), mainSection, array80C, setArray80C, array80D,
+                                                    <IconButton onClick={() => handleDeleteRow2(array24.indexOf(item), mainSection, array80C, setArray80C, array80D,
                                                         setArray80D, array10, setArray10, array24, setArray24, array80CCD, setArray80CCD)}>
                                                         <Delete />
                                                     </IconButton>
@@ -523,8 +537,6 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <option value="Parent/Guardian">Parent/Guardian</option>
                                                 <option value="Spouse/Partner">Spouse/Partner</option>
                                                 <option value="Son/Daughter">Son/Daughter</option>
-                                                <option value="Siblings">Siblings</option>
-                                                <option value="Others">Others</option>
                                             </select>
                                         </td>
                                         {mainSection === "Section 10" && <>
@@ -594,6 +606,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             </td>
 
                                         </>}
+
                                         <td contentEditable="true" className={css.word_break} onChange={(e) => {
                                             const updatedRows = [...rows];
                                             updatedRows[index].policyNo = e.currentTarget.textContent;
@@ -607,6 +620,16 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         >
                                             {row.policyNo}
                                         </td>
+                                        {mainSection === "Section 80C" || mainSection === "Section 80D" ? <td contentEditable="true" className={css.word_break}
+                                        >
+                                            <input type='date' className={css.input_date}
+                                                onChange={(e) => {
+                                                    const updatedRows = [...rows];
+                                                    const newValue = e.target.value;
+                                                    updatedRows[index].paymentDate = newValue;
+                                                    setRows(updatedRows);
+                                                }} />
+                                        </td> : <></>}
                                         <td contentEditable="true" className={css.word_break} onChange={(e) => {
                                             const updatedRows = [...rows];
                                             updatedRows[index].investment = e.currentTarget.textContent;
@@ -780,6 +803,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {item.policyNo}
                                         </td>
                                         <td className={css.word_break}>
+                                            {item.paymentDate}
+                                        </td>
+                                        <td className={css.word_break}>
                                             {item.investment}
                                         </td>
                                         <td className={css.word_break}>
@@ -831,6 +857,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                         <td className={css.word_break}>
                                             {item.policyNo}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.paymentDate}
                                         </td>
                                         <td className={css.word_break}>
                                             {item.investment}
@@ -1049,7 +1078,6 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                     </tr>
                                 ))}
-                                {/*  */}
                                 {rows.map((row, index) => (
                                     <tr key={index}>
                                         <td contentEditable="true">
@@ -1116,8 +1144,6 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <option value="Parent/Guardian">Parent/Guardian</option>
                                                 <option value="Spouse/Partner">Spouse/Partner</option>
                                                 <option value="Son/Daughter">Son/Daughter</option>
-                                                <option value="Siblings">Siblings</option>
-                                                <option value="Others">Others</option>
                                             </select>
                                         </td>
                                         {mainSection === "Section 10" && <>
@@ -1200,6 +1226,16 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         >
                                             {row.policyNo}
                                         </td>
+                                        {mainSection === "Section 80C" || mainSection === "Section 80D" ? <td contentEditable="true" className={css.word_break}
+                                        >
+                                            <input type='date' className={css.input_date}
+                                                onChange={(e) => {
+                                                    const updatedRows = [...rows];
+                                                    const newValue = e.target.value;
+                                                    updatedRows[index].paymentDate = newValue;
+                                                    setRows(updatedRows);
+                                                }} />
+                                        </td> : <></>}
                                         <td contentEditable="true" className={css.word_break} onChange={(e) => {
                                             const updatedRows = [...rows];
                                             updatedRows[index].investment = e.currentTarget.textContent;

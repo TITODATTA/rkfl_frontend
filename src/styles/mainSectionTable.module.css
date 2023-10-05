@@ -103,3 +103,12 @@
   opacity: 0;
   width: 0%;
 }
+.input_date {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  appearance: none; /* Hide default arrow in browsers */
+  cursor: pointer;
+  text-align: center;
+}
