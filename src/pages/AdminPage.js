@@ -8,6 +8,7 @@ import { handleGetFinancialsAdmin, updateInvestmentTypeToActual } from '../apis/
 import { handleDuplicateTaxtationYear } from '../apis/taxationApi'
 import { CircularProgress } from '@mui/material'
 import { handleCopyTransaction, handleGetAllTransactionForCsv } from '../apis/transactionApi'
+import { handleDeleteEmployeeData } from '../apis/employeeUpdate'
 
 const AdminPage = () => {
     const user = JSON.parse(sessionStorage.getItem('userData'))
@@ -17,6 +18,8 @@ const AdminPage = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [isLoading2, setIsLoading2] = useState(false)
     const [isLoading3, setIsLoading3] = useState(false)
+    const [isLoading4, setIsLoading4] = useState(false)
+    const [isLoading5, setIsLoading5] = useState(false)
     const navigate = useNavigate()
     useEffect(() => {
         if (!role || !user) {
@@ -85,45 +88,63 @@ const AdminPage = () => {
                 <p style={{ fontWeight: "lighter" }}>Note :<span style={{ color: "red" }}>Step 1 </span> : Duplicate ,<span style={{ color: "red" }}>Step 2</span>: Convert,<span style={{ color: "red" }}>Step 3 </span>: Change In MongoCompass</p>
             </h3>
             <div className={css.functional_container}>
-                <div className={css.investment_container}>
-                    <h3>Investment Schedule : <span style={{ color: "blue" }}>
-                        {investmentType.toUpperCase()}
-                    </span>
-                    </h3>
-                    {investmentType === 'provisional' &&
-                        <button onClick={() => { handleChangeToActual() }}
-                        >Change To Actual
-                        </button>
-                    }
+                <div className={css.left_container}>
+                    <div className={css.investment_container}>
+                        <h3>Investment Schedule : <span style={{ color: "blue" }}>
+                            {investmentType.toUpperCase()}
+                        </span>
+                        </h3>
+                        {investmentType === 'provisional' &&
+                            <button onClick={() => { handleChangeToActual() }}
+                            >Change To Actual
+                            </button>
+                        }
 
-                </div>
-                {investmentType === 'actual' &&
-                    <div className={css.investment_container2}>
-                        <h3>Duplication of Taxation Data of All Employees For New Financial Year</h3>
-                        <button onClick={() => handleDuplicateTaxation()}>
-                            {isLoading ? <CircularProgress size={20} /> : "Duplicate"}
-                        </button>
+                    </div>
+                    {investmentType === 'actual' &&
+                        <div className={css.investment_container2}>
+                            <h3>Duplication of Taxation Data of All Employees For New Financial Year</h3>
+                            <button onClick={() => handleDuplicateTaxation()}>
+                                {isLoading ? <CircularProgress size={20} /> : "Duplicate"}
+                            </button>
+                        </div>}
+                    {investmentType === 'actual' &&
+                        <div className={css.investment_container2}>
+                            <h3>Conversion of Actual to Provisional Investments for New Financial Year</h3>
+                            <button onClick={() => handleActualToProvisionalConverstion()}>
+                                {isLoading2 ? <CircularProgress size={20} /> : "Convert To Provisional"}
+                            </button>
+                        </div>}
+                    {investmentType === 'actual' && <div className={css.investment_container1}>
+                        <h3>
+                            <span style={{ color: "red" }}>Reminder:</span>
+                            <br />
+                            <span style={{ color: "red" }}>Close</span> Year {openYear} and <span style={{ color: "blue" }}>Open</span> Year {parseInt(openYear) + 1} ON MONGO DB COMPASS
+                        </h3>
                     </div>}
-                {investmentType === 'actual' &&
-                    <div className={css.investment_container2}>
-                        <h3>Conversion of Actual to Provisional Investments for New Financial Year</h3>
-                        <button onClick={() => handleActualToProvisionalConverstion()}>
-                            {isLoading2 ? <CircularProgress size={20} /> : "Convert To Provisional"}
+                    <div className={css.investment_container3}>
+                        <h3>Create Your CSV/JSON Data In MongoDb Compass</h3>
+                        <button onClick={() => handleGetAllTransactionForCsv(setIsLoading3)}>
+                            {isLoading3 ? <CircularProgress size={20} /> : "Create"}
                         </button>
-                    </div>}
-                {investmentType === 'actual' && <div className={css.investment_container1}>
-                    <h3>
-                        <span style={{ color: "red" }}>Reminder:</span>
-                        <br />
-                        <span style={{ color: "red" }}>Close</span> Year {openYear} and <span style={{ color: "blue" }}>Open</span> Year {parseInt(openYear) + 1} ON MONGO DB COMPASS
-                    </h3>
-                </div>}
-                <div className={css.investment_container3}>
-                    <h3>Create Your CSV/JSON Data In MongoDb Compass</h3>
-                    <button onClick={() => handleGetAllTransactionForCsv(setIsLoading3)}>
-                        {isLoading3 ? <CircularProgress size={20} /> : "Create"}
-                    </button>
+                    </div>
                 </div>
+                <div className={css.right_container}>
+                    <div className={css.investment_container}>
+                        <h3>Update <span style={{ color: "red" }}>Employee</span> Master Table(UPLOAD JSON IN MONGO)</h3>
+                        <button onClick={() => handleDeleteEmployeeData(setIsLoading4)}>
+                            {isLoading4 ? <CircularProgress size={20} /> : "Update"}
+                        </button>
+                    </div>
+                    <div className={css.investment_container3}>
+                        <h3>Update <span style={{ color: "red" }}>Taxation</span> Master Table(UPLOAD JSON IN MONGO)</h3>
+                        <input type='number' inputMode="numeric" placeholder='Enter the Year' />
+                        <button >
+                            {isLoading5 ? <CircularProgress size={20} /> : "Update"}
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </div >
     )

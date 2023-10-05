@@ -41,7 +41,7 @@ export const handleDeleteRow2 =
     (index, mainSection, array80C, setArray80C, array80D,
         setArray80D, array10, setArray10, array24, setArray24, array80CCD, setArray80CCD) => {
         if (array80C.length + array80D.length + array10.length + array24.length + array80CCD.length === 1) {
-            alert("Error You can delete all your data after submission. Either you can edit or add a new one and delete that")
+            alert("Error You cannot delete all your data after submission. Either you can edit ,add a new one and delete that,or make the investment amoun t to 0")
             return;
         }
         else {

@@ -31,17 +31,20 @@
 }
 .functional_container {
   margin-top: 30px;
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column; */
+  display: flex;
+}
+.functional_container .left_container {
+  flex: 0.5;
+}
+.functional_container .right_container {
+  flex: 0.5;
 }
 .container_header {
   text-align: center;
   margin-bottom: 15;
 }
 .investment_container {
-  width: 25vw;
+  width: 45.5vw;
   padding: 10px;
   border: 2px solid #ddd;
 }
@@ -93,6 +96,21 @@
 }
 .investment_container3 button {
   /* width: 100%; */
+  margin-top: 10px;
+  padding: 5px 20px;
+  cursor: pointer;
+  /* background-color: lightgreen; */
+  border: 2px solid #ddd; /* Light black shade border */
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;
+  position: relative;
+  overflow: hidden;
+}
+.investment_container3 input {
+  /* width: 100%; */
+  margin-right: 10px;
   margin-top: 10px;
   padding: 5px 20px;
   cursor: pointer;
