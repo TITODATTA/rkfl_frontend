@@ -48,10 +48,9 @@ const EditModal = ({
     const [uploadLoading, setUploadLoading] = useState(false)
     const [type, setType] = useState("")
     const [paymentDate, setPaymentDate] = useState("")
+    const [startDate, setStartDate] = useState("")
+    const [endDate, setEndDate] = useState("")
     const alphanumericPattern = /^[a-zA-Z0-9]+$/;
-
-
-    console.log(array80D)
 
     useEffect(() => {
         if (editModal) {
@@ -96,6 +95,8 @@ const EditModal = ({
                 setFile(array10[editIndex]?.file)
                 setType(array10[editIndex]?.investmentSchedule)
                 setCityCategory(array10[editIndex]?.cityCategory)
+                setStartDate(array10[editIndex]?.startDate)
+                setEndDate(array10[editIndex]?.endDate)
                 if (array10[editIndex]?.file.length !== 0) {
                     setIsFileUploaded(true)
                 }
@@ -166,6 +167,18 @@ const EditModal = ({
                         <h5>Policy No/ Bill No/ Document No.</h5>
                         <input type="text" value={policy} onChange={(e) => handleChangeInputFileds(e, setPolicy)} />
                     </div>
+                    {mainSection === "Section 10" &&
+                        <>
+                            <div className={css.edit_info}>
+                                <h5>Start Date</h5>
+                                <input type="date" value={startDate.split('.').reverse().join('-')} onChange={(e) => handleChangeInputFileds(e, setStartDate)} />
+                            </div>
+                            <div className={css.edit_info}>
+                                <h5>End Date</h5>
+                                <input type="date" value={endDate.split('.').reverse().join('-')} onChange={(e) => handleChangeInputFileds(e, setEndDate)} />
+                            </div>
+                        </>
+                    }
                     {mainSection === "Section 80C" || mainSection === "Section 80D" ?
                         <div className={css.edit_info}>
                             <h5>Payment Date</h5>
@@ -178,7 +191,7 @@ const EditModal = ({
                     </div>
                     {mainSection === "Section 10" &&
                         <>
-                            <div className={css.edit_info}>
+                            <div className={css.edit_info1}>
                                 <h5 >City Category</h5>
                                 <select value={cityCategory} onChange={(e) => handleChangeInputFileds(e, setCityCategory)}>
                                     <option value="">Non Metro</option>
@@ -302,6 +315,8 @@ const EditModal = ({
                                     name1,
                                     file,
                                     cityCategory,
+                                    startDate,
+                                    endDate,
                                     propertyType,
                                     eligible80EEA,
                                     possession,

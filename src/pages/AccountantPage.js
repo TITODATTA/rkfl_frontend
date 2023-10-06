@@ -276,34 +276,6 @@ const AccountantPage = () => {
                         <option value="new">New Actual Entry</option>
                     </select>
                 </div>}
-
-            {/* {submitButtonState && <div className={css.filter_option_container}>
-                <h4 >Advanced Filter</h4>
-                <hr />
-                <ArrowForwardIosIcon fontSize='small' className={css.arrow_icon} />
-                <h4 className={css.filter_text}>Select Type</h4>
-                <select >
-                    <option value="" selected disabled hidden>Choose Type</option>
-                    <option value="emp">Employee Code</option>
-                    <option value="main">Main Section</option>
-                </select>
-                <h4 className={css.filter_text}>Employee Code</h4>
-                <input
-                    type='text'
-                />
-                <h4 className={css.filter_text}>Main Section</h4>
-                <select >
-                    <option value="" selected disabled hidden>Choose Section</option>
-                    <option value="emp">Section 80C</option>
-                    <option value="main">Section 80D</option>
-                    <option value="main">Section 10</option>
-                    <option value="main">Section 24</option>
-                    <option value="main">Section 80CCD</option>
-                </select>
-                <button
-                    className={css.submit_button} disabled>Submit</button>
-            </div>} */}
-
             <div className={css.table_container}>
                 <table className={css.data_table}>
                     <thead>
@@ -318,7 +290,11 @@ const AccountantPage = () => {
                             <th>Investment</th>
                             <th>Investment Details</th>
                             <th>Name Of Assured</th>
+                            <th>Relation</th>
                             <th>Investment Amount</th>
+                            <th>Investment Payment Date</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                             <th>Pan of Landloard</th>
                             <th>Name of  Landloard</th>
                             <th>Address of  Landloard</th>
@@ -329,8 +305,8 @@ const AccountantPage = () => {
                             <th>Policy Number/Document Number</th>
                             <th>Create Date/Time</th>
                             <th>Edit Date/Time</th>
+                            <th>Conversion Date/Time</th>
                             {investmentType === 'Actual' && <th>Status(Reject)</th>}
-
                             <th>Accounts Comments</th>
 
                             {/* Add more table headers as needed */}
@@ -353,7 +329,11 @@ const AccountantPage = () => {
                                 <td>{item?.investmentCode}</td>
                                 <td>{item.subSection}</td>
                                 <td>{item.nameOfAssured}</td>
+                                <td>{item.relation}</td>
                                 <td>{item.investment}</td>
+                                <td>{item?.paymentDate}</td>
+                                <td>{item?.startDate}</td>
+                                <td>{item?.endDate}</td>
                                 {item.subSectionCode === "13A" ?
                                     <>
                                         <td>{item?.pan}</td>
@@ -391,6 +371,7 @@ const AccountantPage = () => {
                                 <td>{item?.policyNo}</td>
                                 <td>{item?.createTimestamp}</td>
                                 <td>{item?.editTimestamp}</td>
+                                <td>{item?.conversionTimestamp}</td>
                                 {investmentType === 'Actual' && <td>
                                     {item?.status === 'Reject' ? <span>Rejected</span> :
                                         <>

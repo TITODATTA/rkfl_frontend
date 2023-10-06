@@ -69,6 +69,8 @@ export const handleEdit = (
     name1,
     file,
     cityCategory,
+    startDate,
+    endDate,
     propertyType,
     eligible80EEA,
     possession,
@@ -117,6 +119,11 @@ export const handleEdit = (
             setErrorMessage("Investment Cannot be empty")
 
         }
+        else if (relation.length === 0) {
+            setError(true)
+            setErrorMessage("Relation Cannot be empty")
+
+        }
         else if (isNaN(investment)) {
             setError(true)
             setErrorMessage("Investment Can only be numbers");
@@ -139,6 +146,14 @@ export const handleEdit = (
                 setError(true)
                 setErrorMessage("Address of Landord cannot empty if investment is more than 8333")
             }
+            else if (startDate.length === 0) {
+                setError(true)
+                setErrorMessage("Start Date cannot be empty");
+            }
+            else if (endDate.length === 0) {
+                setError(true)
+                setErrorMessage("End Date cannot be empty");
+            }
             else {
                 const updatedData = [...array10];
                 updatedData[editIndex] = {
@@ -150,6 +165,8 @@ export const handleEdit = (
                     relation: relation,
                     subSectionCode: subSectionCode,
                     subSection: subSectionValue,
+                    startDate: startDate.split("-").reverse().join("."),
+                    endDate: endDate.split("-").reverse().join("."),
                     pan: pan,
                     cityCategory: cityCategory,
                     landLoardAddress: address,
@@ -315,37 +332,49 @@ export const handleEdit = (
                 )
             }
             else if (mainSection === "Section 10") {
-                const updatedData = [...array10];
-                updatedData[editIndex] = {
-                    ...updatedData[editIndex],
-                    file: file,
-                    investment: investment,
-                    nameOfAssured: name,
-                    policyNo: policy,
-                    relation: relation,
-                    cityCategory: cityCategory,
-                    subSectionCode: subSectionCode,
-                    subSection: subSectionValue,
-                    pan: pan,
-                    landLoardName: name1,
-                    landLoardAddress: address,
-                    editTimestamp: new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true })
-                };
-                setArray10(updatedData)
-                handleCloseEditModal(
-                    setEditModal,
-                    setSubSectionValue,
-                    setSubSectionCode,
-                    setName,
-                    setRelation,
-                    setPolicy,
-                    setInvestment,
-                    setFile,
-                    setPan,
-                    setName1,
-                    setAddress,
-                    setIsFileUploaded,
-                )
+                if (startDate.length === 0) {
+                    setError(true)
+                    setErrorMessage("Start Date cannot be empty");
+                }
+                else if (endDate.length === 0) {
+                    setError(true)
+                    setErrorMessage("End Date cannot be empty");
+                }
+                else {
+                    const updatedData = [...array10];
+                    updatedData[editIndex] = {
+                        ...updatedData[editIndex],
+                        file: file,
+                        investment: investment,
+                        nameOfAssured: name,
+                        policyNo: policy,
+                        relation: relation,
+                        cityCategory: cityCategory,
+                        subSectionCode: subSectionCode,
+                        subSection: subSectionValue,
+                        startDate: startDate.split("-").reverse().join("."),
+                        endDate: endDate.split("-").reverse().join("."),
+                        pan: pan,
+                        landLoardName: name1,
+                        landLoardAddress: address,
+                        editTimestamp: new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true })
+                    };
+                    setArray10(updatedData)
+                    handleCloseEditModal(
+                        setEditModal,
+                        setSubSectionValue,
+                        setSubSectionCode,
+                        setName,
+                        setRelation,
+                        setPolicy,
+                        setInvestment,
+                        setFile,
+                        setPan,
+                        setName1,
+                        setAddress,
+                        setIsFileUploaded,
+                    )
+                }
             }
         }
     }
@@ -353,6 +382,11 @@ export const handleEdit = (
         if (name.length === 0) {
             setError(true)
             setErrorMessage("Name of Assured Cannot be empty")
+
+        }
+        else if (relation.length === 0) {
+            setError(true)
+            setErrorMessage("Relation Cannot be empty")
 
         }
         else if (investment.length === 0) {
@@ -370,7 +404,12 @@ export const handleEdit = (
             setErrorMessage("Policy Number Cannot be empty");
 
         }
-        else if (paymentDate.length === 0) {
+        else if (mainSection === "Section 80C" && paymentDate.length === 0) {
+            setError(true)
+            setErrorMessage("Payment Date Cannot be empty");
+
+        }
+        else if (mainSection === "Section 80D" && paymentDate.length === 0) {
             setError(true)
             setErrorMessage("Payment Date Cannot be empty");
 
@@ -402,6 +441,14 @@ export const handleEdit = (
                 setError(true)
                 setErrorMessage("Address of Landord cannot empty if investment is more than 8333")
             }
+            else if (startDate.length === 0) {
+                setError(true)
+                setErrorMessage("Start Date cannot be empty");
+            }
+            else if (endDate.length === 0) {
+                setError(true)
+                setErrorMessage("End Date cannot be empty");
+            }
             else {
                 const updatedData = [...array10];
                 updatedData[editIndex] = {
@@ -413,6 +460,8 @@ export const handleEdit = (
                     relation: relation,
                     subSectionCode: subSectionCode,
                     subSection: subSectionValue,
+                    startDate: startDate.split("-").reverse().join("."),
+                    endDate: endDate.split("-").reverse().join("."),
                     pan: pan,
                     cityCategory: cityCategory,
                     landLoardAddress: address,
@@ -580,38 +629,51 @@ export const handleEdit = (
                 )
             }
             else if (mainSection === "Section 10") {
-                const updatedData = [...array10];
-                updatedData[editIndex] = {
-                    ...updatedData[editIndex],
-                    file: file,
-                    investment: investment,
-                    nameOfAssured: name,
-                    policyNo: policy,
-                    relation: relation,
-                    subSectionCode: subSectionCode,
-                    subSection: subSectionValue,
-                    pan: pan,
-                    cityCategory: cityCategory,
-                    landLoardName: name1,
-                    landLoardAddress: address,
-                    editTimestamp: new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true })
-                };
-                setArray10(updatedData)
-                handleCloseEditModal(
-                    setEditModal,
-                    setSubSectionValue,
-                    setSubSectionCode,
-                    setName,
-                    setRelation,
-                    setPolicy,
-                    setInvestment,
-                    setFile,
-                    setPan,
-                    setName1,
-                    setAddress,
-                    setIsFileUploaded,
-                    setCityCategory
-                )
+                if (startDate.length === 0) {
+                    setError(true)
+                    setErrorMessage("Start Date cannot be empty");
+                }
+                else if (endDate.length === 0) {
+                    setError(true)
+                    setErrorMessage("End Date cannot be empty");
+                }
+                else {
+                    const updatedData = [...array10];
+                    updatedData[editIndex] = {
+                        ...updatedData[editIndex],
+                        file: file,
+                        investment: investment,
+                        nameOfAssured: name,
+                        policyNo: policy,
+                        relation: relation,
+                        subSectionCode: subSectionCode,
+                        subSection: subSectionValue,
+                        startDate: startDate.split("-").reverse().join("."),
+                        endDate: endDate.split("-").reverse().join("."),
+                        pan: pan,
+                        cityCategory: cityCategory,
+                        landLoardName: name1,
+                        landLoardAddress: address,
+                        editTimestamp: new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true })
+                    };
+                    setArray10(updatedData)
+                    handleCloseEditModal(
+                        setEditModal,
+                        setSubSectionValue,
+                        setSubSectionCode,
+                        setName,
+                        setRelation,
+                        setPolicy,
+                        setInvestment,
+                        setFile,
+                        setPan,
+                        setName1,
+                        setAddress,
+                        setIsFileUploaded,
+                        setCityCategory
+                    )
+                }
+
             }
         }
     }

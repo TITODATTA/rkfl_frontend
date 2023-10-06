@@ -23,7 +23,7 @@ import { url } from '../utils/constants';
 
 
 
-const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOption, openyear }) => {
+const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOption, openyear, doj }) => {
     const [subSectionValue, setSubSectionValue] = useState("");
     const [addState, setAddState] = useState(false)
     const [array80C, setArray80C] = useState([])
@@ -47,6 +47,10 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
     const [commentsModel, setCommentsModel] = useState(false)
     const [uploadLoading, setUploadLoading] = useState(false)
     const alphanumericPattern = /^[a-zA-Z0-9]+$/;
+    // const minDate = '2023-01-01'; // Replace with your desired minimum date
+    const maxYear = parseInt(openyear) + 1
+    const maxDate = `${maxYear}-12-31`
+    const minDate = doj.split('-').reverse().join('-')
 
     useEffect(() => {
         setIsLoading(true)
@@ -67,7 +71,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
         setEntryStatus("")
         setComments("")
     }
-    console.log(array80C)
+    console.log(array10)
 
     return (
         <>
@@ -96,6 +100,8 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                 <th>Relation<span style={{ color: "red" }}>(*)</span></th>
                                 {mainSection === "Section 10" &&
                                     <>
+                                        <th>Start Date<span style={{ color: "red" }}>*</span></th>
+                                        <th>End Date<span style={{ color: "red" }}>*</span></th>
                                         <th>Accommodation Type<br /><span style={{ color: "brown" }}>(1:-Rented Accommodation)</span></th>
                                         <th>City Category<br /><span style={{ color: "brown" }}>(1:-Metro,Blank:Non Metro)</span></th>
                                     </>
@@ -275,6 +281,12 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                         <td className={css.word_break}>
                                             {item.relation}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.startDate}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.endDate}
                                         </td>
                                         <td className={css.word_break}>
                                             {item.accommodationType}
@@ -539,6 +551,32 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <option value="Son/Daughter">Son/Daughter</option>
                                             </select>
                                         </td>
+                                        {mainSection === "Section 10" && <td contentEditable="true" className={css.word_break}
+                                        >
+                                            <input type='date'
+                                                className={css.input_date}
+                                                min={minDate}
+                                                max={maxDate}
+                                                onChange={(e) => {
+                                                    const updatedRows = [...rows];
+                                                    const newValue = e.target.value;
+                                                    updatedRows[index].startDate = newValue;
+                                                    setRows(updatedRows);
+                                                }} />
+                                        </td>}
+                                        {mainSection === "Section 10" && <td contentEditable="true" className={css.word_break}
+                                        >
+                                            <input type='date'
+                                                className={css.input_date}
+                                                min={minDate}
+                                                max={maxDate}
+                                                onChange={(e) => {
+                                                    const updatedRows = [...rows];
+                                                    const newValue = e.target.value;
+                                                    updatedRows[index].endDate = newValue;
+                                                    setRows(updatedRows);
+                                                }} />
+                                        </td>}
                                         {mainSection === "Section 10" && <>
                                             <td contentEditable>
                                                 1
@@ -908,6 +946,12 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {item.relation}
                                         </td>
                                         <td className={css.word_break}>
+                                            {item.startDate}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.endDate}
+                                        </td>
+                                        <td className={css.word_break}>
                                             {item.accommodationType}
                                         </td>
                                         <td className={css.word_break}>
@@ -1146,6 +1190,32 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 <option value="Son/Daughter">Son/Daughter</option>
                                             </select>
                                         </td>
+                                        {mainSection === "Section 10" && <td contentEditable="true" className={css.word_break}
+                                        >
+                                            <input type='date'
+                                                className={css.input_date}
+                                                min={minDate}
+                                                max={maxDate}
+                                                onChange={(e) => {
+                                                    const updatedRows = [...rows];
+                                                    const newValue = e.target.value;
+                                                    updatedRows[index].startDate = newValue;
+                                                    setRows(updatedRows);
+                                                }} />
+                                        </td>}
+                                        {mainSection === "Section 10" && <td contentEditable="true" className={css.word_break}
+                                        >
+                                            <input type='date'
+                                                className={css.input_date}
+                                                min={minDate}
+                                                max={maxDate}
+                                                onChange={(e) => {
+                                                    const updatedRows = [...rows];
+                                                    const newValue = e.target.value;
+                                                    updatedRows[index].endDate = newValue;
+                                                    setRows(updatedRows);
+                                                }} />
+                                        </td>}
                                         {mainSection === "Section 10" && <>
                                             <td>
                                                 1

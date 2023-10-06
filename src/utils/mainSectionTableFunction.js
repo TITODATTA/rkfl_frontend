@@ -240,6 +240,8 @@ export const handleSaveData =
                     file: fileList || [],
                     subSection: row.subSection,
                     accommodationType: 1,
+                    startDate: row.startDate ? row.startDate.split('-').reverse().join('.') : "",
+                    endDate: row.endDate ? row.endDate.split('-').reverse().join('.') : "",
                     cityCategory: row.cityCategory || "",
                     pan: row.pan || "",
                     landLoardName: row.landLoardName || "",
@@ -262,6 +264,16 @@ export const handleSaveData =
                     else if (rowData.relation.length === 0) {
                         setError(true)
                         setErrorMessage("Relation Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.startDate.length === 0) {
+                        setError(true)
+                        setErrorMessage("Start Date Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.endDate.length === 0) {
+                        setError(true)
+                        setErrorMessage("End Date Cannot be empty");
                         return;
                     }
                     else if (rowData.investment.length === 0) {
@@ -311,6 +323,16 @@ export const handleSaveData =
                     else if (rowData.relation.length === 0) {
                         setError(true)
                         setErrorMessage("Relation Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.startDate.length === 0) {
+                        setError(true)
+                        setErrorMessage("Start Date Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.endDate.length === 0) {
+                        setError(true)
+                        setErrorMessage("End Date Cannot be empty");
                         return;
                     }
                     else if (rowData.policyNo.length === "0") {

@@ -231,6 +231,7 @@ const EmployeePage2 = () => {
                                 {mainSection.length !== 0 && selectedOption.length !== 0 &&
                                     < MainSectionTable rows={rows} setRows={setRows} subSection={subSection}
                                         mainSection={mainSection} selectedOption={selectedOption} openyear={openyear}
+                                        doj={user?.dateOfJoining}
                                     />}
                             </div>
                         </div>
