@@ -40,8 +40,21 @@ export const handleDropdownChange = (e, setSubSectionValue) => {
 export const handleDeleteRow2 =
     (index, mainSection, array80C, setArray80C, array80D,
         setArray80D, array10, setArray10, array24, setArray24, array80CCD, setArray80CCD) => {
-        if (array80C.length + array80D.length + array10.length + array24.length + array80CCD.length === 1) {
-            alert("Error You cannot delete all your data after submission. Either you can edit ,add a new one and delete that,or make the investment amoun t to 0")
+        console.log(array80C)
+        if (array80C.length === 1 && mainSection === "Section 80C" && array80C[index].actualSubmission === false) {
+            alert("Error You cannot delete all your data after submission or during saving. Either you can edit ,add a new one and delete that,or make the investment amount to 0")
+            return;
+        }
+        if (array80D.length === 1 && mainSection === "Section 80D" && array80D[index].actualSubmission === false) {
+            alert("Error You cannot delete all your data after submission. Either you can edit ,add a new one and delete that,or make the investment amount to 0")
+            return;
+        }
+        if (array10.length === 1 && mainSection === "Section 10" && array10[index].actualSubmission === false) {
+            alert("Error You cannot delete all your data after submission. Either you can edit ,add a new one and delete that,or make the investment amount to 0")
+            return;
+        }
+        if (array24.length === 1 && mainSection === "Section 24" && array24[index].actualSubmission === false) {
+            alert("Error You cannot delete all your data after submission. Either you can edit ,add a new one and delete that,or make the investment amount to 0")
             return;
         }
         else {
@@ -237,6 +250,7 @@ export const handleSaveData =
                     relation: row.relation || "",
                     policyNo: row.policyNo || "",
                     investment: row.investment || "",
+                    adjustedInvestment: row.investment || "",
                     file: fileList || [],
                     subSection: row.subSection,
                     accommodationType: 1,
@@ -398,8 +412,10 @@ export const handleSaveData =
                     relation: row.relation || "",
                     policyNo: row.policyNo || "",
                     investment: row.investment || "",
+                    adjustedInvestment: row.investment || "",
                     file: fileList || [],
                     propertyType: row.propertyType || "1",
+                    city: row.city || "",
                     eligible80EEA: row.eligible80EEA || "",
                     possession: row.possession || "",
                     subSection: row.subSection,
@@ -424,6 +440,11 @@ export const handleSaveData =
                     else if (rowData.relation.length === 0) {
                         setError(true)
                         setErrorMessage("Relation Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.city.length === 0) {
+                        setError(true)
+                        setErrorMessage("City Cannot be empty");
                         return;
                     }
                     else if (rowData.investment.length === 0) {
@@ -472,6 +493,11 @@ export const handleSaveData =
                     else if (rowData.relation.length === 0) {
                         setError(true)
                         setErrorMessage("Relation Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.city.length === 0) {
+                        setError(true)
+                        setErrorMessage("City Cannot be empty");
                         return;
                     }
                     else if (rowData.policyNo.length === 0) {
@@ -531,6 +557,7 @@ export const handleSaveData =
                     policyNo: row.policyNo || "",
                     paymentDate: row.paymentDate || "",
                     investment: row.investment || "",
+                    adjustedInvestment: row.investment || "",
                     file: fileList || [],
                     subSection: row.subSection || "",
                     investmentCode: row.investmentCode || "",
@@ -657,10 +684,36 @@ export const handleActualConversion = (index, array, setArray, setError, setErro
         setError(true)
         setErrorMessage("Conversion to  Actual Requires File Upload and Policy/Document Number")
     }
-    else if (array[index].paymentDate) {
+    else if (array[index].hasOwnProperty('paymentDate')) {
         if (array[index]?.paymentDate.length === 0) {
             setError(true)
             setErrorMessage("Payment Date Is Required for Actual Entry")
+        }
+        else {
+            const empCode = JSON.parse(sessionStorage.getItem("userData"))
+            const currentDateMillis = Date.now();
+            const confirmed = window.confirm('Warning , after conversion, you cannot edit or  delete the provisional entry .  Do you wish to continue?');
+            if (confirmed) {
+                const updatedData = [...array];
+                const ediObj = {
+                    ...updatedData[index],
+                    investmentSchedule: "actual",
+                    adjustedInvestment: array[index].investment,
+                    uniqueId: `${empCode.employeeCode}-${currentDateMillis}`,
+                }
+                updatedData[index] = {
+                    ...updatedData[index],
+                    isConverted: true,
+                    conversionTimestamp: new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true })
+                };
+                const newArray = [...updatedData];
+                newArray[newArray.length] = ediObj;
+                setArray(newArray)
+                setSuccess(true)
+                setSuccessMessage("Conversion Successfull")
+            } else {
+                return;
+            }
         }
     }
     else {
@@ -672,6 +725,7 @@ export const handleActualConversion = (index, array, setArray, setError, setErro
             const ediObj = {
                 ...updatedData[index],
                 investmentSchedule: "actual",
+                adjustedInvestment: array[index].investment,
                 uniqueId: `${empCode.employeeCode}-${currentDateMillis}`,
             }
             updatedData[index] = {

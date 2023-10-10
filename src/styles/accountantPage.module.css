@@ -95,7 +95,7 @@ hr {
   width: 100%;
   border-collapse: collapse;
   border: 1px solid #ccc;
-  font-size: 10px;
+  font-size: 9.5px;
 }
 
 .data_table th,
@@ -104,7 +104,6 @@ hr {
   padding: 7px;
   text-align: center;
   word-break: break-all;
-  max-width: 100px;
 }
 
 .data_table th {

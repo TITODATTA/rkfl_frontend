@@ -80,3 +80,30 @@ export const handleDuplicateTaxtationYear = async (financialYear, setIsLoading) 
         });
 
 };
+
+export const handleDeleteTaxation = async (financialYear, setIsLoading) => {
+    const convertedYear = parseInt(financialYear)
+    setIsLoading(true)
+    axios.delete(`${url}/api/taxations/delete?financialYear=${convertedYear}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            setIsLoading(false)
+            alert(`Financial year ${financialYear} is  deleted successfully`)
+        })
+        .catch(error => {
+            setIsLoading(false)
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
+            if (error.response.data.error === "Financial year is required") {
+                alert("Financial year is Invalid")
+            }
+            console.log(error)
+        });
+
+}

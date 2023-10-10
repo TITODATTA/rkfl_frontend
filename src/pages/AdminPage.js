@@ -5,21 +5,23 @@ import logo from "../assests/Logo_main-removebg-preview.png"
 import { IconButton, Tooltip } from '@mui/material'
 import { Logout } from '@mui/icons-material'
 import { handleGetFinancialsAdmin, updateInvestmentTypeToActual } from '../apis/financialApi'
-import { handleDuplicateTaxtationYear } from '../apis/taxationApi'
+import { handleDeleteTaxation, handleDuplicateTaxtationYear } from '../apis/taxationApi'
 import { CircularProgress } from '@mui/material'
 import { handleCopyTransaction, handleGetAllTransactionForCsv } from '../apis/transactionApi'
-import { handleDeleteEmployeeData } from '../apis/employeeUpdate'
+import { handleDeleteEmployeeData, handleUpdateEmployeePlant } from '../apis/employeeUpdate'
 
 const AdminPage = () => {
     const user = JSON.parse(sessionStorage.getItem('userData'))
     const role = sessionStorage.getItem('role')
     const [openYear, setOpenYear] = useState("");
+    const [taxYear, setTaxYear] = useState('');
     const [investmentType, setInvestmentType] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [isLoading2, setIsLoading2] = useState(false)
     const [isLoading3, setIsLoading3] = useState(false)
     const [isLoading4, setIsLoading4] = useState(false)
     const [isLoading5, setIsLoading5] = useState(false)
+    const [isLoading6, setIsLoading6] = useState(false)
     const navigate = useNavigate()
     useEffect(() => {
         if (!role || !user) {
@@ -57,6 +59,12 @@ const AdminPage = () => {
             handleCopyTransaction(openYear, setIsLoading2)
         }
     }
+
+    const handleYearChange = (e) => {
+        // Remove non-numeric characters and limit to 4 digits
+        const inputYear = e.target.value.replace(/\D/g, '').slice(0, 4);
+        setTaxYear(inputYear);
+    };
 
     return (
         <div className={css.page_container}>
@@ -137,9 +145,21 @@ const AdminPage = () => {
                         </button>
                     </div>
                     <div className={css.investment_container3}>
+                        <h3>Updatation/Checking of <span style={{ color: "red" }}>Plant</span> after Employee Master Table Updation</h3>
+                        <button onClick={() => handleUpdateEmployeePlant(setIsLoading6)}>
+                            {isLoading6 ? <CircularProgress size={20} /> : "Check/update"}
+                        </button>
+                    </div>
+                    <div className={css.investment_container3}>
                         <h3>Update <span style={{ color: "red" }}>Taxation</span> Master Table(UPLOAD JSON IN MONGO)</h3>
-                        <input type='number' inputMode="numeric" placeholder='Enter the Year' />
-                        <button >
+                        <input
+                            type="text"  // Use type 'text' to allow maxlength
+                            inputMode="numeric"
+                            placeholder="Enter the Year"
+                            value={taxYear}
+                            onChange={handleYearChange}
+                        />
+                        <button disabled={taxYear.length === 0 ? true : false} onClick={() => handleDeleteTaxation(taxYear, setIsLoading5)}>
                             {isLoading5 ? <CircularProgress size={20} /> : "Update"}
                         </button>
                     </div>

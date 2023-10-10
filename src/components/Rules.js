@@ -9,6 +9,7 @@ const Rules = ({ selectedOption }) => {
         <div className={css.main_container}>
             <h3>Instructions To Follow</h3>
             <h5>1)Choose the <span style={{ color: "blue" }}>Main Section</span> Dropdown to View/Edit/Delete your investment</h5>
+            <h5>1)Fill up the <span style={{ color: "red" }}>Contact Details for Accountant Communication</span> before filling up the form</h5>
             <h5>2)Details Marked with <span style={{ color: "red" }}>*</span> are mandatory fields</h5>
             <h5>3)Press <span style={{ color: "blue" }}>"Submit Your {selectedOption} Data"</span> positively before logging out or exiting from the page otherwise your investment data will not be saved</h5>
             <h5>4)In Section 10 for <span style={{ color: "blue" }}>"House Rent Allowance"</span> if your investment amount per month is<span style={{ color: "red" }}> more than Rs 8333</span> , then <span style={{ color: "red" }}>Pan,Pan Photocopy(During Actual),Name,Address of Landlord</span> is <span style={{ color: "red" }}>mandatory</span>.</h5>

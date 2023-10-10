@@ -23,7 +23,7 @@ import { url } from '../utils/constants';
 
 
 
-const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOption, openyear, doj }) => {
+const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOption, openyear, doj, phoneNumber }) => {
     const [subSectionValue, setSubSectionValue] = useState("");
     const [addState, setAddState] = useState(false)
     const [array80C, setArray80C] = useState([])
@@ -50,7 +50,8 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
     // const minDate = '2023-01-01'; // Replace with your desired minimum date
     const maxYear = parseInt(openyear) + 1
     const maxDate = `${maxYear}-12-31`
-    const minDate = doj.split('-').reverse().join('-')
+    // const minDate = doj.split('-').reverse().join('-')
+    const minDate = `2023-04-01`
 
     useEffect(() => {
         setIsLoading(true)
@@ -100,14 +101,15 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                 <th>Relation<span style={{ color: "red" }}>(*)</span></th>
                                 {mainSection === "Section 10" &&
                                     <>
-                                        <th>Start Date<span style={{ color: "red" }}>*</span></th>
-                                        <th>End Date<span style={{ color: "red" }}>*</span></th>
+                                        <th>Start Date<span style={{ color: "red" }}>(*)</span></th>
+                                        <th>End Date<span style={{ color: "red" }}>(*)</span></th>
                                         <th>Accommodation Type<br /><span style={{ color: "brown" }}>(1:-Rented Accommodation)</span></th>
                                         <th>City Category<br /><span style={{ color: "brown" }}>(1:-Metro,Blank:Non Metro)</span></th>
                                     </>
                                 }
                                 {mainSection === "Section 24" &&
                                     <>
+                                        <th>House Location<span style={{ color: "red" }}>(*)</span></th>
                                         <th>Property Type</th>
                                         <th>Eligible For 80EEA</th>
                                         <th>Possession Obtained</th>
@@ -123,7 +125,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         {selectedOption === "actual" && <span style={{ color: "red" }}>(*)</span>}
                                     </th> : <></>}
 
-                                <th>Investment amount during the "Year"<span style={{ color: "red" }}>(*)</span></th>
+                                <th>Investment amount during the {mainSection === "Section 10" ? "Monthly" : "Year"}<span style={{ color: "red" }}>(*)</span></th>
                                 {mainSection === "Section 10" &&
                                     <><th>PAN of Landlord</th>
                                         <th>Name of Landlord</th>
@@ -142,6 +144,18 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                     {selectedOption === "actual" && <span style={{ color: "red" }}>(*)</span>}
                                 </th>
                                 <th>Status</th>
+                                {viewOption === "actual" &&
+                                    <>
+                                        <th>Adjusted Invesment By Accountant</th>
+                                        <th>Accountant Comments</th>
+                                    </>}
+
+
+                                {/* {viewOption === "actual" &&
+                                    <>
+                                        <th>Adjusted Investment</th>
+                                        <th>Adjusted Comments</th>
+                                    </>} */}
                             </tr>
                         </thead>
                         {viewOption === "actual" &&
@@ -178,6 +192,12 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             </td>
                                             <td className={css.word_break}>
                                                 {item?.status}
+                                            </td>
+                                            <td className={css.word_break}>
+                                                {item?.adjustedInvestment}
+                                            </td>
+                                            <td className={css.word_break}>
+                                                {item?.adjustedComments}
                                             </td>
                                             <td>
                                                 {item?.isEdit === true ?
@@ -359,6 +379,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                         <td className={css.word_break}>
                                             {item.relation}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.city}
                                         </td>
                                         <td className={css.word_break}>
                                             {item.propertyType === "1" && "Self-occupied/Deemed Self occupied/Under Construction"}
@@ -600,6 +623,19 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
 
                                         </tr>}
                                         {mainSection === "Section 24" && <>
+                                            <td contentEditable="true" className={css.word_break} onChange={(e) => {
+                                                const updatedRows = [...rows];
+                                                updatedRows[index].city = e.currentTarget.textContent;
+                                                setRows(updatedRows);
+                                            }}
+                                                onBlur={(e) => {
+                                                    const updatedRows = [...rows];
+                                                    updatedRows[index].city = e.currentTarget.textContent;
+                                                    setRows(updatedRows);
+                                                }}
+                                            >
+                                                {row.city}
+                                            </td>
                                             <td>
                                                 <select
                                                     className={css.custom_select}
@@ -804,6 +840,12 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                     </>
                                                 )}
                                             </>}
+                                        </td>
+                                        <td className={css.word_break}>
+
+                                        </td>
+                                        <td className={css.word_break}>
+
                                         </td>
                                         <td className={css.word_break}>
 
@@ -1013,6 +1055,9 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                         <td className={css.word_break}>
                                             {item.relation}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.city}
                                         </td>
                                         <td className={css.word_break}>
                                             {item.propertyType === "1" && "Self-occupied/Deemed Self occupied/Under Construction"}
@@ -1239,6 +1284,19 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
 
                                         </tr>}
                                         {mainSection === "Section 24" && <>
+                                            <td contentEditable="true" className={css.word_break} onChange={(e) => {
+                                                const updatedRows = [...rows];
+                                                updatedRows[index].city = e.currentTarget.textContent;
+                                                setRows(updatedRows);
+                                            }}
+                                                onBlur={(e) => {
+                                                    const updatedRows = [...rows];
+                                                    updatedRows[index].city = e.currentTarget.textContent;
+                                                    setRows(updatedRows);
+                                                }}
+                                            >
+                                                {row.city}
+                                            </td>
                                             <td>
                                                 <select
                                                     className={css.custom_select}
@@ -1485,7 +1543,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             setArray80C, setArray80D,
                                             setArray10, setArray24,
                                             setArray80CCD, setRows, setAddState, setSubSectionValue,
-                                            alphanumericPattern, fileList, setFileList, openyear)}>
+                                            alphanumericPattern, fileList, setFileList, openyear, phoneNumber)}>
                                     Save
                                 </button>
                             </div>

@@ -13,7 +13,7 @@ export const handleCreateOrUpdateTransaction = async (
                 // Only add the key-value pair if selectedOption is "actual" and the array is not empty
                 return { ...obj, actualSubmission: true }; // Replace 'key' and 'value' with the desired key and value
             }
-            return obj; // Otherwise, return the object as-is
+            return { ...obj, actualSubmission: false }; // Otherwise, return the object as-is
         });
     };
 
@@ -364,6 +364,8 @@ export const handleUpdateAcceptedTransaction = (data, setTransactions, setSubmit
             employeeCode: item?.employeeCode,
             sectionArray: item?.mainSection,
             objectId: item?.uniqueId,
+            adjustedInvestment: item?.adjustedInvestment,
+            adjustedComments: item?.adjustedComments || "",
         };
 
         return axios.put(

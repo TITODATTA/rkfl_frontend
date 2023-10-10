@@ -29,7 +29,7 @@ const CommentsModel = ({
             aria-describedby="modal-modal-description"
         >
             <Box sx={modalStyle}>
-                <h4 className={styles.modal_header}>Status: <span style={{ color: "red" }}>{entryStatus}ed</span></h4>
+                <h4 className={styles.modal_header}>Status: <span style={{ color: "red" }}>{entryStatus}</span></h4>
                 <h4 className={styles.modal_text}>Accountants Comments: <span style={{ fontWeight: "lighter" }}>{comments}</span></h4>
                 <div className={styles.button_container}>
                     <button className={styles.close_button} onClick={() => handleCloseCommentsModel()}>Close</button>

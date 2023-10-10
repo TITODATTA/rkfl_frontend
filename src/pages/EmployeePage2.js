@@ -6,12 +6,13 @@ import { handleGetFinancials } from '../apis/financialApi'
 import { handleGetSection } from '../apis/sectionApi'
 import MainSectionTable from '../components/MainSectionTable'
 import { IconButton, Tooltip } from '@mui/material'
-import { Logout } from '@mui/icons-material'
+import { Edit, Logout } from '@mui/icons-material'
 import CircularProgress from '@mui/material/CircularProgress';
 import Rules from '../components/Rules'
 import { handleCreateTaxtaion } from '../apis/taxationApi'
 import { handleDownloadCsv } from '../utils/mainSectionTableFunction'
 import { handleGetInvestmentTransaction } from '../apis/transactionApi'
+import { handleGetEmployeeContact, handleUpdateEmployeeContact } from '../apis/employeeUpdate'
 
 const EmployeePage2 = () => {
     const role = sessionStorage.getItem('role')
@@ -23,6 +24,7 @@ const EmployeePage2 = () => {
     const [selectedOption1, setSelectedOption1] = useState('');
     const [isLoading, setIsLoading] = useState(false)
     const [isLoading2, setIsLoading2] = useState(false)
+    const [isLoading3, setIsLoading3] = useState(false)
     const [rows, setRows] = useState([]);
     const [newEntry, setNewEntry] = useState(false)
     const [taxOption, setTaxOption] = useState("")
@@ -30,6 +32,8 @@ const EmployeePage2 = () => {
     const [invesment80D, setInvestment80D] = useState(0)
     const [invesment10, setInvestment10] = useState(0)
     const [invesment24, setInvestment24] = useState(0)
+    const [isContactInfo, setIsContactInfo] = useState(false)
+    const [phoneNumber, setPhoneNumber] = useState("")
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -52,23 +56,24 @@ const EmployeePage2 = () => {
                 setInvestment10,
                 setInvestment24
             )
-
+            handleGetEmployeeContact(user.employeeCode, setIsContactInfo, setPhoneNumber)
         }
     }, [])
 
-    // const handleCheckboxChange1 = (option) => {
-    //     setSelectedOption1(option);
-    //     if (option === "option2") {
-    //         setSubSection([])
-    //         setMainSection("")
-    //     }
-    // };
+    const handleChangePhoneNumber = (e) => {
+        const number = e.target.value.replace(/\D/g, '').slice(0, 10);
+        setPhoneNumber(number);
+    }
 
+    const handlePhoneNumberUpdate = () => {
+        if (phoneNumber.length < 10) {
+            alert("Phone number cannot be less than 10 digits")
+        }
+        else {
+            handleUpdateEmployeeContact(user.employeeCode, phoneNumber, setIsLoading3)
+        }
+    }
 
-
-    // const handleCheckboxChange = (option) => {
-    //     setSelectedOption(option);
-    // };
 
     const handleChangeMainSection = (e) => {
         setIsLoading(true)
@@ -167,10 +172,21 @@ const EmployeePage2 = () => {
                                         </tbody>
                                     </table>
                                 </div>
+                                <div style={{ marginTop: "10px" }}>
+                                    <h5 style={{ marginTop: "10px", marginRight: "10px" }}>Contact Info(For Accountant Communication) :</h5>
+                                    <h6 style={{ color: 'red' }}>*To Update the Phone Number ,click on 'Update' button , to enable the input field</h6>
+                                    <div style={{ marginTop: "10px" }}>
+                                        <input type='text' value={phoneNumber} disabled={isContactInfo ? true : false} onChange={(e) => handleChangePhoneNumber(e)} />
+                                        {isLoading3 ? <CircularProgress size={20} /> :
+                                            <>{isContactInfo ? <button style={{ marginLeft: "10px" }} onClick={() => setIsContactInfo(false)}>Update</button>
+                                                : <button style={{ marginLeft: "10px" }} onClick={handlePhoneNumberUpdate}>Add/Update</button>}</>}
+
+
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-
 
                     </div>
                     <div className={empPageCss.right_information}>
@@ -231,7 +247,7 @@ const EmployeePage2 = () => {
                                 {mainSection.length !== 0 && selectedOption.length !== 0 &&
                                     < MainSectionTable rows={rows} setRows={setRows} subSection={subSection}
                                         mainSection={mainSection} selectedOption={selectedOption} openyear={openyear}
-                                        doj={user?.dateOfJoining}
+                                        doj={user?.dateOfJoining} phoneNumber={phoneNumber}
                                     />}
                             </div>
                         </div>

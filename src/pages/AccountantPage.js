@@ -3,13 +3,16 @@ import { useNavigate } from "react-router-dom"
 import css from "../styles/accountantPage.module.css"
 import logo from "../assests/Logo_main-removebg-preview.png"
 import { IconButton, Tooltip } from '@mui/material'
-import { Logout } from '@mui/icons-material'
+import { Build, ContactsOutlined, Logout } from '@mui/icons-material'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { handleGetCombinedTransaction, handleUpdateAcceptedTransaction, handleUpdateTransaction } from "../apis/transactionApi";
 import CircularProgress from '@mui/material/CircularProgress';
 import { handleGetFinancialsAccountant } from '../apis/financialApi'
 import { url } from '../utils/constants'
 import RulesAccount from '../components/RulesAccount'
+import AdjustmentModel from '../components/AdjustmentModel'
+import { handleGetEmployeeContactAccountant } from '../apis/employeeUpdate'
+import ContactInfoModel from '../components/ContactInfoModel'
 
 const AccountantPage = () => {
     const role = sessionStorage.getItem('role')
@@ -22,14 +25,20 @@ const AccountantPage = () => {
     const [plant, setPlant] = useState("");
     const [mainSection, setMainSection] = useState("")
     const [isLoading, setIsLoading] = useState(false);
+    const [openAdjustment, setOpenAdjustment] = useState(false)
     const [data, setData] = useState([]);
     const [submitButtonState, setSubmitButtonState] = useState(false);
-    const [submitButtonState2, setSubmitButtonState2] = useState(false);
-    const [rejectReason, setRejectReason] = useState('');
-    const [radioChecked, setRadioChecked] = useState(null);
     const [openYear, setOpenYear] = useState("");
     const [filter, setFilter] = useState("");
     const [searchTerm, setSearchTerm] = useState("")
+    const [adjustedObject, setAdjustedObject] = useState({})
+    const [adjustedObjectIndex, setAdjustedObjectIndex] = useState(null)
+    const [adjustedInvestment, setAdjustedInvestment] = useState("")
+    const [adjustedComments, setAdjustedComments] = useState("")
+    const [phoneNumber, setPhoneNumber] = useState("")
+    const [openContactInfoModal, setOpenContactInfoModal] = useState(false)
+
+    console.log(transactions)
 
     useEffect(() => {
         if (!role || !userDetails) {
@@ -144,7 +153,6 @@ const AccountantPage = () => {
         setTransactions([])
         setSubmitButtonState(false);
         setData([])
-        setRadioChecked(false)
         setItemsPerPage(5)
         setFilter("")
         setPlant("")
@@ -153,7 +161,6 @@ const AccountantPage = () => {
         setSearchTerm("")
     }
     const handleBackButton2 = () => {
-        setSubmitButtonState2(false)
         setSearchTerm("")
     }
 
@@ -181,6 +188,24 @@ const AccountantPage = () => {
         handleUpdateAcceptedTransaction(acceptedArray, setTransactions, setSubmitButtonState)
     }
 
+    const handleCloseAdjustmentModel = () => {
+        setOpenAdjustment(false)
+    }
+    const handleOpenAdjustmentModel = (index) => {
+        setAdjustedObjectIndex(index)
+        setAdjustedObject(transactions[index])
+        setAdjustedInvestment(transactions[index].adjustedInvestment)
+        setOpenAdjustment(true)
+        setAdjustedComments(transactions[index].adjustedComments || "")
+    }
+
+    const handleGetEmployeeContactInfo = (employeeCode) => {
+        handleGetEmployeeContactAccountant(employeeCode, setPhoneNumber)
+        setOpenContactInfoModal(true)
+    }
+    const handleCloseContactInfoModal = () => {
+        setOpenContactInfoModal(false)
+    }
     return (
         <div className={css.page_container}>
             <div className={css.header_container}>
@@ -291,6 +316,7 @@ const AccountantPage = () => {
                             <th>Investment Details</th>
                             <th>Name Of Assured</th>
                             <th>Relation</th>
+                            <th>House Location</th>
                             <th>Investment Amount</th>
                             <th>Investment Payment Date</th>
                             <th>Start Date</th>
@@ -306,8 +332,13 @@ const AccountantPage = () => {
                             <th>Create Date/Time</th>
                             <th>Edit Date/Time</th>
                             <th>Conversion Date/Time</th>
-                            {investmentType === 'Actual' && <th>Status(Reject)</th>}
-                            <th>Accounts Comments</th>
+                            {investmentType === 'Actual' && <>
+                                <th>Status(Reject)</th>
+                                <th>Accounts Comments</th>
+                                <th>Adjusted Invesment</th>
+                                <th>Adjusted Comments</th>
+                            </>}
+                            <th>Contact Info</th>
 
                             {/* Add more table headers as needed */}
                         </tr>
@@ -318,7 +349,7 @@ const AccountantPage = () => {
                         </div>}
 
                         {!isLoading && filter.length === 0 && currentItems.map((item, index) => (
-                            <tr key={index}>
+                            <tr key={index} >
                                 <td>{index + 1}</td>
                                 <td>{item.employeeCode}</td>
                                 <td>{item.financialyear}</td>
@@ -330,6 +361,7 @@ const AccountantPage = () => {
                                 <td>{item.subSection}</td>
                                 <td>{item.nameOfAssured}</td>
                                 <td>{item.relation}</td>
+                                <td>{item?.city}</td>
                                 <td>{item.investment}</td>
                                 <td>{item?.paymentDate}</td>
                                 <td>{item?.startDate}</td>
@@ -372,41 +404,39 @@ const AccountantPage = () => {
                                 <td>{item?.createTimestamp}</td>
                                 <td>{item?.editTimestamp}</td>
                                 <td>{item?.conversionTimestamp}</td>
-                                {investmentType === 'Actual' && <td>
-                                    {item?.status === 'Reject' ? <span>Rejected</span> :
-                                        <>
-                                            {item?.status}{" "}
-                                            {item.status === "Resubmitted" ? item?.resubmissionCounter : ""}
+                                {investmentType === 'Actual' &&
+                                    <>
+                                        <td>
+                                            {item?.status === 'Reject' ? <span>Rejected</span> :
+                                                <>
+                                                    {item?.status}{" "}
+                                                    {item.status === "Resubmitted" ? item?.resubmissionCounter : ""}
+                                                    <br />
+                                                    {item?.status !== 'Accept' &&
+                                                        <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />}
+
+                                                </>
+                                            }
+                                        </td>
+                                        <td >
+                                            {item?.accountantsComments}
+                                        </td>
+                                        <td>
                                             <br />
-                                            {item?.status !== 'Accept' &&
-                                                <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />}
-
-                                            {/* <FormControlLabel
-                                                        value="Reject"
-                                                        control={
-                                                            <Radio
-                                                                size='small'
-                                                            // checked={data[index === 0 ? index : index + 1]?.checked ? true : false}
-                                                            // Use the state variable to control the checked state
-                                                            />
-                                                        }
-                                                        label={<span className={css.smallLabel1}>Reject</span>}
-                                                    // onClick={() => handleRadioChange(index, 'Reject', item)}
-                                                    /> */}
-
-
-
-                                        </>
-                                    }
-
-                                </td>}
-
-                                <td >
-                                    {item?.accountantsComments}
+                                            {item.adjustedInvestment}
+                                            <br />
+                                            <IconButton disabled={item?.status === 'Reject' || item.checked || item.status === 'Accept' ? true : false} onClick={() => handleOpenAdjustmentModel(transactions.indexOf(item))}>
+                                                <Build fontSize='small' />
+                                            </IconButton>
+                                        </td>
+                                        <td>
+                                            {item?.adjustedComments}
+                                        </td>
+                                    </>
+                                }
+                                <td>
+                                    <IconButton onClick={() => handleGetEmployeeContactInfo(item.employeeCode)}><ContactsOutlined fontSize='small' /></IconButton>
                                 </td>
-
-
-                                {/* Add more table cells as needed */}
                             </tr>
                         ))}
                         {filter === "reject" && currentItems.filter((item) => item.checked === true || item?.status === "Reject").map((item, index) => (
@@ -421,7 +451,12 @@ const AccountantPage = () => {
                                 <td>{item?.investmentCode}</td>
                                 <td>{item.subSection}</td>
                                 <td>{item.nameOfAssured}</td>
+                                <td>{item.relation}</td>
+                                <td>{item?.city}</td>
                                 <td>{item.investment}</td>
+                                <td>{item?.paymentDate}</td>
+                                <td>{item?.startDate}</td>
+                                <td>{item?.endDate}</td>
                                 {item.subSectionCode === "13A" ?
                                     <>
                                         <td>{item?.pan}</td>
@@ -465,20 +500,6 @@ const AccountantPage = () => {
                                             {item?.status}{" "}{item?.resubmissionCounter}
                                             <br />
                                             <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
-                                            {/* <FormControlLabel
-                                                        value="Reject"
-                                                        control={
-                                                            <Radio
-                                                                size='small'
-                                                            // checked={data[index === 0 ? index : index + 1]?.checked ? true : false}
-                                                            // Use the state variable to control the checked state
-                                                            />
-                                                        }
-                                                        label={<span className={css.smallLabel1}>Reject</span>}
-                                                    // onClick={() => handleRadioChange(index, 'Reject', item)}
-                                                    /> */}
-
-
 
                                         </>
                                     }
@@ -488,7 +509,17 @@ const AccountantPage = () => {
                                 <td >
                                     {item?.accountantsComments}
                                 </td>
-
+                                <td>
+                                    {item.adjustedInvestment}
+                                    <br />
+                                    <IconButton disabled={item?.status === 'Reject' || item.checked ? true : false} onClick={() => handleOpenAdjustmentModel(transactions.indexOf(item))}>
+                                        <Build />
+                                    </IconButton>
+                                </td>
+                                <td >
+                                    {item?.adjustedComments}
+                                </td>
+                                <td><IconButton onClick={() => handleGetEmployeeContactInfo(item.employeeCode)}><ContactsOutlined fontSize='small' /></IconButton></td>
 
                                 {/* Add more table cells as needed */}
                             </tr>
@@ -506,7 +537,12 @@ const AccountantPage = () => {
                                 <td>{item.subSection}</td>
                                 <td>{item.nameOfAssured}</td>
                                 {/* <td>{item.nameOfAssured}</td> */}
+                                <td>{item.relation}</td>
+                                <td>{item?.city}</td>
                                 <td>{item.investment}</td>
+                                <td>{item?.paymentDate}</td>
+                                <td>{item?.startDate}</td>
+                                <td>{item?.endDate}</td>
                                 {item.subSectionCode === "13A" ?
                                     <>
                                         <td>{item?.pan}</td>
@@ -548,6 +584,15 @@ const AccountantPage = () => {
                                 <td >
                                     {item?.accountantsComments}
                                 </td>
+                                <td>
+                                    <IconButton onClick={() => handleOpenAdjustmentModel(transactions.indexOf(item))}>
+                                        <Build />
+                                    </IconButton>
+                                </td>
+                                <td >
+                                    {item?.adjustedComments}
+                                </td>
+                                <td><IconButton onClick={() => handleGetEmployeeContactInfo(item.employeeCode)}><ContactsOutlined fontSize='small' /></IconButton></td>
 
 
                                 {/* Add more table cells as needed */}
@@ -565,7 +610,12 @@ const AccountantPage = () => {
                                 <td>{item?.investmentCode}</td>
                                 <td>{item.subSection}</td>
                                 <td>{item.nameOfAssured}</td>
+                                <td>{item.relation}</td>
+                                <td>{item?.city}</td>
                                 <td>{item.investment}</td>
+                                <td>{item?.paymentDate}</td>
+                                <td>{item?.startDate}</td>
+                                <td>{item?.endDate}</td>
                                 {item.subSectionCode === "13A" ?
                                     <>
                                         <td>{item?.pan}</td>
@@ -617,6 +667,17 @@ const AccountantPage = () => {
                                 <td >
                                     {item?.accountantsComments}
                                 </td>
+                                <td>
+                                    {item.adjustedInvestment}
+                                    <br />
+                                    <IconButton disabled={item?.status === 'Reject' || item.checked ? true : false} onClick={() => handleOpenAdjustmentModel(transactions.indexOf(item))}>
+                                        <Build />
+                                    </IconButton>
+                                </td>
+                                <td >
+                                    {item?.adjustedComments}
+                                </td>
+                                <td><IconButton onClick={() => handleGetEmployeeContactInfo(item.employeeCode)}><ContactsOutlined fontSize='small' /></IconButton></td>
 
 
                                 {/* Add more table cells as needed */}
@@ -634,7 +695,12 @@ const AccountantPage = () => {
                                 <td>{item?.investmentCode}</td>
                                 <td>{item.subSection}</td>
                                 <td>{item.nameOfAssured}</td>
+                                <td>{item.relation}</td>
+                                <td>{item?.city}</td>
                                 <td>{item.investment}</td>
+                                <td>{item?.paymentDate}</td>
+                                <td>{item?.startDate}</td>
+                                <td>{item?.endDate}</td>
                                 {item.subSectionCode === "13A" ?
                                     <>
                                         <td>{item?.pan}</td>
@@ -672,36 +738,31 @@ const AccountantPage = () => {
                                 <td>{item?.policyNo}</td>
                                 <td>{item?.createTimestamp}</td>
                                 <td>{item?.editTimestamp}</td>
+                                <td>{item?.conversionTimestamp}</td>
                                 {investmentType === 'Actual' && <td>
                                     {item?.status === 'Reject' ? <span>Rejected</span> :
                                         <>
                                             {item?.status}{" "}{item?.resubmissionCounter}
                                             <br />
                                             <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
-                                            {/* <FormControlLabel
-                                                        value="Reject"
-                                                        control={
-                                                            <Radio
-                                                                size='small'
-                                                            // checked={data[index === 0 ? index : index + 1]?.checked ? true : false}
-                                                            // Use the state variable to control the checked state
-                                                            />
-                                                        }
-                                                        label={<span className={css.smallLabel1}>Reject</span>}
-                                                    // onClick={() => handleRadioChange(index, 'Reject', item)}
-                                                    /> */}
-
-
-
                                         </>
                                     }
 
                                 </td>}
-
-                                <td >
+                                <td>
                                     {item?.accountantsComments}
                                 </td>
-
+                                <td>
+                                    {item.adjustedInvestment}
+                                    <br />
+                                    <IconButton disabled={item?.status === 'Reject' || item.checked ? true : false} onClick={() => handleOpenAdjustmentModel(transactions.indexOf(item))}>
+                                        <Build />
+                                    </IconButton>
+                                </td>
+                                <td >
+                                    {item?.adjustedComments}
+                                </td>
+                                <td><IconButton onClick={() => handleGetEmployeeContactInfo(item.employeeCode)}><ContactsOutlined fontSize='small' /></IconButton></td>
 
                                 {/* Add more table cells as needed */}
                             </tr>
@@ -729,6 +790,19 @@ const AccountantPage = () => {
                 </div>}
 
             </div>
+            <AdjustmentModel
+                openAdjustment={openAdjustment}
+                adjustedObjectIndex={adjustedObjectIndex}
+                handleCloseAdjustmentModel={handleCloseAdjustmentModel}
+                adjustedInvestment={adjustedInvestment}
+                adjustedComments={adjustedComments}
+                setAdjustedInvestment={setAdjustedInvestment}
+                setAdjustedComments={setAdjustedComments}
+                adjustedObject={adjustedObject}
+                transactions={transactions}
+                setTransactions={setTransactions}
+            />
+            <ContactInfoModel openContactInfoModal={openContactInfoModal} handleCloseContactInfoModal={handleCloseContactInfoModal} phoneNumber={phoneNumber} />
         </div>
     )
 }
