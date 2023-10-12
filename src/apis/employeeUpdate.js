@@ -56,7 +56,6 @@ export const handleGetEmployeeContact = async (employeeCode, setIsContactInfo, s
         }
     })
         .then(response => {
-            console.log(response)
             setIsContactInfo(response.data.contactInfo)
             if (response.data.contactInfo === true) {
                 setPhoneNumber(response.data.phoneNumber)
@@ -82,8 +81,8 @@ export const handleGetEmployeeContactAccountant = async (employeeCode, setPhoneN
         }
     })
         .then(response => {
-            console.log(response)
             if (response.data.contactInfo === true) {
+                console.log("hello")
                 setPhoneNumber(response.data.phoneNumber)
             }
             else {

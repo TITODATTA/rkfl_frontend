@@ -1,7 +1,7 @@
 import axios from "axios";
 import { handleGetTaxtaion } from "./taxationApi";
 import { url } from "../utils/constants";
-import { handleGetInvestmentTransaction } from "./transactionApi";
+import { handleGetInvestmentRejectedTransaction, handleGetInvestmentTransaction } from "./transactionApi";
 
 
 export const handleGetFinancials = async (
@@ -9,7 +9,12 @@ export const handleGetFinancials = async (
     setIsLoading2, setInvestment80C,
     setInvestment80D,
     setInvestment10,
-    setInvestment24) => {
+    setInvestment24,
+    setRejected80C,
+    setRejected80D,
+    setRejected10,
+    setRejected24
+) => {
     setIsLoading2(true)
     axios.get(`${url}/api/financials/getFinancials`, {
         headers: {
@@ -26,6 +31,7 @@ export const handleGetFinancials = async (
                 setSelectedOption(openFinancial.investmentType);
                 handleGetTaxtaion(employeeCode, openFinancial.financialYear, setNewEntry, setTaxOption, setIsLoading2)
                 handleGetInvestmentTransaction(setInvestment80C, setInvestment80D, setInvestment10, setInvestment24, openFinancial.investmentType, openFinancial.financialYear)
+                handleGetInvestmentRejectedTransaction(openFinancial.financialYear, setRejected80C, setRejected80D, setRejected10, setRejected24)
             }
             else {
                 alert("There is no financial entry with Open,So you cannot access the site , Redirecting To Login")

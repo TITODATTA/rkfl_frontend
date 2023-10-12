@@ -31,7 +31,7 @@ const ContactInfoModel = ({
             aria-describedby="modal-modal-description"
         >
             <Box sx={modalStyle}>
-                <h4>Contact Details :- {phoneNumber.length === 0 ? phoneNumber : "Contact Info Not Provided"}</h4>
+                <h4>Contact Details :- {phoneNumber.length === 0 ? "Contact Info Not Provided" : phoneNumber}</h4>
             </Box>
         </Modal>
     )

@@ -11,7 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Rules from '../components/Rules'
 import { handleCreateTaxtaion } from '../apis/taxationApi'
 import { handleDownloadCsv } from '../utils/mainSectionTableFunction'
-import { handleGetInvestmentTransaction } from '../apis/transactionApi'
+import { handleGetInvestmentRejectedTransaction, handleGetInvestmentTransaction } from '../apis/transactionApi'
 import { handleGetEmployeeContact, handleUpdateEmployeeContact } from '../apis/employeeUpdate'
 
 const EmployeePage2 = () => {
@@ -34,6 +34,10 @@ const EmployeePage2 = () => {
     const [invesment24, setInvestment24] = useState(0)
     const [isContactInfo, setIsContactInfo] = useState(false)
     const [phoneNumber, setPhoneNumber] = useState("")
+    const [rejected80C, setRejected80C] = useState([])
+    const [rejected80D, setRejected80D] = useState([])
+    const [rejected10, setRejected10] = useState([])
+    const [rejected24, setRejected24] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -54,7 +58,11 @@ const EmployeePage2 = () => {
                 setInvestment80C,
                 setInvestment80D,
                 setInvestment10,
-                setInvestment24
+                setInvestment24,
+                setRejected80C,
+                setRejected80D,
+                setRejected10,
+                setRejected24
             )
             handleGetEmployeeContact(user.employeeCode, setIsContactInfo, setPhoneNumber)
         }
@@ -186,6 +194,12 @@ const EmployeePage2 = () => {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div className={empPageCss.error_container}>
+                            {rejected80C.length !== 0 && <h4>Section 80C : -<span style={{ color: "red" }}>{rejected80C.length} Rejected </span></h4>}
+                            {rejected80D.length !== 0 && <h4>Section 80D : -<span style={{ color: "red" }}>{rejected80D.length} Rejected </span></h4>}
+                            {rejected10.length !== 0 && <h4>Section 10 : -<span style={{ color: "red" }}>{rejected10.length} Rejected </span></h4>}
+                            {rejected24.length !== 0 && <h4>Section 24 : -<span style={{ color: "red" }}>{rejected24.length} Rejected </span></h4>}
                         </div>
 
                     </div>

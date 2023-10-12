@@ -260,6 +260,12 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         <td className={css.word_break}>
                                             {item?.status}
                                         </td>
+                                        <td className={css.word_break}>
+                                            {item?.adjustedInvestment}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item?.adjustedComments}
+                                        </td>
                                         <td>
                                             {item?.isEdit === true ?
                                                 <IconButton onClick={() => handleOpenCommentsModel(item, setCommentsModel, setEntryStatus, setComments)}>
@@ -337,6 +343,12 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                         <td className={css.word_break}>
                                             {item?.status}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item?.adjustedInvestment}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item?.adjustedComments}
                                         </td>
                                         <td>
                                             {item?.isEdit === true ?
@@ -420,6 +432,12 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         <td className={css.word_break}>
                                             {item?.status}
                                         </td>
+                                        <td className={css.word_break}>
+                                            {item?.adjustedInvestment}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item?.adjustedComments}
+                                        </td>
                                         <td>
                                             {item?.isEdit === true ?
                                                 <IconButton onClick={() => handleOpenCommentsModel(item, setCommentsModel, setEntryStatus, setComments)}>
@@ -476,6 +494,12 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                         <td className={css.word_break}>
                                             {item?.status}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item?.adjustedInvestment}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item?.adjustedComments}
                                         </td>
                                         <td>
                                             {item?.isEdit === true ?

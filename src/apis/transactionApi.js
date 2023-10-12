@@ -118,7 +118,6 @@ export const handleGetInvestmentTransaction = async (
         }
     })
         .then(response => {
-            console.log(response)
             const totalInvestment80C = response.data.data.section80C.length > 0 ?
                 response.data.data.section80C
                     .filter(item => item.investmentSchedule === selectedOption && item.financialyear === openyear)
@@ -162,6 +161,53 @@ export const handleGetInvestmentTransaction = async (
                 window.location = "/login"
                 return;
             }
+        });
+
+};
+export const handleGetInvestmentRejectedTransaction = async (openyear, setRejected80C, setRejected80D, setRejected10, setRejected24) => {
+    const empCode = JSON.parse(sessionStorage.getItem("userData"))
+    const postData = {
+        employeeCode: parseInt(empCode.employeeCode),
+    }
+    axios.post(`${url}/api/transactions/getTransactionByEmployeeCode`, postData, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            const totalRejectedInvestment80C = response.data.data.section80C.length > 0 ?
+                response.data.data.section80C
+                    .filter(item => item.investmentSchedule === 'actual' && item.financialyear === openyear && item?.status === 'Reject')
+                : []
+            const totalRejectedInvestment80D = response.data.data.section80D.length > 0 ?
+                response.data.data.section80D
+                    .filter(item => item.investmentSchedule === 'actual' && item.financialyear === openyear && item?.status === 'Reject')
+                : []
+            const totalRejectedInvestment10 = response.data.data.section10.length > 0 ?
+                response.data.data.section10
+                    .filter(item => item.investmentSchedule === 'actual' && item.financialyear === openyear && item?.status === 'Reject')
+                : []
+            const totalRejectedInvestment24 = response.data.data.section24.length > 0 ?
+                response.data.data.section24
+                    .filter(item => item.investmentSchedule === 'actual' && item.financialyear === openyear && item?.status === 'Reject')
+                : []
+
+            setRejected80C(totalRejectedInvestment80C)
+            setRejected80D(totalRejectedInvestment80D)
+            setRejected10(totalRejectedInvestment10)
+            setRejected24(totalRejectedInvestment24)
+
+        })
+        .catch(error => {
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error:Redirecting To Login")
+                window.location = "/login"
+                return;
+            }
+            setRejected80C([])
+            setRejected80D([])
+            setRejected10([])
+            setRejected24([])
         });
 
 };
