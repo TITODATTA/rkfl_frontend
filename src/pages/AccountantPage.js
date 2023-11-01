@@ -583,13 +583,16 @@ const AccountantPage = () => {
                                 <td>{item?.createTimestamp}</td>
                                 <td>{item?.editTimestamp}</td>
                                 <td>{item?.conversionTimestamp}</td>
-                                <td>Accepted</td>
+                                <td>Accept</td>
                                 <td >
                                     {item?.accountantsComments}
                                 </td>
                                 <td>
-                                    <IconButton onClick={() => handleOpenAdjustmentModel(transactions.indexOf(item))}>
-                                        <Build />
+                                    <br />
+                                    {item.adjustedInvestment}
+                                    <br />
+                                    <IconButton disabled={item?.status === 'Reject' || item.checked || item.status === 'Accept' ? true : false} onClick={() => handleOpenAdjustmentModel(transactions.indexOf(item))}>
+                                        <Build fontSize='small' />
                                     </IconButton>
                                 </td>
                                 <td >

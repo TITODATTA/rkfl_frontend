@@ -190,7 +190,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             <td className={css.word_break}>
                                                 You have uploaded  {item.file.length} files
                                             </td>
-                                            <td className={css.word_break}>
+                                            <td className={css.word_break} style={{ color: item?.status === "Accept" ? "green" : "red", fontWeight: 'bold' }}>
                                                 {item?.status}
                                             </td>
                                             <td className={css.word_break}>
@@ -257,7 +257,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         <td className={css.word_break}>
                                             You have uploaded  {item.file.length} files
                                         </td>
-                                        <td className={css.word_break}>
+                                        <td className={css.word_break} style={{ color: 'green', fontWeight: 'bold' }}>
                                             {item?.status}
                                         </td>
                                         <td className={css.word_break}>
@@ -341,7 +341,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         <td className={css.word_break}>
                                             You have uploaded  {item.file.length} files
                                         </td>
-                                        <td className={css.word_break}>
+                                        <td className={css.word_break} style={{ color: item?.status === "Accept" ? "green" : "red", fontWeight: 'bold' }}>
                                             {item?.status}
                                         </td>
                                         <td className={css.word_break}>
@@ -429,7 +429,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         <td className={css.word_break}>
                                             You have uploaded  {item.file.length} files
                                         </td>
-                                        <td className={css.word_break}>
+                                        <td className={css.word_break} style={{ color: item?.status === "Accept" ? "green" : "red", fontWeight: 'bold' }}>
                                             {item?.status}
                                         </td>
                                         <td className={css.word_break}>
@@ -492,7 +492,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         <td className={css.word_break}>
                                             You have uploaded  {item.file.length} files
                                         </td>
-                                        <td className={css.word_break}>
+                                        <td className={css.word_break} style={{ color: item?.status === "Accept" ? "green" : "red", fontWeight: 'bold' }}>
                                             {item?.status}
                                         </td>
                                         <td className={css.word_break}>
