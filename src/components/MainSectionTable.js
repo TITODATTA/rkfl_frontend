@@ -23,7 +23,7 @@ import { url } from '../utils/constants';
 
 
 
-const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOption, openyear, doj, phoneNumber }) => {
+const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOption, openyear, doj, phoneNumber, taxOption }) => {
     const [subSectionValue, setSubSectionValue] = useState("");
     const [addState, setAddState] = useState(false)
     const [array80C, setArray80C] = useState([])
@@ -552,17 +552,19 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 value={row.selectValue}
                                             >
                                                 <option value="" >Select</option>
-                                                {subSection.map((item) => (
-                                                    <option
-                                                        value={item._id}
-                                                        data-subSectionCode={item.subSectionCode}
-                                                        data-subSection={item.subSection}
-                                                        data-investmentCode={item?.investmentCode || ""}
-                                                        data-division={item?.division || ""}
-                                                    >
-                                                        {item.subSection} ({item.investmentCode ? item?.investmentCode : item?.subSectionCode}  {item?.division})
-                                                    </option>
-                                                ))}
+                                                {subSection
+                                                    .filter((item, index) => taxOption !== 2 || index === 12)
+                                                    .map((item) => (
+                                                        <option
+                                                            value={item._id}
+                                                            data-subSectionCode={item.subSectionCode}
+                                                            data-subSection={item.subSection}
+                                                            data-investmentCode={item?.investmentCode || ""}
+                                                            data-division={item?.division || ""}
+                                                        >
+                                                            {item.subSection} ({item.investmentCode ? item?.investmentCode : item?.subSectionCode}  {item?.division})
+                                                        </option>
+                                                    ))}
                                             </select>
                                         </td>
                                         <td className={css.word_break} >
@@ -1213,17 +1215,19 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 value={row.selectValue}
                                             >
                                                 <option value="" >Select</option>
-                                                {subSection.map((item) => (
-                                                    <option
-                                                        value={item._id}
-                                                        data-subSection={item.subSection}
-                                                        data-subSectionCode={item.subSectionCode}
-                                                        data-investmentCode={item?.investmentCode || ""}
-                                                        data-division={item?.division || ""}
-                                                    >
-                                                        {item.subSection} ({item.investmentCode ? item?.investmentCode : item?.subSectionCode}  {item?.division})
-                                                    </option>
-                                                ))}
+                                                {subSection
+                                                    .filter((item, index) => taxOption !== 2 || index === 12)
+                                                    .map((item) => (
+                                                        <option
+                                                            value={item._id}
+                                                            data-subSection={item.subSection}
+                                                            data-subSectionCode={item.subSectionCode}
+                                                            data-investmentCode={item?.investmentCode || ""}
+                                                            data-division={item?.division || ""}
+                                                        >
+                                                            {item.subSection} ({item.investmentCode ? item?.investmentCode : item?.subSectionCode}  {item?.division})
+                                                        </option>
+                                                    ))}
                                             </select>
                                         </td>
                                         <td className={css.word_break} >
