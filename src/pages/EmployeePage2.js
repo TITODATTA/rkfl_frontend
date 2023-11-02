@@ -266,53 +266,8 @@ const EmployeePage2 = () => {
                             </div>
                         </div>
                     </div>}
-                {taxOption === 2 &&
-                    <div className={empPageCss.second_entry_container}>
-                        <div className={empPageCss.second_entry_left}>
-                            <div className={empPageCss.investment_schedule_container}>
-                                <div className={empPageCss.investment_schedule_text}>
-                                    <h3>Investment Schedule</h3>
-                                </div>
-                                <div className={empPageCss.investment_schedule_option_container}>
-                                    <h4>Details Will be Submitted in <span style={selectedOption === "provisional" ? { color: "red" } : { color: "blue" }}>{selectedOption}</span> State</h4>
-                                </div>
-                            </div>
-                            <div className={empPageCss.main_section_container}>
-                                {rows.length !== 0 ?
-                                    <select disabled className={empPageCss.custom_select} value={mainSection} onChange={(e) => handleChangeMainSection(e)}>
-                                        <option value="" disabled hidden selected>Choose Your Main Section</option>
-                                        <option value="Section 80D">Section 80D</option>
-                                        {/* Add more options */}
-                                    </select> :
-                                    <select className={empPageCss.custom_select} value={mainSection} onChange={(e) => handleChangeMainSection(e)}>
-                                        <option value="" disabled hidden selected>Choose Your Main Section</option>
-                                        <option value="Section 80D">Section 80D</option>
-                                        {/* <option value="Section 80CCD">Section 80CCD</option> */}
-                                        {/* Add more options */}
-                                    </select>}
-
-                            </div>
-                            <div className={empPageCss.csv_download_container}>
-                                <a onClick={() => handleDownloadCsv()}>Download Investment Details submitted till Date</a>
-                            </div>
-                        </div>
-                        <div className={empPageCss.second_entry_right}>
-                            <div className={empPageCss.tableContainer}>
-                                <div className={empPageCss.tableHeader}>
-                                    {selectedOption.length !== 0 &&
-                                        <h3>{mainSection}</h3>}
-                                </div>
-                                {mainSection.length !== 0 && selectedOption.length !== 0 &&
-                                    < MainSectionTable rows={rows} setRows={setRows} subSection={subSection}
-                                        mainSection={mainSection} selectedOption={selectedOption} openyear={openyear}
-                                        doj={user?.dateOfJoining} phoneNumber={phoneNumber} taxOption={taxOption}
-                                    />}
-                            </div>
-                        </div>
-                    </div>}
 
             </div>}
-
 
         </>
 
