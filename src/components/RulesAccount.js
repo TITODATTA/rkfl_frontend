@@ -11,7 +11,7 @@ const RulesAccount = () => {
             <h5>To change the view of investments click the "Back" button</h5>
             <h5>2)<span style={{ color: "blue" }}>Provisional</span>  Investment is View-Only Data</h5>
             <h5>3)Number of Entries Per Page : -Number of Invesment you want to see per page </h5>
-            <h5>4)Rejected/Accepted/Resubmitted/New Actual Entry Filter Options will appear only for<span style={{ color: "blue" }}>Actual Investments</span>
+            <h5>4)Rejected/Accepted/Resubmitted/New Actual Entry Filter Options will appear only for <span style={{ color: "blue" }}>Actual Investments</span>
                 <p style={{ marginLeft: "20px" }}>
                     <span style={{ color: "red" }}>&#8226; Rejected:</span>Invesment Rejected By Accounts
                 </p>
@@ -26,8 +26,9 @@ const RulesAccount = () => {
                 </p>
             </h5>
             <h5>5)Checkbox of the Status is for Accepted/Rejected.</h5>
-            <h5>6)Adjustements Will only happen for investments which are not <span style={{ color: "red" }}>Rejected</span> or <span style={{ color: "green" }}>Accepted</span>.Adjustements will be submitted on click of "Accepted/Resubmitted To SAP" button </h5>
-            <h5>7)<span style={{ color: "red" }}>Rejected </span>Investments needs to Submitted first , before Submitting <span style={{ color: "green" }}>Accepted/Resubmitted</span> Investments</h5>
+            <h5>6)Adjustements Will only happen for investments which are not <span style={{ color: "red" }}>Rejected</span>.Adjustements will be submitted on click of "Accepted/Resubmitted To SAP" button </h5>
+            <h5>7)Adjustements Comments will apply or appear if the adjusted investment is changed from the investment value filled by employee</h5>
+            <h5>8)<span style={{ color: "red" }}>Rejected </span>Investments needs to Submitted first , before Submitting <span style={{ color: "green" }}>Accepted/Resubmitted</span> Investments</h5>
         </div>
     )
 }
