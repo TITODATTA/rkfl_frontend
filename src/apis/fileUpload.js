@@ -2,6 +2,7 @@ import axios from "axios";
 import { url } from "../utils/constants";
 
 export const uploadFile = async (file, setFileList, setSuccess, setSuccessMessage, setError, setErrorMessage, setUploadLoading) => {
+    const empCode = JSON.parse(sessionStorage.getItem("userData"))
     setUploadLoading(true)
     try {
         const formData = new FormData();
@@ -17,6 +18,12 @@ export const uploadFile = async (file, setFileList, setSuccess, setSuccessMessag
         if (!filenameRegex.test(file.name)) {
             setError(true);
             setErrorMessage('Invalid filename format');
+            setUploadLoading(false)
+            return;
+        }
+        if (parseInt(file.name.substr(0, 6)) !== empCode.employeeCode) {
+            setError(true);
+            setErrorMessage('Incorrect employee code in filename');
             setUploadLoading(false)
             return;
         }

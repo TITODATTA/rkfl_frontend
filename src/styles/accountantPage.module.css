@@ -181,6 +181,18 @@ hr {
   appearance: none;
   width: 20px;
   height: 20px;
+  margin-left: 15px;
+  border: 2px solid #000; /* Border color for the checkbox */
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+}
+.checkbox1 {
+  /* Style for the default checkbox appearance */
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-left: 12px;
   border: 2px solid #000; /* Border color for the checkbox */
   background-color: transparent;
   cursor: pointer;
@@ -195,9 +207,37 @@ hr {
   text-align: center;
   line-height: 20px;
 }
+.checkbox1:checked::before {
+  /* Style for the checked state */
+  content: "✓"; /* Red cross symbol */
+  display: block;
+  color: green; /* Red color for the cross */
+  font-size: 16px;
+  text-align: center;
+  line-height: 20px;
+}
+.checkbox:disabled {
+  opacity: 0.5; /* Reduce the opacity to make it visually disabled */
+  cursor: not-allowed; /* Change the cursor to "not-allowed" as well */
+}
+.checkbox1:disabled {
+  opacity: 0.5; /* Reduce the opacity to make it visually disabled */
+  cursor: not-allowed; /* Change the cursor to "not-allowed" as well */
+}
 .rules_container {
   width: 40%;
 }
 .rules_container h3 {
   color: red;
+}
+.checkbox_container {
+  margin-top: 5px;
+  display: flex;
+}
+.checkbox_container1 {
+  margin-top: 5px;
+  display: flex;
+}
+.status_td {
+  width: 6%;
 }

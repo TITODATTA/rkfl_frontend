@@ -25,7 +25,7 @@ const RulesAccount = () => {
                     <span style={{ color: "green" }}>&#8226; New Actual Entry:</span>New Entry After Last Acceptence by Accounts
                 </p>
             </h5>
-            <h5>5)Checkbox of the Status is only for Rejected.If not checked,it will imply<span style={{ color: "green" }}>Accepted</span> </h5>
+            <h5>5)Checkbox of the Status is for Accepted/Rejected.</h5>
             <h5>6)Adjustements Will only happen for investments which are not <span style={{ color: "red" }}>Rejected</span> or <span style={{ color: "green" }}>Accepted</span>.Adjustements will be submitted on click of "Accepted/Resubmitted To SAP" button </h5>
             <h5>7)<span style={{ color: "red" }}>Rejected </span>Investments needs to Submitted first , before Submitting <span style={{ color: "green" }}>Accepted/Resubmitted</span> Investments</h5>
         </div>

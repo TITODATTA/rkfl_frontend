@@ -38,8 +38,6 @@ const AccountantPage = () => {
     const [phoneNumber, setPhoneNumber] = useState("")
     const [openContactInfoModal, setOpenContactInfoModal] = useState(false)
 
-    console.log(transactions)
-
     useEffect(() => {
         if (!role || !userDetails) {
             navigate("/login")
@@ -127,6 +125,16 @@ const AccountantPage = () => {
             setTransactions(updatedData);
         }
     };
+    const handleRadioChangeAccpeted = (index, status, item) => {
+        const updatedData = [...transactions];
+        if (updatedData[index].hasOwnProperty('checked1')) {
+            delete updatedData[index].checked1;
+            setTransactions(updatedData);
+        } else {
+            updatedData[index].checked1 = true;
+            setTransactions(updatedData);
+        }
+    };
 
     const handleSearchEmployee = () => {
         if (searchTerm.length === 0) {
@@ -166,6 +174,7 @@ const AccountantPage = () => {
 
     const handleSubmit = () => {
         handleUpdateTransaction(transactions, setTransactions, setSubmitButtonState, setData)
+        setFilter("")
     }
     const handleChangeFilter = (e) => {
         setFilter(e.target.value)
@@ -173,19 +182,29 @@ const AccountantPage = () => {
 
     const handleSubmitAcceptedTransaction = () => {
         const hasCheckedTrue = transactions.some(item => item.checked === true);
+        // const hasChecked1Property = transactions.every(item => item.hasOwnProperty('checked1'));
         if (hasCheckedTrue) {
-            alert("Rejected Documents Neeed To be Submitted First");
+            alert("Rejected Documents Need To be Submitted First");
             return; // Exit the function
         }
-        let acceptedArray;
-        if (transactions.some(item => item.hasOwnProperty('checked'))) {
-            // Filter based on the 'checked' key if it exists
-            acceptedArray = transactions.filter(item => item.checked === false);
-        } else {
-            // Filter based on the 'status' key if 'checked' doesn't exist
-            acceptedArray = transactions.filter(item => !item.status || item.status === "Resubmitted");
+        // if (!hasChecked1Property) {
+        //     alert("Error, Not all documents have been Accepted")
+        //     return;
+        // }
+        let acceptedArray = transactions.filter(item => item.checked1 === true);
+        if (acceptedArray.length === 0) {
+            alert("No Accepted Transactions");
+            return;
         }
+        // if (transactions.some(item => item.hasOwnProperty('checked'))) {
+        //     // Filter based on the 'checked' key if it exists
+        //     acceptedArray = transactions.filter(item => item.checked === false);
+        // } else {
+        //     // Filter based on the 'status' key if 'checked' doesn't exist
+        //     acceptedArray = transactions.filter(item => !item.status || item.status === "Resubmitted");
+        // }
         handleUpdateAcceptedTransaction(acceptedArray, setTransactions, setSubmitButtonState)
+        setFilter("")
     }
 
     const handleCloseAdjustmentModel = () => {
@@ -206,7 +225,6 @@ const AccountantPage = () => {
     const handleCloseContactInfoModal = () => {
         setOpenContactInfoModal(false)
     }
-    console.log(currentItems)
     return (
         <div className={css.page_container}>
             <div className={css.header_container}>
@@ -299,6 +317,7 @@ const AccountantPage = () => {
                         <option value="reject">Rejected</option>
                         <option value="accept">Accepted</option>
                         <option value="resubmit">Resubmitted</option>
+                        <option value="notChecked">Not Checked Entries</option>
                         <option value="new">New Actual Entry</option>
                     </select>
                 </div>}
@@ -334,7 +353,7 @@ const AccountantPage = () => {
                             <th>Edit Date/Time</th>
                             <th>Conversion Date/Time</th>
                             {investmentType === 'Actual' && <>
-                                <th>Status(Reject)</th>
+                                <th>Status(Accept/Reject)</th>
                                 <th>Accounts Comments</th>
                                 <th>Adjusted Invesment</th>
                                 <th>Adjusted Comments</th>
@@ -407,14 +426,25 @@ const AccountantPage = () => {
                                 <td>{item?.conversionTimestamp}</td>
                                 {investmentType === 'Actual' &&
                                     <>
-                                        <td>
-                                            {item?.status === 'Reject' ? <span>Rejected</span> :
+                                        <td className={css.status_td}>
+                                            {item?.status === 'Reject' ? <span style={{ color: "red", fontWeight: "bold" }}>Reject</span> :
                                                 <>
                                                     {item?.status}{" "}
                                                     {item.status === "Resubmitted" ? item?.resubmissionCounter : ""}
                                                     <br />
                                                     {item?.status !== 'Accept' &&
-                                                        <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />}
+                                                        <>
+                                                            <div className={css.checkbox_container}>
+                                                                <h4>Accept</h4>
+                                                                <input type='checkbox' checked={item.checked1 ? true : false} disabled={item.checked ? true : false} className={css.checkbox1} onClick={() => handleRadioChangeAccpeted(transactions.indexOf(item))} />
+                                                            </div>
+                                                            <div className={css.checkbox_container1}>
+                                                                <h4>Reject</h4>
+                                                                <input type='checkbox' checked={item.checked ? true : false} disabled={item.checked1 ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
+                                                            </div>
+                                                        </>
+
+                                                    }
 
                                                 </>
                                             }
@@ -474,8 +504,8 @@ const AccountantPage = () => {
                                 {item.subSectionCode === "B" ?
                                     <>
                                         <td>{item?.pan}</td>
-                                        <td>{item?.landloardsName}</td>
-                                        <td>{item?.landLoardsAddress}</td>
+                                        <td>{item?.landLoardName}</td>
+                                        <td>{item?.landLoardAddress}</td>
                                     </> :
                                     <>
                                         <td></td>
@@ -496,12 +526,21 @@ const AccountantPage = () => {
                                 <td>{item?.createTimestamp}</td>
                                 <td>{item?.editTimestamp}</td>
                                 <td>{item?.conversionTimestamp}</td>
-                                {investmentType === 'Actual' && <td>
-                                    {item?.status === 'Reject' ? <span>Rejected</span> :
+                                {investmentType === 'Actual' && <td className={css.status_td}>
+                                    {item?.status === 'Reject' ? <span style={{ color: "red", fontWeight: "bold" }}>Reject</span> :
                                         <>
                                             {item?.status}{" "}{item?.resubmissionCounter}
                                             <br />
-                                            <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
+                                            <>
+                                                <div className={css.checkbox_container}>
+                                                    <h4>Accept</h4>
+                                                    <input type='checkbox' checked={item.checked1 ? true : false} disabled={item.checked ? true : false} className={css.checkbox1} onClick={() => handleRadioChangeAccpeted(transactions.indexOf(item))} />
+                                                </div>
+                                                <div className={css.checkbox_container1}>
+                                                    <h4>Reject</h4>
+                                                    <input type='checkbox' checked={item.checked ? true : false} disabled={item.checked1 ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
+                                                </div>
+                                            </>
 
                                         </>
                                     }
@@ -526,7 +565,7 @@ const AccountantPage = () => {
                                 {/* Add more table cells as needed */}
                             </tr>
                         ))}
-                        {filter === "accept" && currentItems.filter((item) => item?.status === "Accept").map((item, index) => (
+                        {filter === "accept" && currentItems.filter((item) => item?.status === "Accept" || item?.checked1 === true).map((item, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{item.employeeCode}</td>
@@ -561,8 +600,8 @@ const AccountantPage = () => {
                                 {item.subSectionCode === "B" ?
                                     <>
                                         <td>{item?.pan}</td>
-                                        <td>{item?.landloardsName}</td>
-                                        <td>{item?.landLoardsAddress}</td>
+                                        <td>{item?.landLoardName}</td>
+                                        <td>{item?.landLoardAddress}</td>
                                     </> :
                                     <>
                                         <td></td>
@@ -583,7 +622,18 @@ const AccountantPage = () => {
                                 <td>{item?.createTimestamp}</td>
                                 <td>{item?.editTimestamp}</td>
                                 <td>{item?.conversionTimestamp}</td>
-                                <td>Accept</td>
+                                <td className={css.status_td}>{item.status ? "Accept" : <>
+                                    <div className={css.checkbox_container}>
+                                        <h4>Accept</h4>
+                                        <input type='checkbox' checked={item.checked1 ? true : false} disabled={item.checked ? true : false} className={css.checkbox1} onClick={() => handleRadioChangeAccpeted(transactions.indexOf(item))} />
+                                    </div>
+                                    <div className={css.checkbox_container1}>
+                                        <h4>Reject</h4>
+                                        <input type='checkbox' checked={item.checked ? true : false} disabled={item.checked1 ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
+                                    </div>
+                                </>}
+
+                                </td>
                                 <td >
                                     {item?.accountantsComments}
                                 </td>
@@ -638,8 +688,8 @@ const AccountantPage = () => {
                                 {item.subSectionCode === "B" ?
                                     <>
                                         <td>{item?.pan}</td>
-                                        <td>{item?.landloardsName}</td>
-                                        <td>{item?.landLoardsAddress}</td>
+                                        <td>{item?.landLoardName}</td>
+                                        <td>{item?.landLoardAddress}</td>
                                     </> :
                                     <>
                                         <td></td>
@@ -660,12 +710,21 @@ const AccountantPage = () => {
                                 <td>{item?.createTimestamp}</td>
                                 <td>{item?.editTimestamp}</td>
                                 <td>{item?.conversionTimestamp}</td>
-                                {investmentType === 'Actual' && <td>
-                                    {item?.status === 'Reject' ? <span>Rejected</span> :
+                                {investmentType === 'Actual' && <td className={css.status_td}>
+                                    {item?.status === 'Reject' ? <span style={{ color: "red", fontWeight: "bold" }}>Reject</span> :
                                         <>
                                             {item?.status}{" "}{item?.resubmissionCounter}
                                             <br />
-                                            <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
+                                            <>
+                                                <div className={css.checkbox_container}>
+                                                    <h4>Accept</h4>
+                                                    <input type='checkbox' checked={item.checked1 ? true : false} disabled={item.checked ? true : false} className={css.checkbox1} onClick={() => handleRadioChangeAccpeted(transactions.indexOf(item))} />
+                                                </div>
+                                                <div className={css.checkbox_container1}>
+                                                    <h4>Reject</h4>
+                                                    <input type='checkbox' checked={item.checked ? true : false} disabled={item.checked1 ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
+                                                </div>
+                                            </>
                                         </>
                                     }
 
@@ -688,6 +747,108 @@ const AccountantPage = () => {
 
 
                                 {/* Add more table cells as needed */}
+                            </tr>
+                        ))}
+                        {filter === "notChecked" && currentItems.filter((item) => !item?.checked1 && !item?.checked && !item.status).map((item, index) => (
+                            <tr key={index} >
+                                <td>{index + 1}</td>
+                                <td>{item.employeeCode}</td>
+                                <td>{item.financialyear}</td>
+                                <td>{item.employeeName}</td>
+                                <td>{item.mainSection}</td>
+                                <td>{item?.subSectionCode}</td>
+                                <td>{item?.division}</td>
+                                <td>{item?.investmentCode}</td>
+                                <td>{item.subSection}</td>
+                                <td>{item.nameOfAssured}</td>
+                                <td>{item.relation}</td>
+                                <td>{item?.city}</td>
+                                <td>{item.investment}</td>
+                                <td>{item?.paymentDate}</td>
+                                <td>{item?.startDate}</td>
+                                <td>{item?.endDate}</td>
+                                {item.subSectionCode === "13A" ?
+                                    <>
+                                        <td>{item?.pan}</td>
+                                        <td>{item?.landLoardName}</td>
+                                        <td>{item?.landLoardAddress}</td>
+                                    </> :
+                                    <>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </>
+                                }
+
+                                {item.subSectionCode === "B" ?
+                                    <>
+                                        <td>{item?.pan}</td>
+                                        <td>{item?.landLoardName}</td>
+                                        <td>{item?.landLoardAddress}</td>
+                                    </> :
+                                    <>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </>
+                                }
+                                <td>
+                                    {item?.file.map((item, index) => (
+                                        <>
+                                            <a href={`${url}/file/${item.file}`} target="_blank" rel="noreferrer">Uploaded Document {index + 1}</a>
+                                            <br />
+                                        </>
+
+                                    ))}
+                                </td>
+                                <td>{item?.policyNo}</td>
+                                <td>{item?.createTimestamp}</td>
+                                <td>{item?.editTimestamp}</td>
+                                <td>{item?.conversionTimestamp}</td>
+                                {investmentType === 'Actual' &&
+                                    <>
+                                        <td className={css.status_td}>
+                                            {item?.status === 'Reject' ? <span style={{ color: "red", fontWeight: "bold" }}>Reject</span> :
+                                                <>
+                                                    {item?.status}{" "}
+                                                    {item.status === "Resubmitted" ? item?.resubmissionCounter : ""}
+                                                    <br />
+                                                    {item?.status !== 'Accept' &&
+                                                        <>
+                                                            <div className={css.checkbox_container}>
+                                                                <h4>Accept</h4>
+                                                                <input type='checkbox' checked={item.checked1 ? true : false} disabled={item.checked ? true : false} className={css.checkbox1} onClick={() => handleRadioChangeAccpeted(transactions.indexOf(item))} />
+                                                            </div>
+                                                            <div className={css.checkbox_container1}>
+                                                                <h4>Reject</h4>
+                                                                <input type='checkbox' checked={item.checked ? true : false} disabled={item.checked1 ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
+                                                            </div>
+                                                        </>
+
+                                                    }
+
+                                                </>
+                                            }
+                                        </td>
+                                        <td >
+                                            {item?.accountantsComments}
+                                        </td>
+                                        <td>
+                                            <br />
+                                            {item.adjustedInvestment}
+                                            <br />
+                                            <IconButton disabled={item?.status === 'Reject' || item.checked || item.status === 'Accept' ? true : false} onClick={() => handleOpenAdjustmentModel(transactions.indexOf(item))}>
+                                                <Build fontSize='small' />
+                                            </IconButton>
+                                        </td>
+                                        <td>
+                                            {item?.adjustedComments}
+                                        </td>
+                                    </>
+                                }
+                                <td>
+                                    <IconButton onClick={() => handleGetEmployeeContactInfo(item.employeeCode)}><ContactsOutlined fontSize='small' /></IconButton>
+                                </td>
                             </tr>
                         ))}
                         {filter === "new" && currentItems.filter((item) => !item?.status && !item.checked).map((item, index) => (
@@ -724,8 +885,8 @@ const AccountantPage = () => {
                                 {item.subSectionCode === "B" ?
                                     <>
                                         <td>{item?.pan}</td>
-                                        <td>{item?.landloardsName}</td>
-                                        <td>{item?.landLoardsAddress}</td>
+                                        <td>{item?.landLoardName}</td>
+                                        <td>{item?.landLoardAddress}</td>
                                     </> :
                                     <>
                                         <td></td>
@@ -746,12 +907,19 @@ const AccountantPage = () => {
                                 <td>{item?.createTimestamp}</td>
                                 <td>{item?.editTimestamp}</td>
                                 <td>{item?.conversionTimestamp}</td>
-                                {investmentType === 'Actual' && <td>
-                                    {item?.status === 'Reject' ? <span>Rejected</span> :
+                                {investmentType === 'Actual' && <td className={css.status_td}>
+                                    {item?.status === 'Reject' ? <span style={{ color: "red", fontWeight: "bold" }}>Reject</span> :
                                         <>
                                             {item?.status}{" "}{item?.resubmissionCounter}
                                             <br />
-                                            <input type='checkbox' checked={item.checked ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
+                                            <div className={css.checkbox_container}>
+                                                <h4>Accept</h4>
+                                                <input type='checkbox' checked={item.checked1 ? true : false} disabled={item.checked ? true : false} className={css.checkbox1} onClick={() => handleRadioChangeAccpeted(transactions.indexOf(item))} />
+                                            </div>
+                                            <div className={css.checkbox_container1}>
+                                                <h4>Reject</h4>
+                                                <input type='checkbox' checked={item.checked ? true : false} disabled={item.checked1 ? true : false} className={css.checkbox} onClick={() => handleRadioChange(transactions.indexOf(item), 'Reject', item)} />
+                                            </div>
                                         </>
                                     }
 

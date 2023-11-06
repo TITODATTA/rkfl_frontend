@@ -147,7 +147,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                 {viewOption === "actual" &&
                                     <>
                                         <th>Adjusted Invesment By Accountant</th>
-                                        <th>Accountant Comments</th>
+                                        <th>Accountant Comments For Adjustment</th>
                                     </>}
 
 

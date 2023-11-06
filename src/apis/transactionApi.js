@@ -122,28 +122,28 @@ export const handleGetInvestmentTransaction = async (
                 response.data.data.section80C
                     .filter(item => item.investmentSchedule === selectedOption && item.financialyear === openyear)
                     .reduce((acc, item) => {
-                        const investmentValue = parseInt(item.investment);
+                        const investmentValue = parseInt(item.adjustedInvestment);
                         return isNaN(investmentValue) ? acc : acc + investmentValue;
                     }, 0) : 0;
             const totalInvestment80D = response.data.data.section80D.length > 0 ?
                 response.data.data.section80D
                     .filter(item => item.investmentSchedule === selectedOption && item.financialyear === openyear)
                     .reduce((acc, item) => {
-                        const investmentValue = parseInt(item.investment);
+                        const investmentValue = parseInt(item.adjustedInvestment);
                         return isNaN(investmentValue) ? acc : acc + investmentValue;
                     }, 0) : 0;
             const totalInvestment10 = response.data.data.section10.length > 0 ?
                 response.data.data.section10
                     .filter(item => item.investmentSchedule === selectedOption && item.financialyear === openyear)
                     .reduce((acc, item) => {
-                        const investmentValue = parseInt(item.investment);
+                        const investmentValue = parseInt(item.adjustedInvestment);
                         return isNaN(investmentValue) ? acc : acc + investmentValue;
                     }, 0) : 0;
             const totalInvestment24 = response.data.data.section24.length > 0 ?
                 response.data.data.section24
                     .filter(item => item.investmentSchedule === selectedOption && item.financialyear === openyear)
                     .reduce((acc, item) => {
-                        const investmentValue = parseInt(item.investment);
+                        const investmentValue = parseInt(item.adjustedInvestment);
                         return isNaN(investmentValue) ? acc : acc + investmentValue;
                     }, 0) : 0;
             setInvestment80C(totalInvestment80C)
