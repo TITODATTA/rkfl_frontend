@@ -127,7 +127,7 @@ const AdminPage = () => {
                         <h3>
                             <span style={{ color: "red" }}>Reminder:</span>
                             <br />
-                            <span style={{ color: "red" }}>Close</span> Year {openYear} and <span style={{ color: "blue" }}>Open</span> Year {parseInt(openYear) + 1} ON MONGO DB COMPASS
+                            <span style={{ color: "red" }}>Close</span> Year {openYear} and <span style={{ color: "blue" }}>Open</span> Year {parseInt(openYear) + 1} ON MONGO DB COMPASS(Hit Reload once done)
                         </h3>
                     </div>}
                     <div className={css.investment_container3}>
