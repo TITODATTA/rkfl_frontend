@@ -68,6 +68,7 @@ export const handleEdit = (
     address,
     name1,
     file,
+    city,
     cityCategory,
     startDate,
     endDate,
@@ -191,7 +192,11 @@ export const handleEdit = (
             }
         }
         else if (mainSection === "Section 24") {
-            if (pan.length === 0) {
+            if (city.length === 0) {
+                setError(true)
+                setErrorMessage("City(House Location) cannot be empty")
+            }
+            else if (pan.length === 0) {
                 setError(true)
                 setErrorMessage("Pan of Lender cannot be empty")
             }
@@ -215,6 +220,7 @@ export const handleEdit = (
                     investment: investment,
                     adjustedInvestment: investment,
                     nameOfAssured: name,
+                    city: city,
                     policyNo: policy,
                     relation: relation,
                     subSectionCode: subSectionCode,
@@ -493,7 +499,11 @@ export const handleEdit = (
             }
         }
         else if (mainSection === "Section 24") {
-            if (pan.length === 0) {
+            if (city.length === 0) {
+                setError(true)
+                setErrorMessage("City(House Location) cannot be empty")
+            }
+            else if (pan.length === 0) {
                 setError(true)
                 setErrorMessage("Pan of Lender cannot be empty")
             }
@@ -518,6 +528,7 @@ export const handleEdit = (
                     adjustedInvestment: investment,
                     nameOfAssured: name,
                     policyNo: policy,
+                    city: city,
                     relation: relation,
                     subSectionCode: subSectionCode,
                     subSection: subSectionValue,

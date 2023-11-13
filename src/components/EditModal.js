@@ -34,6 +34,7 @@ const EditModal = ({
     const [subSectionCode, setSubSectionCode] = useState("")
     const [name, setName] = useState("")
     const [relation, setRelation] = useState("")
+    const [city, setCity] = useState("")
     const [policy, setPolicy] = useState("")
     const [investment, setInvestment] = useState(null)
     const [pan, setPan] = useState("")
@@ -116,6 +117,7 @@ const EditModal = ({
                 setPropertyType(array24[editIndex]?.propertyType)
                 setEligible80EEA(array24[editIndex]?.eligible80EEA)
                 setPossession(array24[editIndex]?.possession)
+                setCity(array24[editIndex]?.city)
                 if (array24[editIndex]?.file.length !== 0) {
                     setIsFileUploaded(true)
                 }
@@ -221,6 +223,10 @@ const EditModal = ({
                     {mainSection === "Section 24" &&
                         <>
                             <div className={css.edit_info}>
+                                <h5>House Location</h5>
+                                <input type="text" value={city} onChange={(e) => handleChangeInputFileds(e, setCity)} />
+                            </div>
+                            <div className={css.edit_info}>
                                 <h5>Property Type</h5>
                                 <select value={propertyType} onChange={(e) => handleChangeInputFileds(e, setPropertyType)}
                                 >
@@ -246,6 +252,10 @@ const EditModal = ({
                                     <option value="1" >Yes</option>
                                     <option value="2" >No</option>
                                 </select>
+                            </div>
+                            <div className={css.edit_info}>
+                                <h5>Pan of Financial Institute of Homeloan Lender</h5>
+                                <input type="text" value={pan} onChange={(e) => handleChangeInputFileds(e, setPan)} />
                             </div>
                             <div className={css.edit_info}>
                                 <h5>Name of Financial Institute of Homeloan Lender</h5>
@@ -314,6 +324,7 @@ const EditModal = ({
                                     address,
                                     name1,
                                     file,
+                                    city,
                                     cityCategory,
                                     startDate,
                                     endDate,

@@ -109,7 +109,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                 }
                                 {mainSection === "Section 24" &&
                                     <>
-                                        <th>House Location<span style={{ color: "red" }}>(*)</span></th>
+                                        <th>City(House Location)<span style={{ color: "red" }}>(*)</span></th>
                                         <th>Property Type</th>
                                         <th>Eligible For 80EEA</th>
                                         <th>Possession Obtained</th>
