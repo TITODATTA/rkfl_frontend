@@ -8,9 +8,9 @@ export const uploadFile = async (file, setFileList, setSuccess, setSuccessMessag
         const formData = new FormData();
         formData.append('file', file);
 
-        if (file.size > 200 * 1024) {
+        if (file.size > 300 * 1024) {
             setError(true);
-            setErrorMessage("File size exceeds 200KB");
+            setErrorMessage("File size exceeds 300KB");
             setUploadLoading(false)
             return;
         }

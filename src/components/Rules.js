@@ -19,14 +19,14 @@ const Rules = ({ selectedOption }) => {
                 <>
                     <h5>8)Mutiple Files can be uploaded for a single investment by clicking on Upload more in the Edit Mode or in the table while adding a investment </h5>
                     <h5>9)<span style={{ color: "blue" }}>File Name</span> needs to have a correct format :- <span style={{ color: "blue" }}>"EmployeeCode(In Number)_FileName(text)"</span></h5>
-                    <h5>10)<span style={{ color: "blue" }}>File Size</span> needs to below <span style={{ color: "blue" }}>200KB</span></h5>
+                    <h5>10)<span style={{ color: "blue" }}>File Size</span> needs to below <span style={{ color: "blue" }}>300KB</span></h5>
                 </>
             }
             {selectedOption === "actual" && <>
                 <h5>8)To upload files , click on edit option , and choose the button "Choose File".</h5>
                 <h5>9)Mutiple Files can be uploaded for a single investment by clicking on upload more in the edit option</h5>
                 <h5>10)<span style={{ color: "blue" }}>File Name</span> needs to have a correct format :- <span style={{ color: "blue" }}>"EmployeeCode(In Number)_FileName(text)"</span></h5>
-                <h5>11)<span style={{ color: "blue" }}>File Size</span> needs to below <span style={{ color: "blue" }}>200KB</span></h5>
+                <h5>11)<span style={{ color: "blue" }}>File Size</span> needs to below <span style={{ color: "blue" }}>300KB</span></h5>
                 <h5>12)<span style={{ color: "blue" }}>Conversion Process</span> needs to carried out for all sections and investments</h5>
                 <h5>13)<span style={{ color: "blue" }}>After conversion,</span> you cannot edit or delete the provisional entry .</h5>
                 <h5>14)<span style={{ color: "blue" }}>After Final submission</span> you can add entries ,but cannot edit or delete</h5>

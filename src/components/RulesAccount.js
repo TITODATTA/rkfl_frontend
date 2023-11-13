@@ -11,7 +11,8 @@ const RulesAccount = () => {
             <h5>To change the view of investments click the "Back" button</h5>
             <h5>2)<span style={{ color: "blue" }}>Provisional</span>  Investment is View-Only Data</h5>
             <h5>3)Number of Entries Per Page : -Number of Invesment you want to see per page </h5>
-            <h5>4)Rejected/Accepted/Resubmitted/New Actual Entry Filter Options will appear only for <span style={{ color: "blue" }}>Actual Investments</span>
+            <h5>4)Rejected/Accepted/Resubmitted/New Actual Entry Filter Options will appear only for
+                <span style={{ color: "blue" }}>Actual Investments</span>
                 <p style={{ marginLeft: "20px" }}>
                     <span style={{ color: "red" }}>&#8226; Rejected:</span>Invesment Rejected By Accounts
                 </p>
