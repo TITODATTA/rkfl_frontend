@@ -50,7 +50,8 @@ export const handleGetFinancials = async (
 
 };
 
-export const handleGetFinancialsAccountant = async (setOpenYear) => {
+
+export const handleGetFinancialsAccountant = async (setOpenYear, setFinancialYears) => {
     axios.get(`${url}/api/financials/getFinancials`, {
         headers: {
             'Content-Type': 'application/json'
@@ -58,7 +59,7 @@ export const handleGetFinancialsAccountant = async (setOpenYear) => {
     })
         .then(response => {
             const financials = response.data.financials;
-
+            setFinancialYears(financials)
             // Find the financial entry with status "Open"
             const openFinancial = financials.find(financial => financial.status === "Open");
             if (openFinancial) {

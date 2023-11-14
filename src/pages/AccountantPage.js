@@ -13,6 +13,7 @@ import RulesAccount from '../components/RulesAccount'
 import AdjustmentModel from '../components/AdjustmentModel'
 import { handleGetEmployeeContactAccountant } from '../apis/employeeUpdate'
 import ContactInfoModel from '../components/ContactInfoModel'
+import PastDataModel from '../components/PastDataModel'
 
 const AccountantPage = () => {
     const role = sessionStorage.getItem('role')
@@ -37,6 +38,9 @@ const AccountantPage = () => {
     const [adjustedComments, setAdjustedComments] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
     const [openContactInfoModal, setOpenContactInfoModal] = useState(false)
+    const [openPastData, setOpenPastData] = useState(false)
+    const [financialYears, setFinancialYears] = useState([])
+
 
     useEffect(() => {
         if (!role || !userDetails) {
@@ -46,7 +50,7 @@ const AccountantPage = () => {
             navigate("/login")
         }
         else {
-            handleGetFinancialsAccountant(setOpenYear)
+            handleGetFinancialsAccountant(setOpenYear, setFinancialYears)
         }
     }, [])
     // Calculate the total number of pages
@@ -217,6 +221,9 @@ const AccountantPage = () => {
         setOpenAdjustment(true)
         setAdjustedComments(transactions[index].adjustedComments || "")
     }
+    const handleClosePastDataModel = () => {
+        setOpenPastData(false)
+    }
 
     const handleGetEmployeeContactInfo = (employeeCode) => {
         handleGetEmployeeContactAccountant(employeeCode, setPhoneNumber)
@@ -249,7 +256,7 @@ const AccountantPage = () => {
                     <h3>Department :- {userDetails?.department}</h3>
                     <h3>Designation :- {userDetails?.designation}</h3>
                     <h3>Plant :- {userDetails?.plant}</h3>
-                    <h3>Financial Year :- {openYear} (<a style={{ color: "blue", textDecoration: "underline", cursor: "pointer", fontWeight: "lighter" }}>Check Past Data</a>)</h3>
+                    <h3>Financial Year :- {openYear} (<a onClick={() => setOpenPastData(true)} style={{ color: "blue", textDecoration: "underline", cursor: "pointer", fontWeight: "lighter" }}>Check Past Data</a>)</h3>
                 </div>
                 <RulesAccount />
             </div>
@@ -977,6 +984,7 @@ const AccountantPage = () => {
                 transactions={transactions}
                 setTransactions={setTransactions}
             />
+            <PastDataModel openPastData={openPastData} handleClosePastDataModel={handleClosePastDataModel} plants={plants} financialYears={financialYears} />
             <ContactInfoModel openContactInfoModal={openContactInfoModal} handleCloseContactInfoModal={handleCloseContactInfoModal} phoneNumber={phoneNumber} />
         </div>
     )

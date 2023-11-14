@@ -1,5 +1,6 @@
 import axios from "axios";
 import { url } from "../utils/constants";
+import * as XLSX from 'xlsx';
 
 export const handleCreateOrUpdateTransaction = async (
     array80C, array80D, array10, array24, array80CCD, setSuccess,
@@ -314,6 +315,62 @@ export const handleGetCombinedTransaction = async (setTransactions, plant, inves
             });
 
     }
+};
+export const handleGetCombinedTransactionAccountant = async (plant, year, type, mainSection,) => {
+    console.log(plant, year, type, mainSection)
+    const postData = {
+        plant: plant
+    };
+    axios.post(`${url}/api/transactions/combineEmployeeArrays`, postData, {
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': 'Admin'
+        }
+    })
+        .then(response => {
+            if (response.data.data.length === 0) {
+                alert("There is no data");
+            } else {
+                console.log(response.data.data)
+                let filteredData;
+
+                if (type === 'actual') {
+                    filteredData = mainSection.length === 0
+                        ? response.data.data.filter(item => item.investmentSchedule === "actual" && item.financialyear === year)
+                        : response.data.data.filter(item => item.investmentSchedule === "actual" && item.financialyear === year && item.mainSection === mainSection);
+                } else if (type === 'provisional') {
+                    filteredData = mainSection.length === 0
+                        ? response.data.data.filter(item => item.investmentSchedule === "provisional" && item.financialyear === year)
+                        : response.data.data.filter(item => item.investmentSchedule === "provisional" && item.financialyear === year && item.mainSection === mainSection);
+                }
+                if (filteredData.length > 0) {
+                    const ws = XLSX.utils.json_to_sheet(filteredData);
+                    ws["!rows"] = [{ hpx: 20, outfitters: { bold: true } }];
+                    // Extract headers from the first object in the data array
+                    const headers = Object.keys(filteredData[0]);
+
+                    // Add headers to the worksheet
+                    XLSX.utils.sheet_add_aoa(ws, [headers], { origin: 'A1' });
+
+                    const wb = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(wb, ws, "Sheet 1");
+                    XLSX.writeFile(wb, "filtered_data.xlsx");
+                } else {
+                    alert("No data available")
+                }
+                // Create Excel file and download
+
+            }
+        })
+        .catch(error => {
+            if (error.code === "ERR_NETWORK") {
+                alert("Server Error: Redirecting To Login");
+                window.location = "/login";
+                return;
+            }
+            alert("Server Error: Redirecting To Login");
+            console.log(error)
+        });
 };
 
 export const handleUpdateTransaction = (data, setTransactions, setSubmitButtonState, setData) => {
