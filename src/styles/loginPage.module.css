@@ -1,6 +1,7 @@
 .login_container {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   height: 100vh;
   background-color: #f0f0f0;
@@ -8,6 +9,7 @@
 
 .login_form {
   text-align: center;
+  margin-top: auto;
   background-color: white;
   padding: 20px;
   border-radius: 5px;
@@ -72,4 +74,9 @@
 
 .role_selector input[type="radio"]:checked {
   background-color: #007bff;
+}
+.created_by_Container {
+  text-align: center;
+  font-size: 13px;
+  margin-top: auto;
 }

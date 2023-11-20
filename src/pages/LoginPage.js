@@ -82,6 +82,10 @@ const LoginPage = () => {
 
 
             </form>
+            <div className={LoginPageCSS.created_by_Container}>
+                <h3 ><span style={{ fontWeight: "lighter" }}>Created By</span> Som Subhra Datta</h3>
+                <h3><span style={{ fontWeight: "lighter" }}>Supervised By</span> Supriya Roy Kanungoe</h3>
+            </div>
             <SuccessSnackbar state={open} setState={setOpen} successMessage={successMessage} />
             <ErrorSnackbar state={openError} setState={setOpenError} errorMessage={errorMessage} />
         </div>
