@@ -159,7 +159,7 @@ const AdminPage = () => {
                             value={taxYear}
                             onChange={handleYearChange}
                         />
-                        <button disabled={taxYear.length === 0 ? true : false} onClick={() => handleDeleteTaxation(taxYear, setIsLoading5)}>
+                        <button disabled={taxYear.length === 0 ? true : false} onClick={() => handleDeleteTaxation(taxYear, setIsLoading5, setTaxYear)}>
                             {isLoading5 ? <CircularProgress size={20} /> : "Update"}
                         </button>
                     </div>
