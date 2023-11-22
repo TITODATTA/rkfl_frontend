@@ -40,8 +40,25 @@ const AccountantPage = () => {
     const [openContactInfoModal, setOpenContactInfoModal] = useState(false)
     const [openPastData, setOpenPastData] = useState(false)
     const [financialYears, setFinancialYears] = useState([])
+    const [currentItems, setCurrentItems] = useState([])
 
+    useEffect(() => {
+        // Calculate the total number of pages
+        const totalPages = Math.ceil(transactions.length / itemsPerPage);
 
+        // Ensure currentPage is within bounds
+        const validPage = Math.max(1, Math.min(currentPage, totalPages));
+
+        // Calculate the starting and ending indices for the current page
+        const startIndex = (validPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+
+        // Slice the transactions array to display only the items for the current page
+        const newCurrentItems = transactions.slice(startIndex, endIndex);
+
+        // Update the state with the new currentItems
+        setCurrentItems(newCurrentItems);
+    }, [transactions, itemsPerPage, currentPage]);
     useEffect(() => {
         if (!role || !userDetails) {
             navigate("/login")
@@ -54,14 +71,14 @@ const AccountantPage = () => {
         }
     }, [])
     // Calculate the total number of pages
-    const totalPages = Math.ceil(transactions.length / itemsPerPage);
+    // const totalPages = Math.ceil(transactions.length / itemsPerPage);
 
-    // Calculate the starting and ending indices for the current page
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+    // // Calculate the starting and ending indices for the current page
+    // const startIndex = (currentPage - 1) * itemsPerPage;
+    // const endIndex = startIndex + itemsPerPage;
 
-    // Slice the transactions array to display only the items for the current page
-    let currentItems = transactions.slice(startIndex, endIndex);
+    // // Slice the transactions array to display only the items for the current page
+    // let currentItems = transactions.slice(startIndex, endIndex);
 
     const plants = userDetails?.acctRolePlant.split(',') || []
 
@@ -171,6 +188,8 @@ const AccountantPage = () => {
         setInvestmentType("")
         setMainSection("")
         setSearchTerm("")
+        setCurrentItems([])
+        setCurrentPage(1)
     }
     const handleBackButton2 = () => {
         setSearchTerm("")
@@ -952,7 +971,7 @@ const AccountantPage = () => {
                     </tbody>
                 </table>
                 <div className={css.pagination}>
-                    {Array.from({ length: totalPages }, (_, index) => (
+                    {Array.from({ length: Math.ceil(transactions.length / itemsPerPage) }, (_, index) => (
                         <button
                             key={index}
                             className={currentPage === index + 1 ? 'active' : ''}

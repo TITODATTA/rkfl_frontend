@@ -84,7 +84,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                     onChange={(e) => setViewOption(e.target.value)}
                     value={viewOption}
                 >
-                    <FormControlLabel value="actual" control={<Radio />} label="Actual" />
+                    {selectedOption === "actual" && <FormControlLabel value="actual" control={<Radio />} label="Actual" />}
                     <FormControlLabel value="provisional" control={<Radio />} label="Provisional" />
                 </RadioGroup>
             </FormControl>
