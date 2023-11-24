@@ -415,6 +415,7 @@ export const handleSaveData =
                     adjustedInvestment: row.investment || "",
                     file: fileList || [],
                     propertyType: row.propertyType || "1",
+                    lenderType: row.lenderType || "(a)",
                     city: row.city || "",
                     eligible80EEA: row.eligible80EEA || "",
                     possession: row.possession || "",

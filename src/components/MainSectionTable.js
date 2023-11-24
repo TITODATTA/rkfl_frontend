@@ -111,6 +111,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                     <>
                                         <th>City(House Location)<span style={{ color: "red" }}>(*)</span></th>
                                         <th>Property Type</th>
+                                        <th>Lender Type</th>
                                         <th>Eligible For 80EEA</th>
                                         <th>Possession Obtained</th>
                                     </>
@@ -401,6 +402,11 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {item.propertyType === "3" && "Wholly Let out House Property"}
                                         </td>
                                         <td className={css.word_break}>
+                                            {item.lenderType === "(a)" && "Financial Institution"}
+                                            {item.lenderType === "(b)" && "Employer"}
+                                            {item.lenderType === "(c)" && "Others"}
+                                        </td>
+                                        <td className={css.word_break}>
                                             {item.eligible80EEA}
                                         </td>
                                         <td className={css.word_break}>
@@ -673,6 +679,21 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                     <option value="1" >Self-occupied/Deemed Self occupied/Under Construction</option>
                                                     <option value="2" >Partly Let out House Property</option>
                                                     <option value="3" >Wholly Let out House Property</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].lenderType = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.lenderType}
+                                                >
+                                                    <option value="(a)" >Financial Institution</option>
+                                                    <option value="(b)" >Employer</option>
+                                                    <option value="(c)" >Others</option>
                                                 </select>
                                             </td>
                                             <td>
@@ -1089,6 +1110,11 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {item.propertyType === "3" && "Wholly Let out House Property"}
                                         </td>
                                         <td className={css.word_break}>
+                                            {item.lenderType === "(a)" && "Financial Institution"}
+                                            {item.lenderType === "(b)" && "Employer"}
+                                            {item.lenderType === "(c)" && "Others"}
+                                        </td>
+                                        <td className={css.word_break}>
                                             {item.eligible80EEA}
                                         </td>
                                         <td className={css.word_break}>
@@ -1334,6 +1360,21 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                     <option value="1">Self-occupied/Deemed Self occupied/Under Construction</option>
                                                     <option value="2" >Partly Let out House Property</option>
                                                     <option value="3" >Wholly Let out House Property</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].lenderType = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.lenderType}
+                                                >
+                                                    <option value="(a)" >Financial Institution</option>
+                                                    <option value="(b)" >Employer</option>
+                                                    <option value="(c)" >Others</option>
                                                 </select>
                                             </td>
                                             <td>

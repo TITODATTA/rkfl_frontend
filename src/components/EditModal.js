@@ -43,6 +43,7 @@ const EditModal = ({
     const [cityCategory, setCityCategory] = useState("")
     const [file, setFile] = useState([])
     const [propertyType, setPropertyType] = useState("")
+    const [lenderType, setLenderType] = useState("")
     const [eligible80EEA, setEligible80EEA] = useState("")
     const [possession, setPossession] = useState("")
     const [isFileUploaded, setIsFileUploaded] = useState(false);
@@ -115,6 +116,7 @@ const EditModal = ({
                 setFile(array24[editIndex]?.file)
                 setType(array24[editIndex]?.investmentSchedule)
                 setPropertyType(array24[editIndex]?.propertyType)
+                setLenderType(array24[editIndex]?.lenderType)
                 setEligible80EEA(array24[editIndex]?.eligible80EEA)
                 setPossession(array24[editIndex]?.possession)
                 setCity(array24[editIndex]?.city)
@@ -236,6 +238,15 @@ const EditModal = ({
                                 </select>
                             </div>
                             <div className={css.edit_info}>
+                                <h5>Lender Type</h5>
+                                <select value={lenderType} onChange={(e) => handleChangeInputFileds(e, setLenderType)}
+                                >
+                                    <option value="(a)">Financial Institution</option>
+                                    <option value="(b)">Employer</option>
+                                    <option value="(c)">Others</option>
+                                </select>
+                            </div>
+                            <div className={css.edit_info}>
                                 <h5>Eligible 80EEA</h5>
                                 <input
                                     onChange={() => setEligible80EEA(eligible80EEA === 'X' ? "" : 'X')}
@@ -329,6 +340,7 @@ const EditModal = ({
                                     startDate,
                                     endDate,
                                     propertyType,
+                                    lenderType,
                                     eligible80EEA,
                                     possession,
                                     policy,
