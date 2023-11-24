@@ -363,6 +363,8 @@ const AccountantPage = () => {
                             <th>Name Of Assured</th>
                             <th>Relation</th>
                             <th>House Location</th>
+                            <th>Possession</th>
+                            <th>Lender Type</th>
                             <th>Investment Amount</th>
                             <th>Investment Payment Date</th>
                             <th>Start Date</th>
@@ -408,6 +410,8 @@ const AccountantPage = () => {
                                 <td>{item.nameOfAssured}</td>
                                 <td>{item.relation}</td>
                                 <td>{item?.city}</td>
+                                <td>{item?.possession}</td>
+                                <td>{item?.lenderType}</td>
                                 <td>{item.investment}</td>
                                 <td>{item?.paymentDate}</td>
                                 <td>{item?.startDate}</td>
@@ -510,6 +514,8 @@ const AccountantPage = () => {
                                 <td>{item.nameOfAssured}</td>
                                 <td>{item.relation}</td>
                                 <td>{item?.city}</td>
+                                <td>{item?.possession}</td>
+                                <td>{item?.lenderType}</td>
                                 <td>{item.investment}</td>
                                 <td>{item?.paymentDate}</td>
                                 <td>{item?.startDate}</td>
@@ -606,6 +612,8 @@ const AccountantPage = () => {
                                 {/* <td>{item.nameOfAssured}</td> */}
                                 <td>{item.relation}</td>
                                 <td>{item?.city}</td>
+                                <td>{item?.possession}</td>
+                                <td>{item?.lenderType}</td>
                                 <td>{item.investment}</td>
                                 <td>{item?.paymentDate}</td>
                                 <td>{item?.startDate}</td>
@@ -694,6 +702,8 @@ const AccountantPage = () => {
                                 <td>{item.nameOfAssured}</td>
                                 <td>{item.relation}</td>
                                 <td>{item?.city}</td>
+                                <td>{item?.possession}</td>
+                                <td>{item?.lenderType}</td>
                                 <td>{item.investment}</td>
                                 <td>{item?.paymentDate}</td>
                                 <td>{item?.startDate}</td>
@@ -789,6 +799,8 @@ const AccountantPage = () => {
                                 <td>{item.nameOfAssured}</td>
                                 <td>{item.relation}</td>
                                 <td>{item?.city}</td>
+                                <td>{item?.possession}</td>
+                                <td>{item?.lenderType}</td>
                                 <td>{item.investment}</td>
                                 <td>{item?.paymentDate}</td>
                                 <td>{item?.startDate}</td>
@@ -891,6 +903,8 @@ const AccountantPage = () => {
                                 <td>{item.nameOfAssured}</td>
                                 <td>{item.relation}</td>
                                 <td>{item?.city}</td>
+                                <td>{item?.possession}</td>
+                                <td>{item?.lenderType}</td>
                                 <td>{item.investment}</td>
                                 <td>{item?.paymentDate}</td>
                                 <td>{item?.startDate}</td>
