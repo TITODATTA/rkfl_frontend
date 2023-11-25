@@ -784,12 +784,17 @@ export const handleDownloadCsv = () => {
 
             if (allData.length > 0) {
                 // Define the fields you want in the Excel sheet
-                const fields = ['employeeCode', 'subSection', 'mainSection', 'nameOfAssured', 'relation', 'accommodation',
-                    'cityCategory', 'propertyType,eligible80EEA', 'possession', 'pan', 'landLoardName', 'landLoardAddress',
-                    , 'policyNo', 'financialyear', 'investment', 'investmentSchedule', 'status'];
+                const fields = ['employeeCode', 'employeeName', 'financialyear', 'mainSection', 'subSection', 'nameOfAssured',
+                    'relation', 'paymentDate', 'startDate', 'endDate', 'cityCategory', 'propertyType', 'lenderType', 'city', 'eligible80EEA',
+                    'possession', 'pan', 'landLoardName', 'landLoardAddress', 'investment', 'adjustedInvestment', 'policyNo', 'investmentSchedule'];
+                // Define the fields you want in the Excel sheet with updated header names
+                const fields2 = ['Employee Code', 'Employee Name', 'Financial Year', 'Main Section', 'Sub Section', 'Name of Assured',
+                    'Relation', 'Payment Date', 'Start Date', 'End Date', 'City Category', 'Property Type', 'Lender Type', 'City', 'Eligible 80EEA',
+                    'Possession', 'PAN of Landlord/Financial Instition', 'Landlord Name/Financial Instition Name', 'Landlord Address/Financial Instition Address', 'Investment', 'Adjusted Investment', 'Policy No', 'Investment Schedule'];
+
 
                 // Create a worksheet with the combined data
-                const worksheetData = [fields].concat(
+                const worksheetData = [fields2].concat(
                     allData.map((item) => fields.map((field) => item[field]))
                 );
 
