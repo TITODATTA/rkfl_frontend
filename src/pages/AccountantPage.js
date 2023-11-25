@@ -14,6 +14,7 @@ import AdjustmentModel from '../components/AdjustmentModel'
 import { handleGetEmployeeContactAccountant } from '../apis/employeeUpdate'
 import ContactInfoModel from '../components/ContactInfoModel'
 import PastDataModel from '../components/PastDataModel'
+import { Pagination } from '@mui/material';
 
 const AccountantPage = () => {
     const role = sessionStorage.getItem('role')
@@ -83,12 +84,14 @@ const AccountantPage = () => {
     const plants = userDetails?.acctRolePlant.split(',') || []
 
     // Function to handle page changes
-    const handlePageChange = (newPage) => {
+    const handlePageChange = (event, newPage) => {
         setCurrentPage(newPage);
     };
     const handleItemsPerPage = (e) => {
-        setItemsPerPage(e.target.value)
-    }
+        const newItemsPerPage = parseInt(e.target.value, 10);
+        setItemsPerPage(newItemsPerPage);
+        setCurrentPage(1); // Reset current page to 1 when items per page changes
+    };
     const handleInvestmentChange = (e) => {
         setInvestmentType(e.target.value)
     }
@@ -985,7 +988,7 @@ const AccountantPage = () => {
                     </tbody>
                 </table>
                 <div className={css.pagination}>
-                    {Array.from({ length: Math.ceil(transactions.length / itemsPerPage) }, (_, index) => (
+                    {/* {Array.from({ length: Math.ceil(transactions.length / itemsPerPage) }, (_, index) => (
                         <button
                             key={index}
                             className={currentPage === index + 1 ? 'active' : ''}
@@ -993,7 +996,14 @@ const AccountantPage = () => {
                         >
                             {index + 1}
                         </button>
-                    ))}
+                    ))} */}
+                    <Pagination
+                        count={Math.ceil(transactions.length / itemsPerPage)}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                        variant="outlined"
+                        shape="rounded"
+                    />
                 </div>
                 {submitButtonState && <div className={css.button_containers}>
                     <button className={css.back_button} onClick={handleBackButton}>Back</button>
