@@ -128,9 +128,17 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
 
                                 <th>Investment amount during the {mainSection === "Section 10" ? "Monthly" : "Year"}<span style={{ color: "red" }}>(*)</span></th>
                                 {mainSection === "Section 10" &&
-                                    <><th>PAN of Landlord</th>
+                                    <>
+                                        <th>PAN of Landlord</th>
                                         <th>Name of Landlord</th>
-                                        <th>Address of Landlord</th></>
+                                        <th>Address of Landlord</th>
+                                        <th>First Name<span style={{ color: "red" }}>(*)</span></th>
+                                        <th>Last Name<span style={{ color: "red" }}>(*)</span></th>
+                                        <th>Gender<span style={{ color: "red" }}>(*)</span></th>
+                                        <th>Date of Birth<span style={{ color: "red" }}>(*)</span></th>
+                                        <th>Child Education Allowance<span style={{ color: "red" }}>(*)</span></th>
+
+                                    </>
                                 }
                                 {mainSection === "Section 24" &&
                                     <>
@@ -325,7 +333,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {item.policyNo}
                                         </td>
                                         <td className={css.word_break}>
-                                            {item.investment}
+                                            {item.investment ? item.investment : ""}
                                         </td>
                                         <td className={css.word_break}>
                                             {item.pan ? item.pan : ""}
@@ -335,6 +343,21 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                         <td className={css.word_break}>
                                             {item.landLoardAddress ? item.landLoardAddress : ""}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.firstName ? item.firstName : ""}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.lastName ? item.lastName : ""}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.gender ? (item.gender === "1" ? "Male" : "Female") : ""}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.dob ? item.dob : ""}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.childAllowance ? (item.childAllowance === "Y" ? "YES" : "NO") : ""}
                                         </td>
                                         <td className={css.word_break}>
                                             {item.investmentSchedule}
@@ -588,21 +611,34 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {row.nameOfAssured}
                                         </td>
                                         <td contentEditable="true">
-                                            <select
-                                                className={css.custom_select}
-                                                onChange={(e) => {
-                                                    const selectedValue = e.target.value;
-                                                    rows[index].relation = selectedValue;
-                                                    setRows([...rows])
-                                                }}
-                                                value={row.relation}
-                                            >
-                                                <option value="" >Select</option>
-                                                <option value="Self">Self</option>
-                                                <option value="Parent/Guardian">Parent/Guardian</option>
-                                                <option value="Spouse/Partner">Spouse/Partner</option>
-                                                <option value="Son/Daughter">Son/Daughter</option>
-                                            </select>
+                                            {mainSection === "Section 10" && row.subSectionValue === "14" ?
+                                                <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].relation = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.relation}
+                                                >
+                                                    <option value="" >Select</option>
+                                                    <option value="Son/Daughter">Son/Daughter</option>
+                                                </select> : <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].relation = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.relation}
+                                                >
+                                                    <option value="" >Select</option>
+                                                    <option value="Self">Self</option>
+                                                    <option value="Parent/Guardian">Parent/Guardian</option>
+                                                    <option value="Spouse/Partner">Spouse/Partner</option>
+                                                    <option value="Son/Daughter">Son/Daughter</option>
+                                                </select>
+                                            }
                                         </td>
                                         {mainSection === "Section 10" && <td contentEditable="true" className={css.word_break}
                                         >
@@ -610,6 +646,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 className={css.input_date}
                                                 min={minDate}
                                                 max={maxDate}
+                                                disabled={subSectionValue === "13A" ? false : true}
                                                 onChange={(e) => {
                                                     const updatedRows = [...rows];
                                                     const newValue = e.target.value;
@@ -623,6 +660,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 className={css.input_date}
                                                 min={minDate}
                                                 max={maxDate}
+                                                disabled={subSectionValue === "13A" ? false : true}
                                                 onChange={(e) => {
                                                     const updatedRows = [...rows];
                                                     const newValue = e.target.value;
@@ -644,6 +682,8 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                         rows[index].cityCategory = selectedValue;
                                                         setRows([...rows])
                                                     }}
+                                                    disabled={subSectionValue === "13A" ? false : true}
+
                                                     value={row.cityCategory}
                                                 >
                                                     <option value="" >Non Metro</option>
@@ -749,7 +789,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                     setRows(updatedRows);
                                                 }} />
                                         </td> : <></>}
-                                        <td contentEditable="true" className={css.word_break} onChange={(e) => {
+                                        <td contentEditable={subSectionValue === "14" ? "false" : "true"} className={css.word_break} onChange={(e) => {
                                             const updatedRows = [...rows];
                                             updatedRows[index].investment = e.currentTarget.textContent;
                                             setRows(updatedRows);
@@ -802,6 +842,76 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                 }}
                                             >
                                                 {row.landLoardAddress}
+                                            </td>
+                                            <td contentEditable={subSectionValue === "14" ? "true" : "false"} className={css.word_break} onChange={(e) => {
+                                                const updatedRows = [...rows];
+                                                updatedRows[index].firstName = e.currentTarget.textContent;
+                                                setRows(updatedRows);
+                                            }}
+                                                onBlur={(e) => {
+                                                    const updatedRows = [...rows];
+                                                    updatedRows[index].firstName = e.currentTarget.textContent;
+                                                    setRows(updatedRows);
+                                                }}
+                                            >
+                                                {row.firstName}
+                                            </td>
+                                            <td contentEditable={subSectionValue === "14" ? "true" : "false"} className={css.word_break} onChange={(e) => {
+                                                const updatedRows = [...rows];
+                                                updatedRows[index].lastName = e.currentTarget.textContent;
+                                                setRows(updatedRows);
+                                            }}
+                                                onBlur={(e) => {
+                                                    const updatedRows = [...rows];
+                                                    updatedRows[index].lastName = e.currentTarget.textContent;
+                                                    setRows(updatedRows);
+                                                }}
+                                            >
+                                                {row.lastName}
+                                            </td>
+                                            <td>
+                                                <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].gender = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.gender}
+                                                    disabled={subSectionValue === "14" ? false : true}
+                                                >
+                                                    <option value="">Select</option>
+                                                    <option value="1">Male</option>
+                                                    <option value="2" >Female</option>
+                                                    <option value="A" >Others</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type='date'
+                                                    className={css.input_date}
+                                                    disabled={subSectionValue === "14" ? false : true}
+                                                    onChange={(e) => {
+                                                        const updatedRows = [...rows];
+                                                        const newValue = e.target.value;
+                                                        updatedRows[index].dob = newValue;
+                                                        setRows(updatedRows);
+                                                    }} />
+                                            </td>
+                                            <td>
+                                                <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].childAllowance = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.childAllowance}
+                                                    disabled={subSectionValue === "14" ? false : true}
+                                                >
+                                                    <option value="">Select</option>
+                                                    <option value="Y">YES</option>
+                                                    <option value="N">NO</option>
+                                                </select>
                                             </td>
                                         </>}
                                         {mainSection === "Section 24" && <>
@@ -1048,7 +1158,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {item.policyNo}
                                         </td>
                                         <td className={css.word_break}>
-                                            {item.investment}
+                                            {item.investment ? item.investment : ""}
                                         </td>
                                         <td className={css.word_break}>
                                             {item.pan ? item.pan : ""}
@@ -1058,6 +1168,21 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         </td>
                                         <td className={css.word_break}>
                                             {item.landLoardAddress ? item.landLoardAddress : ""}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.firstName ? item.firstName : ""}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.lastName ? item.lastName : ""}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.gender ? (item.gender === "1" ? "Male" : "Female") : ""}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.dob ? item.dob : ""}
+                                        </td>
+                                        <td className={css.word_break}>
+                                            {item.childAllowance ? (item.childAllowance === "Y" ? "YES" : "NO") : ""}
                                         </td>
                                         <td className={css.word_break}>
                                             {item.investmentSchedule}
@@ -1126,7 +1251,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {item.policyNo}
                                         </td>
                                         <td className={css.word_break}>
-                                            {item.investment}
+                                            {item.investment ? item.investment : ""}
                                         </td>
                                         <td className={css.word_break}>
                                             {item.pan ? item.pan : ""}
@@ -1269,25 +1394,40 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             {row.nameOfAssured}
                                         </td>
                                         <td contentEditable="true">
-                                            <select
-                                                className={css.custom_select}
-                                                onChange={(e) => {
-                                                    const selectedValue = e.target.value;
-                                                    rows[index].relation = selectedValue;
-                                                    setRows([...rows])
-                                                }}
-                                                value={row.relation}
-                                            >
-                                                <option value="" >Select</option>
-                                                <option value="Self">Self</option>
-                                                <option value="Parent/Guardian">Parent/Guardian</option>
-                                                <option value="Spouse/Partner">Spouse/Partner</option>
-                                                <option value="Son/Daughter">Son/Daughter</option>
-                                            </select>
+                                            {mainSection === "Section 10" && row.subSectionValue === "14" ?
+                                                <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].relation = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.relation}
+                                                >
+                                                    <option value="" >Select</option>
+                                                    <option value="Son/Daughter">Son/Daughter</option>
+                                                </select> : <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].relation = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.relation}
+                                                >
+                                                    <option value="" >Select</option>
+                                                    <option value="Self">Self</option>
+                                                    <option value="Parent/Guardian">Parent/Guardian</option>
+                                                    <option value="Spouse/Partner">Spouse/Partner</option>
+                                                    <option value="Son/Daughter">Son/Daughter</option>
+                                                </select>
+                                            }
+
                                         </td>
                                         {mainSection === "Section 10" && <td contentEditable="true" className={css.word_break}
                                         >
                                             <input type='date'
+                                                disabled={subSectionValue === "13A" ? false : true}
                                                 className={css.input_date}
                                                 min={minDate}
                                                 max={maxDate}
@@ -1302,6 +1442,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                         >
                                             <input type='date'
                                                 className={css.input_date}
+                                                disabled={subSectionValue === "13A" ? false : true}
                                                 min={minDate}
                                                 max={maxDate}
                                                 onChange={(e) => {
@@ -1325,6 +1466,8 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                         rows[index].cityCategory = selectedValue;
                                                         setRows([...rows])
                                                     }}
+                                                    disabled={subSectionValue === "13A" ? false : true}
+
                                                     value={row.cityCategory}
                                                 >
                                                     <option value="" >Non Metro</option>
@@ -1429,7 +1572,7 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                                     setRows(updatedRows);
                                                 }} />
                                         </td> : <></>}
-                                        <td contentEditable="true" className={css.word_break} onChange={(e) => {
+                                        <td contentEditable={subSectionValue === "14" ? "false" : "true"} className={css.word_break} onChange={(e) => {
                                             const updatedRows = [...rows];
                                             updatedRows[index].investment = e.currentTarget.textContent;
                                             setRows(updatedRows);
@@ -1483,6 +1626,77 @@ const MainSectionTable = ({ rows, setRows, subSection, mainSection, selectedOpti
                                             >
                                                 {row.landLoardAddress}
                                             </td>
+                                            <td contentEditable={subSectionValue === "14" ? "true" : "false"} className={css.word_break} onChange={(e) => {
+                                                const updatedRows = [...rows];
+                                                updatedRows[index].firstName = e.currentTarget.textContent;
+                                                setRows(updatedRows);
+                                            }}
+                                                onBlur={(e) => {
+                                                    const updatedRows = [...rows];
+                                                    updatedRows[index].firstName = e.currentTarget.textContent;
+                                                    setRows(updatedRows);
+                                                }}
+                                            >
+                                                {row.firstName}
+                                            </td>
+                                            <td contentEditable={subSectionValue === "14" ? "true" : "false"} className={css.word_break} onChange={(e) => {
+                                                const updatedRows = [...rows];
+                                                updatedRows[index].lastName = e.currentTarget.textContent;
+                                                setRows(updatedRows);
+                                            }}
+                                                onBlur={(e) => {
+                                                    const updatedRows = [...rows];
+                                                    updatedRows[index].lastName = e.currentTarget.textContent;
+                                                    setRows(updatedRows);
+                                                }}
+                                            >
+                                                {row.lastName}
+                                            </td>
+                                            <td>
+                                                <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].gender = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.gender}
+                                                    disabled={subSectionValue === "14" ? false : true}
+                                                >
+                                                    <option value="">Select</option>
+                                                    <option value="1">Male</option>
+                                                    <option value="2" >Female</option>
+                                                    <option value="A" >Others</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type='date'
+                                                    className={css.input_date}
+                                                    disabled={subSectionValue === "14" ? false : true}
+                                                    onChange={(e) => {
+                                                        const updatedRows = [...rows];
+                                                        const newValue = e.target.value;
+                                                        updatedRows[index].dob = newValue;
+                                                        setRows(updatedRows);
+                                                    }} />
+                                            </td>
+                                            <td>
+                                                <select
+                                                    className={css.custom_select}
+                                                    onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        rows[index].childAllowance = selectedValue;
+                                                        setRows([...rows])
+                                                    }}
+                                                    value={row.childAllowance}
+                                                    disabled={subSectionValue === "14" ? false : true}
+                                                >
+                                                    <option value="">Select</option>
+                                                    <option value="Y">YES</option>
+                                                    <option value="N">NO</option>
+                                                </select>
+                                            </td>
+
                                         </>}
                                         {mainSection === "Section 24" && <>
                                             <td contentEditable={subSectionValue === "B" ? "true" : "false"} className={css.word_break} onChange={(e) => {

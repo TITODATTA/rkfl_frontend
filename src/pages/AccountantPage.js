@@ -374,7 +374,12 @@ const AccountantPage = () => {
                             <th>End Date</th>
                             <th>Pan of Landloard</th>
                             <th>Name of  Landloard</th>
-                            <th>Address of  Landloard</th>
+                            <th>Address of Landloard</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Gender</th>
+                            <th>Date of Birth</th>
+                            <th>Child Allowance</th>
                             <th>PAN of Financial Institute of Homeloan Lender</th>
                             <th>Name of Financial Institute of Homeloan Lender</th>
                             <th>Address of Financial Institute of Homeloan Lender</th>
@@ -419,11 +424,16 @@ const AccountantPage = () => {
                                 <td>{item?.paymentDate}</td>
                                 <td>{item?.startDate}</td>
                                 <td>{item?.endDate}</td>
-                                {item.subSectionCode === "13A" ?
+                                {item.subSectionCode === "13A" || item.subSectionCode === "14" ?
                                     <>
                                         <td>{item?.pan}</td>
                                         <td>{item?.landLoardName}</td>
                                         <td>{item?.landLoardAddress}</td>
+                                        <td>{item?.firstName}</td>
+                                        <td>{item?.lastName}</td>
+                                        <td>{item?.gender}</td>
+                                        <td>{item?.dob}</td>
+                                        <td>{item?.childAllowance}</td>
                                     </> :
                                     <>
                                         <td></td>
@@ -523,11 +533,16 @@ const AccountantPage = () => {
                                 <td>{item?.paymentDate}</td>
                                 <td>{item?.startDate}</td>
                                 <td>{item?.endDate}</td>
-                                {item.subSectionCode === "13A" ?
+                                {item.subSectionCode === "13A" || item.subSectionCode === "14" ?
                                     <>
                                         <td>{item?.pan}</td>
                                         <td>{item?.landLoardName}</td>
                                         <td>{item?.landLoardAddress}</td>
+                                        <td>{item?.firstName}</td>
+                                        <td>{item?.lastName}</td>
+                                        <td>{item?.gender}</td>
+                                        <td>{item?.dob}</td>
+                                        <td>{item?.childAllowance}</td>
                                     </> :
                                     <>
                                         <td></td>
@@ -621,11 +636,16 @@ const AccountantPage = () => {
                                 <td>{item?.paymentDate}</td>
                                 <td>{item?.startDate}</td>
                                 <td>{item?.endDate}</td>
-                                {item.subSectionCode === "13A" ?
+                                {item.subSectionCode === "13A" || item.subSectionCode === "14" ?
                                     <>
                                         <td>{item?.pan}</td>
                                         <td>{item?.landLoardName}</td>
                                         <td>{item?.landLoardAddress}</td>
+                                        <td>{item?.firstName}</td>
+                                        <td>{item?.lastName}</td>
+                                        <td>{item?.gender}</td>
+                                        <td>{item?.dob}</td>
+                                        <td>{item?.childAllowance}</td>
                                     </> :
                                     <>
                                         <td></td>
@@ -711,11 +731,16 @@ const AccountantPage = () => {
                                 <td>{item?.paymentDate}</td>
                                 <td>{item?.startDate}</td>
                                 <td>{item?.endDate}</td>
-                                {item.subSectionCode === "13A" ?
+                                {item.subSectionCode === "13A" || item.subSectionCode === "14" ?
                                     <>
                                         <td>{item?.pan}</td>
                                         <td>{item?.landLoardName}</td>
                                         <td>{item?.landLoardAddress}</td>
+                                        <td>{item?.firstName}</td>
+                                        <td>{item?.lastName}</td>
+                                        <td>{item?.gender}</td>
+                                        <td>{item?.dob}</td>
+                                        <td>{item?.childAllowance}</td>
                                     </> :
                                     <>
                                         <td></td>
@@ -808,11 +833,16 @@ const AccountantPage = () => {
                                 <td>{item?.paymentDate}</td>
                                 <td>{item?.startDate}</td>
                                 <td>{item?.endDate}</td>
-                                {item.subSectionCode === "13A" ?
+                                {item.subSectionCode === "13A" || item.subSectionCode === "14" ?
                                     <>
                                         <td>{item?.pan}</td>
                                         <td>{item?.landLoardName}</td>
                                         <td>{item?.landLoardAddress}</td>
+                                        <td>{item?.firstName}</td>
+                                        <td>{item?.lastName}</td>
+                                        <td>{item?.gender}</td>
+                                        <td>{item?.dob}</td>
+                                        <td>{item?.childAllowance}</td>
                                     </> :
                                     <>
                                         <td></td>
@@ -912,11 +942,16 @@ const AccountantPage = () => {
                                 <td>{item?.paymentDate}</td>
                                 <td>{item?.startDate}</td>
                                 <td>{item?.endDate}</td>
-                                {item.subSectionCode === "13A" ?
+                                {item.subSectionCode === "13A" || item.subSectionCode === "14" ?
                                     <>
                                         <td>{item?.pan}</td>
                                         <td>{item?.landLoardName}</td>
                                         <td>{item?.landLoardAddress}</td>
+                                        <td>{item?.firstName}</td>
+                                        <td>{item?.lastName}</td>
+                                        <td>{item?.gender}</td>
+                                        <td>{item?.dob}</td>
+                                        <td>{item?.childAllowance}</td>
                                     </> :
                                     <>
                                         <td></td>

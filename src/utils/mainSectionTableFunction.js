@@ -194,6 +194,7 @@ export const handleOpenReviewModal = (
         }
     }
     else {
+        console.log(array10)
         if (checkInvestmentType2(array80C, year) ||
             checkInvestmentType2(array80D, year) ||
             checkInvestmentType2(array10, year) ||
@@ -395,6 +396,130 @@ export const handleSaveData =
                             setErrorMessage("Address of Landord cannot empty if investment is more than 8333")
                             return
                         }
+                    }
+                }
+                savedData.push(rowData);
+            });
+        }
+        else if (subSectionValue === "14") {
+            rows.forEach((row, index) => {
+                const rowData = {
+                    uniqueId: `${empCode.employeeCode}-${currentDateMillis}`,
+                    employeeName: empCode.employeeName,
+                    mainSection: mainSection,
+                    financialyear: openyear,
+                    subSectionCode: row.subSectionValue || "",
+                    nameOfAssured: row.nameOfAssured || "",
+                    relation: row.relation || "",
+                    policyNo: row.policyNo || "",
+                    file: fileList || [],
+                    subSection: row.subSection,
+                    firstName: row.firstName || "",
+                    lastName: row.lastName || "",
+                    gender: row.gender || "",
+                    dob: row.dob ? row.dob.split('-').reverse().join('.') : "",
+                    childAllowance: row.childAllowance || "",
+                    investmentSchedule: selectedOption,
+                    employeeCode: empCode.employeeCode,
+                    createTimestamp: new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true })
+                };
+                if (selectedOption === "provisional") {
+                    if (rowData.subSection.length === 0) {
+                        setError(true)
+                        setErrorMessage("Sub Section Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.nameOfAssured.length === 0) {
+                        setError(true)
+                        setErrorMessage("Name of Assured Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.relation.length === 0) {
+                        setError(true)
+                        setErrorMessage("Relation Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.firstName.length === 0) {
+                        setError(true)
+                        setErrorMessage("First Name Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.lastName.length === 0) {
+                        setError(true)
+                        setErrorMessage("Last Name Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.dob.length === 0) {
+                        setError(true)
+                        setErrorMessage("Date of Birth Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.gender.length === 0) {
+                        setError(true)
+                        setErrorMessage("Gender Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.childAllowance.length === 0) {
+                        setError(true)
+                        setErrorMessage("Child Allowance Cannot be empty");
+                        return;
+                    }
+                }
+                else {
+                    if (rowData.subSection.length === 0) {
+                        setError(true)
+                        setErrorMessage("Sub Section Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.nameOfAssured.length === 0) {
+                        setError(true)
+                        setErrorMessage("Name of Assured Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.relation.length === 0) {
+                        setError(true)
+                        setErrorMessage("Relation Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.firstName.length === 0) {
+                        setError(true)
+                        setErrorMessage("First Name Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.lastName.length === 0) {
+                        setError(true)
+                        setErrorMessage("Last Name Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.dob.length === 0) {
+                        setError(true)
+                        setErrorMessage("Date of Birth Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.gender.length === 0) {
+                        setError(true)
+                        setErrorMessage("Gender Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.childAllowance.length === 0) {
+                        setError(true)
+                        setErrorMessage("Child Allowance Cannot be empty");
+                        return;
+                    }
+                    else if (rowData.policyNo.length === "0") {
+                        setError(true)
+                        setErrorMessage("Policy Number Cannot be empty");
+                        return;
+                    }
+                    else if (alphanumericPattern.test(rowData.policyNo) === false) {
+                        setError(true)
+                        setErrorMessage("Policy Number Can only be alphanumeric");
+                        return;
+                    }
+                    else if (rowData.file.length === 0) {
+                        setError(true)
+                        setErrorMessage("File Cannot be empty");
+                        return;
                     }
                 }
                 savedData.push(rowData);
@@ -786,11 +911,13 @@ export const handleDownloadCsv = () => {
                 // Define the fields you want in the Excel sheet
                 const fields = ['employeeCode', 'employeeName', 'financialyear', 'mainSection', 'subSection', 'nameOfAssured',
                     'relation', 'paymentDate', 'startDate', 'endDate', 'cityCategory', 'propertyType', 'lenderType', 'city', 'eligible80EEA',
-                    'possession', 'pan', 'landLoardName', 'landLoardAddress', 'investment', 'adjustedInvestment', 'policyNo', 'investmentSchedule'];
+                    'possession', 'pan', 'landLoardName', 'landLoardAddress', 'firstName', 'lastName', 'gender', 'dob', 'childAllowance', 'investment', 'adjustedInvestment', 'policyNo', 'investmentSchedule'];
                 // Define the fields you want in the Excel sheet with updated header names
                 const fields2 = ['Employee Code', 'Employee Name', 'Financial Year', 'Main Section', 'Sub Section', 'Name of Assured',
                     'Relation', 'Payment Date', 'Start Date', 'End Date', 'City Category', 'Property Type', 'Lender Type', 'City', 'Eligible 80EEA',
-                    'Possession', 'PAN of Landlord/Financial Instition', 'Landlord Name/Financial Instition Name', 'Landlord Address/Financial Instition Address', 'Investment', 'Adjusted Investment', 'Policy No', 'Investment Schedule'];
+                    'Possession', 'PAN of Landlord/Financial Instition', 'Landlord Name/Financial Instition Name', 'Landlord Address/Financial Instition Address',
+                    'First Name', 'Last Name', 'Gender', 'Date of Birth', 'Child Allowance',
+                    'Investment', 'Adjusted Investment', 'Policy No', 'Investment Schedule'];
 
 
                 // Create a worksheet with the combined data

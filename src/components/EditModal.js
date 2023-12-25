@@ -40,6 +40,11 @@ const EditModal = ({
     const [pan, setPan] = useState("")
     const [address, setAddress] = useState("")
     const [name1, setName1] = useState("")
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [gender, setGender] = useState("")
+    const [dob, setDob] = useState("")
+    const [childAllowance, setChildAllowance] = useState("")
     const [cityCategory, setCityCategory] = useState("")
     const [file, setFile] = useState([])
     const [propertyType, setPropertyType] = useState("")
@@ -93,6 +98,11 @@ const EditModal = ({
                 setInvestment(array10[editIndex]?.investment)
                 setPan(array10[editIndex]?.pan)
                 setName1(array10[editIndex]?.landLoardName)
+                setFirstName(array10[editIndex]?.firstName)
+                setLastName(array10[editIndex]?.lastName)
+                setGender(array10[editIndex]?.gender)
+                setDob(array10[editIndex]?.dob)
+                setChildAllowance(array10[editIndex]?.childAllowance)
                 setAddress(array10[editIndex]?.landLoardAddress)
                 setFile(array10[editIndex]?.file)
                 setType(array10[editIndex]?.investmentSchedule)
@@ -173,14 +183,15 @@ const EditModal = ({
                     </div>
                     {mainSection === "Section 10" &&
                         <>
-                            <div className={css.edit_info}>
+                            {subSectionCode === "13A" ? <> <div className={css.edit_info}>
                                 <h5>Start Date</h5>
-                                <input type="date" value={startDate.split('.').reverse().join('-')} onChange={(e) => handleChangeInputFileds(e, setStartDate)} />
+                                <input type="date" value={startDate?.split('.').reverse().join('-')} onChange={(e) => handleChangeInputFileds(e, setStartDate)} />
                             </div>
-                            <div className={css.edit_info}>
-                                <h5>End Date</h5>
-                                <input type="date" value={endDate.split('.').reverse().join('-')} onChange={(e) => handleChangeInputFileds(e, setEndDate)} />
-                            </div>
+                                <div className={css.edit_info}>
+                                    <h5>End Date</h5>
+                                    <input type="date" value={endDate?.split('.').reverse().join('-')} onChange={(e) => handleChangeInputFileds(e, setEndDate)} />
+                                </div></> : <></>}
+
                         </>
                     }
                     {mainSection === "Section 80C" || mainSection === "Section 80D" ?
@@ -189,38 +200,74 @@ const EditModal = ({
                             <input type="date" value={paymentDate} onChange={(e) => handleChangeInputFileds(e, setPaymentDate)} />
                         </div> : <></>}
 
-                    <div className={css.edit_info}>
+                    {subSectionCode === "14" && mainSection === "Section 10" ? <></> : <div className={css.edit_info}>
                         <h5>Investment amount during the Year</h5>
                         <input type="text" value={investment} onChange={(e) => handleChangeInputFileds(e, setInvestment)} />
-                    </div>
+                    </div>}
                     {mainSection === "Section 10" &&
                         <>
-                            <div className={css.edit_info1}>
-                                <h5 >City Category</h5>
-                                <select value={cityCategory} onChange={(e) => handleChangeInputFileds(e, setCityCategory)}>
-                                    <option value="">Non Metro</option>
-                                    <option value="1">Metro</option>
-                                </select>
-                                {/* {subSectionCode === "13A" ? <input type="text" value={cityCategory} onChange={(e) => handleChangeInputFileds(e, setCityCategory)} />
+                            {subSectionCode === "13A" ? <>
+                                <div className={css.edit_info1}>
+                                    <h5 >City Category</h5>
+                                    <select value={cityCategory} onChange={(e) => handleChangeInputFileds(e, setCityCategory)}>
+                                        <option value="">Non Metro</option>
+                                        <option value="1">Metro</option>
+                                    </select>
+                                    {/* {subSectionCode === "13A" ? <input type="text" value={cityCategory} onChange={(e) => handleChangeInputFileds(e, setCityCategory)} />
                                     : <input type="text" disabled />} */}
-                            </div>
-                            <div className={css.edit_info}>
-                                <h5>PAN of Landlord</h5>
-                                {subSectionCode === "13A" ? <input type="text" value={pan} onChange={(e) => handleChangeInputFileds(e, setPan)} />
-                                    : <input type="text" disabled />}
+                                </div>
+                                <div className={css.edit_info}>
+                                    <h5>PAN of Landlord</h5>
+                                    {subSectionCode === "13A" ? <input type="text" value={pan} onChange={(e) => handleChangeInputFileds(e, setPan)} />
+                                        : <input type="text" disabled />}
 
-                            </div>
-                            <div className={css.edit_info}>
-                                <h5>Name of Landlord</h5>
-                                {subSectionCode === "13A" ? <input type="text" value={name1} onChange={(e) => handleChangeInputFileds(e, setName1)} />
-                                    : <input type="text" disabled />}
-                            </div>
-                            <div className={css.edit_info}>
-                                <h5>Address of Landlord</h5>
-                                {subSectionCode === "13A" ?
-                                    <input type="text" value={address} onChange={(e) => handleChangeInputFileds(e, setAddress)} />
-                                    : <input type="text" disabled />}
-                            </div>
+                                </div>
+                                <div className={css.edit_info}>
+                                    <h5>Name of Landlord</h5>
+                                    {subSectionCode === "13A" ? <input type="text" value={name1} onChange={(e) => handleChangeInputFileds(e, setName1)} />
+                                        : <input type="text" disabled />}
+                                </div>
+                                <div className={css.edit_info}>
+                                    <h5>Address of Landlord</h5>
+                                    {subSectionCode === "13A" ?
+                                        <input type="text" value={address} onChange={(e) => handleChangeInputFileds(e, setAddress)} />
+                                        : <input type="text" disabled />}
+                                </div>
+                            </> : <>
+                                <div className={css.edit_info}>
+                                    <h5>First Name</h5>
+                                    {subSectionCode === "14" ?
+                                        <input type="text" value={firstName} onChange={(e) => handleChangeInputFileds(e, setFirstName)} />
+                                        : <input type="text" disabled />}
+                                </div>
+                                <div className={css.edit_info}>
+                                    <h5>Last Name</h5>
+                                    {subSectionCode === "14" ?
+                                        <input type="text" value={lastName} onChange={(e) => handleChangeInputFileds(e, setLastName)} />
+                                        : <input type="text" disabled />}
+                                </div>
+                                <div className={css.edit_info}>
+                                    <h5>Gender</h5>
+                                    <select value={gender} onChange={(e) => handleChangeInputFileds(e, setGender)}>
+                                        <option value="1">Male</option>
+                                        <option value="2">Female</option>
+                                        <option value="A">Others</option>
+                                    </select>
+                                </div>
+                                <div className={css.edit_info}>
+                                    <h5>Date of Birth</h5>
+                                    <input type="date" value={dob?.split('.').reverse().join('-')} onChange={(e) => handleChangeInputFileds(e, setDob)} />
+                                </div>
+                                <div className={css.edit_info}>
+                                    <h5>Child Alllowance</h5>
+                                    <select value={childAllowance} onChange={(e) => handleChangeInputFileds(e, setChildAllowance)}>
+                                        <option value="Y">Yes</option>
+                                        <option value="N">No</option>
+                                    </select>
+                                </div>
+                            </>}
+
+
                         </>}
                     {mainSection === "Section 24" &&
                         <>
@@ -346,6 +393,11 @@ const EditModal = ({
                                     policy,
                                     paymentDate,
                                     relation,
+                                    firstName,
+                                    lastName,
+                                    gender,
+                                    dob,
+                                    childAllowance,
                                     subSectionCode,
                                     subSectionValue,
                                     array80C,

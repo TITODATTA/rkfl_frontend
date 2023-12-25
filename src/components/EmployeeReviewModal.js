@@ -136,6 +136,11 @@ const EmployeeReviewModal = ({
                                 <th>PAN of Landlord</th>
                                 <th>Name of Landlord</th>
                                 <th>Address of Landlord</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Gender</th>
+                                <th>Date of Birth</th>
+                                <th>Child Allowance</th>
                                 <th>Evidence Document (JPJ / PDF)</th>
 
                             </tr>
@@ -151,6 +156,11 @@ const EmployeeReviewModal = ({
                                 <td>{item.pan}</td>
                                 <td>{item.landLoardName}</td>
                                 <td>{item.landLoardAddress}</td>
+                                <td>{item?.firstName}</td>
+                                <td>{item?.lastName}</td>
+                                <td>{item.gender ? (item.gender === "1" ? "Male" : "Female") : ""}</td>
+                                <td>{item?.dob}</td>
+                                <td>{item.childAllowance}</td>
                                 <td>  {item.file.length} files</td>
                             </tbody>
                         ))}
@@ -296,6 +306,11 @@ const EmployeeReviewModal = ({
                                     <th>PAN of Landlord</th>
                                     <th>Name of Landlord</th>
                                     <th>Address of Landlord</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Gender</th>
+                                    <th>Date of Birth</th>
+                                    <th>Child Allowance</th>
                                     <th>Evidence Document (JPJ / PDF)</th>
 
                                 </tr>
@@ -311,6 +326,11 @@ const EmployeeReviewModal = ({
                                     <td>{item.pan}</td>
                                     <td>{item.landLoardName}</td>
                                     <td>{item.landLoardAddress}</td>
+                                    <td>{item?.firstName}</td>
+                                    <td>{item?.lastName}</td>
+                                    <td>{item.gender ? (item.gender === "1" ? "Male" : "Female") : ""}</td>
+                                    <td>{item?.dob}</td>
+                                    <td>{item.childAllowance}</td>
                                     <td>  {item.file.length} files</td>
                                 </tbody>
                             ))}

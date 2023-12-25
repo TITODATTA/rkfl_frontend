@@ -79,6 +79,11 @@ export const handleEdit = (
     policy,
     paymentDate,
     relation,
+    firstName,
+    lastName,
+    gender,
+    dob,
+    childAllowance,
     subSectionCode,
     subSectionValue,
     array80C,
@@ -116,7 +121,7 @@ export const handleEdit = (
             setError(true)
             setErrorMessage("Name of Assured Cannot be empty")
         }
-        else if (investment.length === 0) {
+        else if (investment?.length === 0) {
             setError(true)
             setErrorMessage("Investment Cannot be empty")
 
@@ -126,12 +131,12 @@ export const handleEdit = (
             setErrorMessage("Relation Cannot be empty")
 
         }
-        else if (isNaN(investment)) {
+        else if (investment && isNaN(investment)) {
             setError(true)
             setErrorMessage("Investment Can only be numbers");
 
         }
-        else if (mainSection === "Section 10" && parseInt(investment) >= 8333) {
+        else if (mainSection === "Section 10" && parseInt(investment) >= 8333 && subSectionCode === "13A") {
             if (pan.length === 0 && subSectionCode === "13A") {
                 setError(true)
                 setErrorMessage("Pan of Landord empty if investment is more than 8333")
@@ -344,7 +349,54 @@ export const handleEdit = (
                     setIsFileUploaded,
                 )
             }
-            else if (mainSection === "Section 10") {
+            else if (mainSection === "Section 10" && subSectionCode === "14") {
+                if (firstName.length === 0) {
+                    setError(true)
+                    setErrorMessage("First Name cannot be empty");
+                }
+                else if (lastName.length === 0) {
+                    setError(true)
+                    setErrorMessage("Last Name cannot be empty");
+                }
+                else if (dob.length === 0) {
+                    setError(true)
+                    setErrorMessage("Date of Birth cannot be empty");
+                }
+                else {
+                    const updatedData = [...array10];
+                    updatedData[editIndex] = {
+                        ...updatedData[editIndex],
+                        file: file,
+                        nameOfAssured: name,
+                        policyNo: policy,
+                        relation: relation,
+                        subSectionCode: subSectionCode,
+                        subSection: subSectionValue,
+                        dob: dob.split("-").reverse().join("."),
+                        firstName: firstName,
+                        lastName: lastName,
+                        gender: gender,
+                        childAllowance: childAllowance,
+                        editTimestamp: new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true })
+                    };
+                    setArray10(updatedData)
+                    handleCloseEditModal(
+                        setEditModal,
+                        setSubSectionValue,
+                        setSubSectionCode,
+                        setName,
+                        setRelation,
+                        setPolicy,
+                        setInvestment,
+                        setFile,
+                        setPan,
+                        setName1,
+                        setAddress,
+                        setIsFileUploaded,
+                    )
+                }
+            }
+            else if (mainSection === "Section 10" && subSectionCode === "13A") {
                 if (startDate.length === 0) {
                     setError(true)
                     setErrorMessage("Start Date cannot be empty");
@@ -403,12 +455,12 @@ export const handleEdit = (
             setErrorMessage("Relation Cannot be empty")
 
         }
-        else if (investment.length === 0) {
+        else if (investment?.length === 0) {
             setError(true)
             setErrorMessage("Investment Cannot be empty")
 
         }
-        else if (isNaN(investment)) {
+        else if (investment && isNaN(investment)) {
             setError(true)
             setErrorMessage("Investment Can only be numbers");
 
@@ -438,7 +490,7 @@ export const handleEdit = (
             setErrorMessage("File Cannot be empty");
 
         }
-        else if (mainSection === "Section 10" && parseInt(investment) >= 8333) {
+        else if (mainSection === "Section 10" && parseInt(investment) >= 8333 && subSectionCode === "13A") {
             if (pan.length === 0 && subSectionCode === "13A") {
                 setError(true)
                 setErrorMessage("Pan of Landord empty if investment is more than 8333")
@@ -653,7 +705,54 @@ export const handleEdit = (
                     setIsFileUploaded,
                 )
             }
-            else if (mainSection === "Section 10") {
+            else if (mainSection === "Section 10" && subSectionCode === "14") {
+                if (firstName.length === 0) {
+                    setError(true)
+                    setErrorMessage("First Name cannot be empty");
+                }
+                else if (lastName.length === 0) {
+                    setError(true)
+                    setErrorMessage("Last Name cannot be empty");
+                }
+                else if (dob.length === 0) {
+                    setError(true)
+                    setErrorMessage("Date of Birth cannot be empty");
+                }
+                else {
+                    const updatedData = [...array10];
+                    updatedData[editIndex] = {
+                        ...updatedData[editIndex],
+                        file: file,
+                        nameOfAssured: name,
+                        policyNo: policy,
+                        relation: relation,
+                        subSectionCode: subSectionCode,
+                        subSection: subSectionValue,
+                        dob: dob.split("-").reverse().join("."),
+                        firstName: firstName,
+                        lastName: lastName,
+                        gender: gender,
+                        childAllowance: childAllowance,
+                        editTimestamp: new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true })
+                    };
+                    setArray10(updatedData)
+                    handleCloseEditModal(
+                        setEditModal,
+                        setSubSectionValue,
+                        setSubSectionCode,
+                        setName,
+                        setRelation,
+                        setPolicy,
+                        setInvestment,
+                        setFile,
+                        setPan,
+                        setName1,
+                        setAddress,
+                        setIsFileUploaded,
+                    )
+                }
+            }
+            else if (mainSection === "Section 10" && subSectionCode === "13A") {
                 if (startDate.length === 0) {
                     setError(true)
                     setErrorMessage("Start Date cannot be empty");
