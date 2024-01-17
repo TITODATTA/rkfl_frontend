@@ -201,7 +201,7 @@ const EditModal = ({
                         </div> : <></>}
 
                     {subSectionCode === "14" && mainSection === "Section 10" ? <></> : <div className={css.edit_info}>
-                        <h5>Investment amount during the Year</h5>
+                        <h5>Investment amount during the {mainSection === "Section 10" ? "Month" : "Year"}</h5>
                         <input type="text" value={investment} onChange={(e) => handleChangeInputFileds(e, setInvestment)} />
                     </div>}
                     {mainSection === "Section 10" &&
